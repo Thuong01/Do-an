@@ -1,0 +1,230 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+    var stat = ViewData["Stats"] as StatsViewModel;
+}
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer localizer
+@using Datas.ViewModels.Statistic
+@inject Web.Admin.Resources.LocalizationService locService
+
+<div class="pagetitle">
+    <h1>@localizer["Dashboard"]</h1>
+    <nav>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="index.html">Trang chủ</a></li>
+            <li class="breadcrumb-item active">Dashboard</li>
+        </ol>
+    </nav>
+</div>
+
+<section class="section dashboard">
+    <div class="row">
+
+        <!-- Left side columns -->
+        <div class="col-lg-12">
+            <div class="row">
+                <!-- Sales Card -->
+                <div class="col-xxl-4 col-md-6">
+                    <div class="card info-card sales-card">
+
+                        <div class="card-body">
+                            <h5 class="card-title">Số đơn hàng <span>| Tháng này</span></h5>
+
+                            <div class="d-flex align-items-center">
+                                <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                    <i class="bi bi-cart"></i>
+                                </div>
+                                <div class="ps-3">
+                                    <h6>@ViewData["TotalOrder"]</h6>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <!-- End Sales Card -->
+
+                <!-- Revenue Card -->
+                <div class="col-xxl-4 col-md-6">
+                    <div class="card info-card revenue-card">
+
+                        <div class="card-body">
+                            <h5 class="card-title">Doanh thu <span>| Tháng này</span></h5>
+                            <div class="d-flex align-items-center">
+                                <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                    <i class="bi bi-currency-dollar"></i>
+                                </div>
+                                <div class="ps-3">
+                                    <h6>
+                                        @(((decimal)ViewData["TotalRevenues"]).ToString("N0")) đ
+                                    </h6>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <!-- End Revenue Card -->
+
+                <!-- Number product Card -->
+                <div class="col-xxl-4 col-md-6">
+                    <div class="card info-card sales-card">
+                        <div class="card-body">
+                            <h5 class="card-title">@locService.GetLocalize("Number_Product")</h5>
+
+                            <div class="d-flex align-items-center">
+                                <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                    <i class="bi bi-cart"></i>
+                                </div>
+                                <div class="ps-3">
+                                    <h6>@ViewData["Product_Count"]</h6>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <!-- End Sales Card -->
+                <!-- Revenue Card -->
+                <div class="col-xxl-4 col-md-6">
+                    <div class="card info-card revenue-card">
+                        <div class="card-body">
+                            <h5 class="card-title">@locService.GetLocalize("Product_Locked")</h5>
+
+                            <div class="d-flex align-items-center">
+                                <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                    <i class="bi bi-currency-dollar"></i>
+                                </div>
+                                <div class="ps-3">
+                                    <h6>@ViewData["Product_Lock_Count"]</h6>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <!-- End Revenue Card -->
+                <!-- Customers Card -->
+                <div class="col-xxl-4 col-xl-12">
+                    <div class="card info-card customers-card">
+                        <div class="card-body">
+                            <h5 class="card-title">@locService.GetLocalize("Customer_number") </h5>
+
+                            <div class="d-flex align-items-center">
+                                <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                    <i class="bi bi-people"></i>
+                                </div>
+                                <div class="ps-3">
+                                    <h6>@ViewData["Customer_number"]</h6>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+                <!-- End Customers Card -->
+
+                <!-- Recent Sales -->
+                <div class="col-12">
+                    <div class="card recent-sales overflow-auto">
+                        <div class="card-body">
+                            <h5 class="card-title">Đơn hàng gần đây</h5>
+
+                            <table class="table table-borderless datatable">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">Người đặt</th>
+                                        <th scope="col">Sản phẩm</th>
+                                        <th scope="col">Giá tiền</th>
+                                        <th scope="col">Trạng thái đơn</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in stat.RecentOrders)
+                                    {
+                                        <tr>
+                                            <th scope="row"><a href="#">@item.OrderId</a></th>
+                                            <td>@item.CustomerName</td>
+                                            <td><a href="#" class="text-primary">@item.ProductName</a></td>
+                                            <td>@item.Price.ToString("N0") đ</td>
+                                            <td><span>@locService.GetLocalize(item.Status.ToString())</span></td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="col-12">
+                    <div class="card top-selling overflow-auto">
+                        <div class="card-body pb-0">
+                            <h5 class="card-title">Sản phẩm bán chạy trong tháng</h5>
+
+                            <table class="table table-borderless">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Preview</th>
+                                        <th scope="col">Sản phẩm</th>
+                                        <th scope="col">Giá</th>
+                                        <th scope="col">Đã bán</th>
+                                        <th scope="col">Tổng tiền</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in stat.TopSellingProducts)
+                                    {
+                                        <tr>
+                                            <th scope="row"><a href="@Url.Action("Details", "Product", new { id = item.ProductId})"><img src="@item.ProductImage" alt="@item.ProductName"></a></th>
+                                            <td><a href="@Url.Action("Details", "Product", new { id = item.ProductId})" class="text-primary fw-bold">@item.ProductName</a></td>
+                                            <td>@item.ProductPrice</td>
+                                            <td class="fw-bold">@item.QuantitySold</td>
+                                            <td>@item.TotalRevenue.ToString("N0") đ</td>
+                                        </tr>
+                                    }                                    
+                                </tbody>
+                            </table>
+
+                        </div>
+
+                    </div>
+                </div><!-- End Top Selling -->
+
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    <script src="~/lib/microsoft/signalr/dist/browser/signalr.js"></script>
+    <script src="~/js/notifications.js"></script>
+    <script>
+        const connection = new signalR.HubConnectionBuilder()
+            .withUrl("/notificationHub")
+            .configureLogging(signalR.LogLevel.Information)
+            .build();
+
+        connection.on("ReceiveNotification", (notification) => {
+            // const notificationElement = document.createElement("div");
+            // notificationElement.className = "notification";
+            // notificationElement.innerHTML = `
+            //     <h4>${notification.title}</h4>
+            //     <p>${notification.message}</p>
+            //     <small>${new Date(notification.createdAt).toLocaleString()}</small>
+            // `;
+            // document.getElementById("notifications").prepend(notificationElement);
+            
+            // Hiệu ứng thông báo
+            // notificationElement.style.animation = "fadeIn 0.5s";
+
+            console.log(notification);
+        });
+
+        connection.start()
+            .then(() => console.log("Connected to SignalR Hub"))
+            .catch(err => console.error(err.toString()));
+    </script>
+}

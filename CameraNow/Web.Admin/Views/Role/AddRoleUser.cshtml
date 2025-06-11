@@ -1,0 +1,78 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using MyShop.Models.Models
+@inject UserManager<AppUser> userManager
+@inject RoleManager<IdentityRole> roleManager
+@using MyShop.Web.Admin.Models
+@model AddRoleUserViewModel
+@{
+    ViewData["Title"] = "Add user role";
+}
+
+<h1>Add role for user: @Model.UserName</h1>
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="@Url.Action("Index", "Home")"><i class="fa-solid fa-house"></i></a></li>
+        <li class="breadcrumb-item active" aria-current="page">Add role</li>
+    </ol>
+</nav>
+
+<div class="card pt-3">
+    <div class="card-body p-3">
+        <form id="frm_addroleuser">
+            @Html.AntiForgeryToken()
+            <input type="hidden" asp-for="@Model.UserId" />
+            <input type="hidden" asp-for="@Model.UserName" />
+            @foreach (var role in roleManager.Roles.ToList())
+            {
+                <div class="form-check mb-3">
+                    <input class="form-check-input" value="@role.Name" type="radio" name="RoleName" @(Model.RoleName.Contains(role.Name) ? "checked" : "")>
+                    <label class="form-check-label" for="@role.Name">
+                        @role.Name
+                    </label>
+                </div>
+            }
+            <div asp-validation-summary="All" class="text-danger"></div>
+
+            <div>
+                <button class="btn btn-primary" id="btn_addroleuser" type="submit">Save</button>
+                <a asp-action="Index" asp-controller="Account" class="btn">Back list</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('#frm_addroleuser').on('submit', function (e) {
+                e.preventDefault();
+
+                let formdata = new FormData(this);
+
+                // Lấy ra tất cả các cặp key/value
+                for (let [key, value] of formdata.entries()) {
+                    console.log(`${key}: ${value}`);
+                }
+
+                $.ajax({
+                    url: "/Role/AddRoleUser",
+                    data: formdata,
+                    type: 'POST',
+                    headers: {
+                        'RequestVerificationToken': $('input[name="__requestverificationtoken"]').val()
+                    },
+                    processData: false,
+                    contentType: false,
+                    success: function (response) {
+                        window.location.href = "/Account";
+                    },
+                    Error: function (err) {
+                        console.error("failured");
+                        console.error(err);
+                    }
+                })
+            })
+        })
+    </script>
+}
+

@@ -1,0 +1,179 @@
+﻿@model Datas.ViewModels.Coupon.CouponUpdateViewModel
+@using Models.Enums
+@inject Web.Admin.Resources.LocalizationService locService
+@{
+    ViewData["Title"] = "Update coupon";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    var coupontype_list = Enum.GetValues(typeof(CouponType)) as IEnumerable<CouponType>;
+}
+
+@section Scripts {
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const typeSelect = document.getElementById("Type");
+            const unitLabel = document.getElementById("unitLabel");
+            const couponCreateBtn =  $('#couponCreateBtn');
+
+            function updateUnitLabel() {
+                const selectedValue = typeSelect.value;
+                unitLabel.textContent = selectedValue === "Percentage" ? "(%)" : "(VNĐ)";
+            }
+
+            // Cập nhật khi trang load lần đầu
+            updateUnitLabel();
+
+            // Cập nhật mỗi khi select thay đổi
+            typeSelect.addEventListener("change", updateUnitLabel);
+
+
+            const valueInput = document.getElementById("Value");
+            function checkTypeForPercent (value) {
+                const selectedValue = typeSelect.value;
+                if (selectedValue === "Percentage") {
+                    return value > 100 ? false : true;
+                }
+                return true;
+            }
+
+            valueInput.addEventListener("input", function (e) {
+                const value = parseFloat(valueInput.value.replace(/,/g, ''));
+                if (!checkTypeForPercent(value)) {
+                    document.getElementById('value_invalid').textContent = ("Giá trị không hợp lệ cho loại mã giảm giá phần trăm.");
+                    couponCreateBtn.prop('disabled', true);
+                }
+                else {
+                    document.getElementById('value_invalid').textContent = "";
+                    couponCreateBtn.prop('disabled', false);
+                }
+                valueInput.value = value;
+            });
+
+            // function formatCurrency(value) {
+            //     return value.replace(/\D/g, '') chỉ giữ số
+            //                 .replace(/\B(?=(\d{3})+(?!\d))/g, ','); thêm dấu phẩy
+            // }
+
+            // valueInput.addEventListener("input", function (e) {
+            //     const cursorPosition = valueInput.selectionStart;
+            //     const originalLength = valueInput.value.length;
+
+            //     valueInput.value = formatCurrency(valueInput.value);
+
+            //     // Giữ nguyên vị trí con trỏ sau khi format
+            //     const newLength = valueInput.value.length;
+            //     valueInput.selectionEnd = cursorPosition + (newLength - originalLength);
+            // });
+
+
+            var codeInput = $("#Code");
+            codeInput.on("input", function () {
+                var value = codeInput.val().toUpperCase();
+                codeInput.val(value);
+            });
+        });
+    </script>
+}
+
+<h2>@locService.GetLocalize("Update_coupon")</h2>
+
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="@Url.Action("Index", "Home")"><i class="fa-regular fa-house"></i></a></li>
+        <li class="breadcrumb-item"><a href="@Url.Action("Index", "Coupon")">@locService.GetLocalize("Coupon")</a></li>
+        <li class="breadcrumb-item active" aria-current="page">@locService.GetLocalize("Edit"): @Model.Code</li>
+    </ol>
+</nav>
+
+
+<hr />
+<div class="row">
+    <div class="col-md-12">
+        <form asp-action="Update" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+
+            <div class="row">
+                <div class="form-group col-md-4 mt-3">
+                    <label asp-for="Code" class="control-label"></label>
+                    <div class="">
+                        <input asp-for="Code" id="name" class="form-control" />
+                        <span asp-validation-for="Code" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="form-group col-md-4 mt-3">
+                    <label asp-for="Type" class="control-label"></label>
+                    <div class="">
+                        <select asp-for="Type" class="form-select">
+                            @foreach (var item in coupontype_list)
+                            {
+                                <option value="@item">@locService.GetLocalize(item.ToString())</option>
+                            }
+                        </select>
+                        <span asp-validation-for="Type" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="form-group col-md-4 mt-3">
+                    <div>
+                        <label asp-for="Value" class="control-label"></label>
+                        <span id="unitLabel">(VNĐ)</span>
+                    </div>
+                    <div class="">
+                        <input asp-for="Value" value="@String.Format("{0:0}", Model.Value)" class="form-control" />
+                        <span id="value_invalid" asp-validation-for="Value" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="form-group col-md-4 mt-3">
+                    <label asp-for="MinOrderAmount" class="control-label"></label>
+                    <div class="">
+                        <input type="number" asp-for="MinOrderAmount" value="@String.Format("{0:0}", Model.MinOrderAmount)" class="form-control" />
+                        <span asp-validation-for="MinOrderAmount" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="form-group col-md-4 mt-3">
+                    <label asp-for="Quantity" class="control-label"></label>
+                    <div class="">
+                        <input asp-for="Quantity" class="form-control" />
+                        <span asp-validation-for="Quantity" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="form-group col-md-4 mt-3">
+                    <label asp-for="Description" class="control-label"></label>
+                    <div class="">
+                        <textarea asp-for="Description" class="form-control"></textarea>
+                        <span asp-validation-for="Description" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="form-group col-md-4 mt-3">
+                    <label asp-for="StartDate" class="control-label"></label>
+                    <div class="">
+                        <input type="date" asp-for="StartDate" class="form-control" />
+                        <span asp-validation-for="StartDate" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group col-md-4 mt-3">
+                    <label asp-for="EndDate" class="control-label"></label>
+                    <div class="">
+                        <input type="date" asp-for="EndDate" id="Contents" class="form-control" />
+                        <span asp-validation-for="EndDate" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 mt-3">
+                    <a class="btn border" asp-action="Index"><i class="fa-regular fa-hand-point-left"></i>@locService.GetLocalize("Back_to_list")</a>
+                </div>
+                <div class="col-md-6 form-group mt-3 row">
+                    <input type="submit" value="@locService.GetLocalize("Save")" class="btn btn-primary" />
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

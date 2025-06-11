@@ -1,0 +1,33 @@
+.order-item {
+    margin-top: 20px;
+    padding: 10px 15px;
+
+    &:hover {
+        background-color: #e0f8ff;
+    }
+}
+
+.order-search {
+    align-items: center;
+    background: #eaeaea;
+    border-radius: 2px;
+    box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.05);
+    color: #212121;
+    display: flex;
+    margin: 12px 0;
+    padding: 12px 0;
+
+    input {
+        background-color: inherit;
+        border: 0;
+        flex: 1;
+        font-size: 14px;
+        line-height: 16px;
+        outline: none;
+    }
+
+    svg {
+        margin: 0 15px;
+        stroke: #bbb;
+    }
+}

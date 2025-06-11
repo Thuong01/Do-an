@@ -1,0 +1,391 @@
+﻿@using Models.Models
+@using Datas.ViewModels.Product
+@using Datas.ViewModels.Feedback
+@model ProductViewModel
+@using System.Globalization
+@using Models.Enums
+@using Web.Admin.Resources
+@inject LocalizationService locService
+@{
+    ViewData["Title"] = Model.Name;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var feedbacks = ViewBag.Feedback as FeedbackViewModel;
+}
+
+@section Styles {
+    <link href="~/lib/sweetalert2/sweetalert2.min.css" rel="stylesheet" />
+    <link href="~/css/product-detail.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+}
+
+<div class="product-detail-container">
+    <!-- Breadcrumb -->
+    <nav aria-label="breadcrumb" class="breadcrumb-nav">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="@Url.Action("Index", "Home")"><i class="fas fa-home"></i></a></li>
+            <li class="breadcrumb-item">
+                <a href="@Url.Action("Index", "Product")">@locService.GetLocalize("Products")</a></li>
+            <li class="breadcrumb-item active" aria-current="page">@Model.Name</li>
+        </ol>
+    </nav>
+
+    <!-- Main Product Card -->
+    <div class="product-card">
+        <!-- Product Header -->
+        <div class="product-header">
+            <h1 class="product-title">@Model.Name</h1>
+            <div class="product-meta">
+                <span class="badge @(Model.Status == Status.Active ? "bg-success" : "bg-danger")">@Model.Status</span>
+                <span class="sku">SKU: @Model.Alias</span>
+            </div>
+        </div>
+
+        <!-- Product Tabs -->
+        <div class="product-tabs-wrapper">
+            <ul class="nav nav-tabs" id="productTabs" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="details-tab" data-bs-toggle="tab" data-bs-target="#details" type="button" role="tab">
+                        <i class="fas fa-info-circle me-2"></i>Thông tin sản phẩm
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="reviews-tab" data-bs-toggle="tab" data-bs-target="#reviews" type="button" role="tab">
+                        <i class="fas fa-comments me-2"></i>Đánh giá của khách hàng (@feedbacks.Feedbacks_Count)
+                    </button>
+                </li>
+            </ul>
+
+            <div class="tab-content" id="productTabsContent">
+                <!-- Product Details Tab -->
+                <div class="tab-pane fade show active" id="details" role="tabpanel">
+                    <div class="product-content">
+                        <!-- Image Gallery -->
+                        <div class="product-gallery">
+                            <div class="main-image">
+                                @if (!string.IsNullOrEmpty(Model.Image))
+                                {
+                                    <img src="@Model.Image" alt="@Model.Name" class="img-fluid" id="mainProductImage">
+                                }
+                            </div>
+                            <div class="thumbnail-container">
+                                @if (!string.IsNullOrEmpty(Model.Image))
+                                {
+                                    <div class="thumbnail active" onclick="changeMainImage('@Model.Image')">
+                                        <img src="@Model.Image" alt="@Model.Name">
+                                    </div>
+                                }
+                                @if (Model.Images != null && Model.Images.Any())
+                                {
+                                    foreach (var item in Model.Images)
+                                    {
+                                        <div class="thumbnail" onclick="changeMainImage('@item.Link')">
+                                            <img src="@item.Link" alt="@Model.Name">
+                                        </div>
+                                    }
+                                }
+                            </div>
+                        </div>
+
+                        <!-- Product Info -->
+                        <div class="product-info">
+                            <!-- Pricing Section -->
+                            <div class="pricing-section">
+                                <div class="price-display">
+                                    @if (Model.Promotion_Price.HasValue)
+                                    {
+                                        <span class="current-price">@Model.Promotion_Price.Value.ToString("C", new CultureInfo("vi-VN"))</span>
+                                        <span class="original-price">@Model.Price.ToString("C", new CultureInfo("vi-VN"))</span>
+                                        @* <span class="discount-badge">@((int)(100 - (Model.Promotion_Price.Value / Model.Price * 100)))% OFF</span> *@
+                                    }
+                                    else
+                                    {
+                                        <span class="current-price">@Model.Price.ToString("C", new CultureInfo("vi-VN"))</span>
+                                    }
+                                </div>
+
+                                <div class="stock-info">
+                                    <span class="label">Tình trạng:</span>
+                                    @if (Model.Quantity > 0)
+                                    {
+                                        <span class="in-stock"><i class="fas fa-check-circle"></i> Còn hàng trong kho (@Model.Quantity)</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="out-of-stock"><i class="fas fa-times-circle"></i>Hết hàng</span>
+                                    }
+                                </div>
+
+                                <div class="sold-count">
+                                    <span>@Model.Buy_Count Đã bán</span>
+                                </div>
+                            </div>
+
+                            <!-- Additional Info -->
+                            <div class="additional-info">
+                                <div class="info-item">
+                                    <span class="info-label"><i class="fas fa-layer-group me-2"></i>Phân loại sản phẩm:</span>
+                                    <span class="info-value">@(string.IsNullOrEmpty(Model.Category_Name) ? "N/A" : Model.Category_Name)</span>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- Description -->
+                    <div class="product-description">
+                        <h4><i class="fas fa-align-left me-2"></i>Mô tả sản phẩm</h4>
+                        <div class="description-content">
+                            @if (string.IsNullOrEmpty(Model.Description))
+                            {
+                                <p class="text-muted">No description available</p>
+                            }
+                            else
+                            {
+                                @Html.Raw(Model.Description)
+                            }
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Reviews Tab -->
+                <div class="tab-pane fade" id="reviews" role="tabpanel">
+                    <div class="reviews-section">
+                        <!-- Rating Overview -->
+                        <div class="rating-overview">
+                            <div class="average-rating">
+                                <div class="rating-value">@((float)Math.Round(feedbacks.Rating_Average, 1))</div>
+                                <div class="stars">
+                                    @for (int i = 0; i < 5; i++)
+                                    {
+                                        if (i < Math.Floor(feedbacks.Rating_Average))
+                                        {
+                                            <i class="fas fa-star"></i>
+                                        }
+                                        else if (i == Math.Floor(feedbacks.Rating_Average) && feedbacks.Rating_Average % 1 >= 0.5)
+                                        {
+                                            <i class="fas fa-star-half-alt"></i>
+                                        }
+                                        else
+                                        {
+                                            <i class="far fa-star"></i>
+                                        }
+                                    }
+                                </div>
+                                <div class="total-reviews">@feedbacks.Feedbacks_Count reviews</div>
+                            </div>
+
+                            <div class="rating-bars">
+                                @foreach (var star in feedbacks.Stars)
+                                {
+                                    <div class="rating-bar">
+                                        <span class="star-count">@star.star <i class="fas fa-star"></i></span>
+                                        <div class="progress">
+                                            <div class="progress-bar" role="progressbar" style="width: @star.Percent%"
+                                                 aria-valuenow="@star.Percent" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                        <span class="percentage">@star.Percent%</span>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+
+                        <!-- Reviews List -->
+                        <div class="reviews-list">
+                            <h4>Customer Reviews</h4>
+
+                            @foreach (var feedback in feedbacks.Data.Data)
+                            {
+                                <div class="review-item">
+                                    <div class="review-header">
+                                        <div class="user-info">
+                                            <div class="user-avatar">
+                                                <i class="fas fa-user-circle"></i>
+                                            </div>
+                                            <div class="user-details">
+                                                <h5>@feedback.User_Name</h5>
+                                                <div class="review-meta">
+                                                    <div class="stars">
+                                                        @for (int i = 0; i < feedback.Rating; i++)
+                                                        {
+                                                            <i class="fas fa-star"></i>
+                                                        }
+                                                        @for (int i = 0; i < 5 - feedback.Rating; i++)
+                                                        {
+                                                            <i class="far fa-star"></i>
+                                                        }
+                                                    </div>
+                                                    <span class="review-date">@feedback.Date</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="review-content">
+                                        <p>@feedback.Message</p>
+                                    </div>
+
+                                    <div class="review-actions">
+                                        <button class="btn btn-like" data-fbId="@feedback.ID" data-productId="@feedback.Product_ID">
+                                            <i class="far fa-thumbs-up"></i>
+                                            <span class="like-count" id="like-count-@feedback.ID">@feedback.Likes</span>
+                                        </button>
+
+                                        <button class="btn btn-reply" data-bs-toggle="collapse" data-bs-target="#reply-@feedback.ID">
+                                            <i class="far fa-comment-dots"></i> Reply
+                                        </button>
+
+                                        @if (User.IsInRole("Admin"))
+                                        {
+                                            <button class="btn btn-delete" data-fbId="@feedback.ID" data-productId="@feedback.Product_ID">
+                                                <i class="far fa-trash-alt"></i> Delete
+                                            </button>
+                                        }
+                                    </div>
+
+                                    <!-- Reply Form -->
+                                    <div class="collapse reply-form" id="reply-@feedback.ID">
+                                        <form asp-action="ReplyFeedback" asp-controller="Feedback"
+                                              asp-route-parentId="@feedback.ID" asp-route-productId="@feedback.Product_ID">
+                                            <div class="form-group">
+                                                <textarea name="message" class="form-control" rows="3" placeholder="Write your reply..." required></textarea>
+                                                <input type="hidden" name="subject" value="Reply to feedback">
+                                            </div>
+                                            <div class="form-actions">
+                                                <button type="button" class="btn btn-cancel" data-bs-toggle="collapse" data-bs-target="#reply-@feedback.ID">Cancel</button>
+                                                <button type="submit" class="btn btn-submit">Post Reply</button>
+                                            </div>
+                                        </form>
+                                    </div>
+
+                                    <!-- Replies -->
+                                    @if (feedback.FeedbackChildrents?.Any() == true)
+                                    {
+                                        <div class="replies-list">
+                                            @foreach (var reply in feedback.FeedbackChildrents)
+                                            {
+                                                <div class="reply-item">
+                                                    <div class="reply-header">
+                                                        <div class="user-avatar admin">
+                                                            <i class="fas fa-user-shield"></i>
+                                                        </div>
+                                                        <div class="user-details">
+                                                            <h6>@reply.User_Name (Admin)</h6>
+                                                            <span class="reply-date">@reply.Date</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="reply-content">
+                                                        <p>@reply.Message</p>
+                                                    </div>
+                                                </div>
+                                            }
+                                        </div>
+                                    }
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="action-buttons">
+        <a href="@Url.Action("Index", "Product")" class="btn btn-back">
+            <i class="fas fa-arrow-left me-2"></i>Quay lại danh sách
+        </a>
+        <a href="@Url.Action("Update", new { id = Model.ID })" class="btn btn-edit">
+            <i class="fas fa-edit me-2"></i>Sửa
+        </a>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/lib/sweetalert2/sweetalert2.min.js"></script>
+    <script>
+        // Change main product image
+            function changeMainImage(src) {
+                $('#mainProductImage').attr('src', src);
+                $('.thumbnail').removeClass('active');
+                $(event.currentTarget).addClass('active');
+            }
+    </script>
+    <script type="module">
+        import { ShowToast } from '/js/ToastifyCommon.js';
+
+
+
+        $(document).ready(function () {
+            // Tab switching
+            $('.nav-tabs a').on('click', function (e) {
+                e.preventDefault();
+                $(this).tab('show');
+            });
+
+            $('.btnLikeFb').on('click', function () {
+                const fbId = $(this).data('fbid');
+                const productId = $(this).data('productid');
+
+                console.log(fbId, productId);
+
+                $.ajax({
+                    url: '/Feedback/LikeFeedback',
+                    method: 'POST',
+                    dataType: 'json',
+                    data: {
+                        fbid: fbId,
+                        productId: productId
+                    },
+                    success: function (response) {
+                        if (response.success) {
+                            $(`.number-feedback-likes-${fbId}`).text(response.result);
+                            ShowToast({ toast: "Đã thích!" });
+                        }
+                    },
+                    error: function (error) {
+                        console.log(error.message);
+                    }
+                });
+            });
+
+            $('.btnDelFb').on('click', function () {
+                var btnDel = $(this);
+
+                Swal.fire({
+                    title: "Are you sure?",
+                    text: "You won't be able to revert this!",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#3085d6",
+                    cancelButtonColor: "#d33",
+                    confirmButtonText: "Yes, delete it!"
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        const fbId = $(this).data('fbid');
+                        const productId = $(this).data('productid');
+
+                        $.ajax({
+                            url: '/Feedback/DeleteFeedback',
+                            method: 'POST',
+                            dataType: 'json',
+                            data: {
+                                fbid: fbId,
+                                productId: productId
+                            },
+                            success: function (response) {
+                                if (response.success) {
+                                    btnDel.parent().parent().remove();
+
+                                    ShowToast({ toast: "Xóa feedback thành công!" });
+                                }
+                            },
+                            error: function (error) {
+                                console.log(error.message);
+                            }
+                        })
+                    }
+                });
+            })
+        })
+    </script>
+}

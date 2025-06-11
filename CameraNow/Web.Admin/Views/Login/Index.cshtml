@@ -1,0 +1,260 @@
+﻿@using Datas.ViewModels
+@model LoginViewModel
+@inject Web.Admin.Resources.LocalizationService locService
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Admin login for Camera Store Management System">
+    <meta name="author" content="">
+    <title>CameraNow - Admin Login</title>
+
+    <!-- Favicon (camera icon would be appropriate) -->
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+
+    <!-- Fonts -->
+    <link href="/lib/fontawesome-pro-6.5.1-web/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Styles -->
+    <link href="/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #3498db; /* Camera blue */
+            --secondary-color: #2c3e50; /* Dark blue */
+            --accent-color: #e74c3c; /* Red for alerts */
+            --light-gray: #f8f9fa;
+            --dark-gray: #343a40;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f5f7fa;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-image: url('https://images.unsplash.com/photo-1516035069371-29a1b244cc32?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+
+        .login-container {
+            max-width: 420px;
+            width: 100%;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .login-header {
+            background-color: var(--secondary-color);
+            color: white;
+            padding: 1.5rem;
+            text-align: center;
+            position: relative;
+        }
+
+            .login-header h1 {
+                font-size: 1.5rem;
+                font-weight: 600;
+                margin: 0;
+            }
+
+            .login-header p {
+                font-size: 0.9rem;
+                opacity: 0.8;
+                margin: 0.5rem 0 0;
+            }
+
+        .login-body {
+            padding: 2rem;
+        }
+
+        .form-control {
+            height: 48px;
+            border-radius: 6px;
+            border: 1px solid #ddd;
+            padding-left: 15px;
+            transition: all 0.3s;
+        }
+
+            .form-control:focus {
+                border-color: var(--primary-color);
+                box-shadow: 0 0 0 0.2rem rgba(52, 152, 219, 0.25);
+            }
+
+        .form-floating label {
+            padding-left: 15px;
+            color: #6c757d;
+        }
+
+        .btn-login {
+            background-color: var(--primary-color);
+            border: none;
+            height: 48px;
+            font-weight: 500;
+            border-radius: 6px;
+            transition: all 0.3s;
+        }
+
+            .btn-login:hover {
+                background-color: #2980b9;
+            }
+
+        .remember-me {
+            display: flex;
+            align-items: center;
+        }
+
+            .remember-me input {
+                margin-right: 8px;
+            }
+
+        .forgot-password {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+
+            .forgot-password:hover {
+                text-decoration: underline;
+            }
+
+        .validation-summary {
+            border-radius: 6px;
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        /* Camera icon in the header */
+        .camera-icon {
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+            color: var(--primary-color);
+        }
+
+        /* Modal styles */
+        .modal-header {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+
+        .modal-footer .btn-primary {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="login-container">
+        <div class="login-header">
+            <div class="camera-icon">
+                <i class="fas fa-camera"></i>
+            </div>
+            <h1>CameraNow Admin</h1>
+        </div>
+
+        <div class="login-body">
+            <div asp-validation-summary="ModelOnly" class="alert alert-danger validation-summary" role="alert"></div>
+
+            <form asp-action="Login" method="post">
+                <div class="form-floating mb-3">
+                    <input asp-for="UserName" class="form-control" autocomplete="username" aria-required="true" placeholder="Username" />
+                    <label asp-for="UserName">@locService.GetLocalize("UserName")</label>
+                    <span asp-validation-for="UserName" class="text-danger small"></span>
+                </div>
+
+                <div class="form-floating mb-3">
+                    <input asp-for="Password" class="form-control" autocomplete="current-password" aria-required="true" placeholder="Password" />
+                    <label asp-for="Password">@locService.GetLocalize("Password")</label>
+                    <span asp-validation-for="Password" class="text-danger small"></span>
+                </div>
+
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <div class="remember-me">
+                        <input type="checkbox" asp-for="RememberMe" class="form-check-input" />
+                        <label class="form-check-label small" asp-for="RememberMe">
+                            @locService.GetLocalize("RememberMe")
+                        </label>
+                    </div>
+                    <a href="#" class="forgot-password" data-bs-toggle="modal" data-bs-target="#forgotPasswordModal">
+                        @locService.GetLocalize("Forgot_password")
+                    </a>
+                </div>
+
+                <button type="submit" class="btn btn-login btn-primary w-100">
+                    @locService.GetLocalize("Login")
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Forgot Password Modal -->
+    <div class="modal fade" id="forgotPasswordModal" tabindex="-1" aria-labelledby="forgotPasswordModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="forgotPasswordModalLabel">@locService.GetLocalize("Forgot_password")</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="forgotPasswordForm">
+                        <div class="mb-3">
+                            <label for="email" class="form-label">@locService.GetLocalize("Email")</label>
+                            <input type="email" class="form-control" id="email" name="email" required
+                                   placeholder="@locService.GetLocalize("Enter_your_email")" />
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">@locService.GetLocalize("Cancel")</button>
+                    <button type="button" class="btn btn-primary" id="submitForgotPassword">@locService.GetLocalize("Submit")</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="/lib/jquery/dist/jquery.min.js"></script>
+    <script src="/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            $('#submitForgotPassword').click(function() {
+                var email = $('#email').val();
+                if (!email) {
+                    alert('@locService.GetLocalize("Please_enter_your_email")');
+                    return;
+                }
+
+                $.ajax({
+                    url: '@Url.Action("ForgotPassword", "Login")',
+                    type: 'POST',
+                    data: { email: email },
+                    success: function(response) {
+                        if (response.success) {
+                            alert('@locService.GetLocalize("Password_reset_email_sent")');
+                            $('#forgotPasswordModal').modal('hide');
+                        } else {
+                            alert(response.message || '@locService.GetLocalize("Error_occurred")');
+                        }
+                    },
+                    error: function() {
+                        alert('@locService.GetLocalize("Error_occurred")');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,21 @@
+﻿@model (string Link, string Name, string Data_fancybox)
+
+<a href="@Model.Link" data-fancybox="@Model.Data_fancybox" data-caption="@Model.Name">
+    <img width="150" src="@Model.Link" alt="@Model.Name" title="@Model.Name" />
+</a>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            Fancybox.bind("[data-fancybox]", {
+                // Your custom options
+                Thumbs: {
+                    autoStart: true, // Show thumbnails
+                },
+                Toolbar: {
+                    display: ["zoom", "close"], // Customize toolbar
+                },
+            });
+        })
+    </script>
+}

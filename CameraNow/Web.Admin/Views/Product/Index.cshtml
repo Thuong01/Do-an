@@ -1,0 +1,343 @@
+﻿@using Datas.ViewModels
+@using Datas.ViewModels.Product
+@using Models.Enums
+@using System.Globalization;
+@using Commons.Commons
+@using Web.Admin.Resources
+@model IEnumerable<ProductViewModel>
+@inject LocalizationService locService
+@{
+    ViewData["Title"] = "Product";
+    var productCategories = ViewBag.ProductCategories as IEnumerable<ProductCategoryViewModel>;
+    var statuses = Enum.GetValues(typeof(StatusViewModel)) as IEnumerable<StatusViewModel>;
+}
+@section Styles {
+    @* <link src="https://cdn.datatables.net/rowgroup/1.5.0/css/rowGroup.dataTables.css" /> *@
+    <style>        
+    </style>
+}
+<div>
+    <!-- Page Heading -->
+    <h1 class="h3 mb-2 text-gray-800">@locService.GetLocalize("Products")</h1>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="@Url.Action("Index", "Home")"><i class="fa-solid fa-house"></i></a></li>
+            <li class="breadcrumb-item active" aria-current="page">@locService.GetLocalize("Products")</li>
+        </ol>
+    </nav>
+
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4">
+        <div class="card-header py-3 mb-3">
+            <h6 class="m-0 font-weight-bold text-primary d-flex justify-content-between align-items-center">
+                <span>@locService.GetLocalize("Products") (@ViewBag.TotalCount)</span>
+
+                <div class="">
+                    <a href="@Url.Action("Create", "Product")" title="Create new" type="button" id="create_btn" class="btn text-primary">
+                        <i class="fa-light fa-plus"></i>
+                    </a>
+                    <button id="btn_del_multi" title="Delete" class="btn text-danger">
+                        <i class="fa-regular fa-trash"></i>
+                    </button>
+                </div>
+            </h6>
+        </div>
+
+        <div class="card-body">
+            <div class="mb-3">
+                @using (Html.BeginForm("Index", "Product", FormMethod.Get, new { @class = "mb-3" }))
+                {
+                    <div class="input-group">
+                        <input type="search" id="search_input" name="filter_text" value="@ViewData["current_fillter"]" placeholder="Tìm kiếm sản phẩm" class="form-control">
+
+                        <button data-bs-toggle="collapse" data-bs-target="#collapseAdvanceSearch" type="button" class="btn border">
+                            @* <i class="fa-regular fa-ellipsis-vertical"></i> *@
+                            Lọc nâng cao
+                        </button>
+
+                        <button type="submit" id="btn_search" class="btn btn-primary">
+                            <i class="fa-regular fa-magnifying-glass"></i>
+                        </button>
+                    </div>
+                }
+                <div class="collapse mt-4 @(((ViewData["current_advSlcCateg"] != null) || (ViewData["current_advSlcStatus"] is Status currentStatus && currentStatus != Status.All)) ? "show" : "")"
+                     id="collapseAdvanceSearch">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4>Tìm kiếm nâng cao</h4>
+                        </div>
+                        <div class="card-body pt-3">
+                            @using (Html.BeginForm("Index", "Product", FormMethod.Get, new { }))
+                            {
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <label class="mb-2" for="advSlcCateg">Lọc theo danh mục</label>
+                                        <select asp-for="@ViewData["current_advSlcCateg"]" class="form-select" name="advSlcCateg" aria-label="Default select example">
+                                            <option value=""> --- Tất cả danh mục --- </option>
+
+                                            @foreach (var cate in productCategories)
+                                            {
+                                                <option value="@cate.ID">@cate.Name</option>
+                                            }
+                                        </select>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <label class="mb-2" for="advSlcStatus">Lọc theo trạng thái</label>
+                                        <select asp-for="@ViewData["current_advSlcStatus"]" class="form-select" name="advSlcStatus" aria-label="Default select example">
+                                            <option value=""> --- Tất cả trạng thái --- </option>
+                                            @foreach (var status in statuses)
+                                            {
+                                                <option value="@status">@status</option>
+                                            }
+                                        </select>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <label class="mb-2" for="advSlcCreatedDate">Lọc theo ngày tạo</label>
+                                        <input class="form-control" type="datetime-local" name="advSlcCreatedDate" />
+                                    </div>
+                                </div>
+
+                                <div class="mt-3 d-flex justify-content-end align-items-center">
+                                    <button class="btn btn-primary">Tìm kiếm</button>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="table-responsive">
+                <table class="table table-bordered table-striped table-hover" id="product_datatable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr class="text-center">
+                            @* <th class="text-center">#</th> *@
+                            <th>
+                                <div class="form-check text-center">
+                                    <input type="checkbox" id="check_all" class="form-check-input" />
+                                </div>
+                            </th>
+                            <th>@Html.DisplayNameFor(x => x.Name)</th>
+                            <th>@Html.DisplayNameFor(x => x.Price)</th>
+                            <th>@Html.DisplayNameFor(x => x.Promotion_Price)</th>
+                            <th class="hiden-creation-date-col">@Html.DisplayNameFor(x => x.Creation_Date)</th>
+                            <th class="hiden-status-col">@Html.DisplayNameFor(x => x.Status)</th>
+                            <th>@locService.GetLocalize("Actions")</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model != null && Model.Count() > 0)
+                        {
+                            foreach (var item in Model)
+                            {
+                                <tr data-id="@item.ID" class="product_datatable_row">
+                                    @* <th class="text-center">@(i++)</th> *@
+
+                                    <td>
+                                        <div class="form-check text-center">
+                                            <input type="checkbox" id="check_item" data-id="@item.ID" class="form-check-input" />
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <span>
+                                                @{
+                                                    var imageUrl = string.IsNullOrEmpty(item.Image) ? "/img/default.jpg" : item.Image;
+                                                }
+                                                <img width="60" src="@imageUrl" alt="Product Image" title="" />
+                                            </span>
+
+                                            <span class="mx-2 name-wrap">
+                                                @item.Name
+                                            </span>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        @{
+                                            CultureInfo vietnamCulture = new CultureInfo("vi-VN");
+                                            var price = item.Price;
+                                            string formattedAmount = price.ToString("C", vietnamCulture);
+                                        }
+                                        @formattedAmount
+                                    </td>
+                                    <td>
+                                        @{
+                                            string formattedPromotionPrice = "";
+                                            if (item.Promotion_Price != null)
+                                            {
+                                                var pro_price = item.Promotion_Price;
+                                                formattedPromotionPrice = pro_price.Value.ToString("C", vietnamCulture);
+                                                var discount_percent = ((item.Price - item.Promotion_Price) / item.Price) * 100;
+                                            }
+                                        }
+                                        @formattedPromotionPrice
+                                        @* <span>@discount_percent</span> *@
+                                    </td>
+                                    <td class="hiden-creation-date-col">@(item.Creation_Date.HasValue ? item.Creation_Date.Value.ToString("dd/MM/yyyy") : "")</td>
+                                    <td class="hiden-status-col">
+                                        @if (item.Status == Status.Active)
+                                        {
+                                            <span class="badge bg-success">@item.Status</span>
+                                        }
+                                        else if (item.Status == Status.Lock)
+                                        {
+                                            <span class="badge bg-danger">@item.Status</span>
+                                        }
+                                        else if (item.Status == Status.Pending)
+                                        {
+                                            <span class="badge bg-warning">@item.Status</span>
+                                        }
+                                    </td>
+                                    <td class="text-center" style="width: 10%;">
+                                        <a href="@Url.Action("Update", "Product", new { id = item.ID})" class="btn p-0 text-primary">
+                                            <i class="fa-regular fa-pen-nib"></i>
+                                        </a>
+                                        |
+                                        <a href="@Url.Action("Details", "Product", new { id = item.ID})" class="btn p-0">
+                                            <i class="fa-regular fa-circle-info"></i>
+                                        </a>
+                                        |
+                                        <button type="button" data-id="@item.ID" class="btn text-danger btn-del p-0">
+                                            <i class="fa-regular fa-trash"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td class="text-center p-3" colspan="7">Không có dữ liệu</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div>
+        @{
+            // xây dựng Func phát sinh Url từ page ./Index
+            Func<int?, string> generateUrl = (int? _pagenumber) =>
+            {
+                return Url.ActionLink("Index", null, new { page = _pagenumber, filter_text = ViewData["current_fillter"] });
+            };
+
+            var datapaging = new PagingModel()
+            {
+                CurrentPage = ViewBag.Page,
+                CountPages = ViewBag.TotalPages,
+                GenerateUrl = generateUrl
+            };
+        }
+
+        <div class="d-flex justify-content-between align-items-center">
+            <div>Hiển thị @ViewBag.Page trong tổng số @ViewBag.TotalPages trang</div>
+            <partial name="_Paging" model="@datapaging" />
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<!-- Delete Confirmation Modal -->
+<div class="modal fade" id="deleteProductModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteModalLabel">Delete Product</h5>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Bạn có chắc muốn xóa <strong id="productName"></strong>?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-danger" id="btn-del">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="PreviewExcelModal" tabindex="-1" data-bs-backdrop="static"
+     aria-labelledby="PreviewExcelModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="PreviewExcelModalLabel">Excel preview</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <iframe id="ifm_excelPreview" style="width: 100%;"></iframe>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" id="save-button" class="btn btn-primary">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="/js/CommonExtension.js"></script>
+    <script src="/Views/Product/Index.cshtml.js"></script>
+@* 
+    <script src="https://cdn.datatables.net/rowgroup/1.5.0/js/dataTables.rowGroup.js"></script>
+    <script src="https://cdn.datatables.net/rowgroup/1.5.0/js/rowGroup.dataTables.js"></script>
+ *@
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const highlightRow = document.querySelector(".highlight");
+            if (highlightRow) {
+                highlightRow.scrollIntoView({ behavior: "smooth", block: "center" });
+            }
+        });
+
+        $(document).ready(function () {
+            // $('#demoDataTables').DataTable({
+            //     order: [[2, 'asc']],
+            //     rowGroup: {
+            //         dataSrc: 4
+            //     }
+            // });
+
+
+            $('#export_btn').on('click', function () {
+                $.ajax({
+                    url: '@Url.Action("Preview", "FileReader")',
+                    method: 'GET',
+                    xhrFields: {
+                        responseType: 'blob'
+                    },
+                    success: function (data) {
+                        console.log(data)
+
+                        var blob = new Blob([data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+
+                        var url = URL.createObjectURL(data);
+                        $("#ifm_excelPreview").attr("src", url);
+                        $("#PreviewExcelModal").modal('show');
+                    }
+                    // success: function (data) {
+                    //     var blob = new Blob([data]);
+                    //     var link = document.createElement('a');
+                    //     link.href = window.URL.createObjectURL(blob);
+                    //     link.download = "data.xlsx";
+                    //     link.click();
+
+                    //     // Display the preview modal
+                    //     $('#previewModal').show();
+                    // }
+                    ,
+                    error: function (xhr, status, error) {
+                        console.error('Error fetching Excel data:', error);
+                        // Handle error gracefully
+                    }
+                })
+            })
+        })
+    </script>
+}

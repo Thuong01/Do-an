@@ -1,0 +1,120 @@
+﻿@model Datas.ViewModels.CreateProductCategoryViewModel
+@using Models.Enums;
+@using Datas.ViewModels;
+@inject Web.Admin.Resources.LocalizationService locService
+
+@{
+    ViewData["Title"] = "Create";
+    var status_list = Enum.GetValues(typeof(StatusViewModel)) as IEnumerable<StatusViewModel>;
+    var parent_list = ViewBag.ProductCategoryParent as IEnumerable<ProductCategoryViewModel>;
+}
+
+@section Styles {
+<link href="/lib/select2/css/select2.min.css" rel="stylesheet" />
+}
+
+<h3>@locService.GetLocalize("Product_Category")</h3>
+
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="@Url.Action("Index", "Home")"><i class="fa-regular fa-house"></i></a></li>
+        <li class="breadcrumb-item"><a href="@Url.Action("Index", "ProductCategory")">@locService.GetLocalize("Product_Category")</a></li>
+        <li class="breadcrumb-item active" aria-current="page">@locService.GetLocalize("Create")</li>
+    </ol>
+</nav>
+
+<hr />
+<div class="row">
+    <div class="">
+        <form asp-action="Create" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="row">
+                <div class="form-group col-lg-6 mt-3">
+                    <label asp-for="Name" class="control-label"></label>
+                    <input asp-for="Name" id="name" class="form-control" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+
+                <div class="form-group col-lg-6 mt-3">
+                    <label asp-for="Parent_ID" class="control-label"></label>
+                    <select asp-for="Parent_ID" class="form-select">
+                        <option value="">--- Vui lòng chọn danh mục cha ---</option>
+
+                        @foreach (var item in parent_list)
+                        {
+                            <option value="@item.ID">@item.Name</option>
+                        }
+                    </select>
+                    <span asp-validation-for="Parent_ID" class="text-danger"></span>
+                </div>
+
+                <div class="form-group col-lg-6 mt-3">
+                    <label asp-for="Status" class="control-label"></label>
+                    <select asp-for="Status" class="form-select">
+                        @foreach (var item in status_list)
+                        {
+                            if (item == StatusViewModel.Active)
+                            {
+                                <option selected value="@item">@locService.GetLocalize(item.ToString())</option>
+                            }
+                            else
+                            {
+                                <option value="@item">@locService.GetLocalize(item.ToString())</option>
+                            }
+                        }
+                    </select>
+                    <span asp-validation-for="Status" class="text-danger"></span>
+                </div>
+            </div>
+
+
+            <div class="d-flex align-items-center justify-content-between mt-3">
+                <div>
+                    <a asp-action="Index">Quay lại</a>
+                </div>
+
+                <div class="form-group col-lg-6 mt-3">
+                    <input type="submit" value="Create" class="btn btn-primary" />
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <script src="/lib/ckeditor5-build-classic/ckeditor.js"></script>
+    <script src="/js/CommonExtension.js"></script>
+    <script src="/Views/Productcategory/Index.cshtml.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            ClassicEditor.create(document.querySelector('#description'), {
+                    //plugins: [
+                    //    Essentials,
+                    //    Paragraph
+                    //],
+
+                    ui: {
+                        poweredBy: {
+                            position: 'inside',
+                            side: 'left',
+                            label: 'This is'
+                        }
+                    }
+                })
+                .then(editor => {
+                    window.editor = editor;
+                })
+                .catch(err => {
+                    console.error(err.stack);
+                });
+
+        });
+    </script>
+}

@@ -1,0 +1,1 @@
+import ShopCard from './Shop';

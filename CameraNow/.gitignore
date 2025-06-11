@@ -1,0 +1,63 @@
+## Build Results
+bin/
+obj/
+
+## Rider project files
+.idea/
+
+## Visual Studio Files
+.vscode/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+## ASP.NET Core Specific
+project.lock.json
+project.fragment.lock.json
+artifacts/
+*.db
+*.sqlite
+
+## Log files
+*.log
+
+## Environment files
+.env
+*.env
+
+## Published output
+wwwroot/
+publish/
+*.Publish.xml
+
+## Backup & temporary files
+*.tmp
+*.temp
+*.bak
+*.swp
+*.sln.cache
+
+## NuGet
+*.nupkg
+*.snupkg
+.nuget/
+packages/
+*.nuspec
+
+## OS generated files
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+.DS_Store
+
+## Resharper
+_ReSharper*/
+*.ReSharper
+*.DotSettings.user
+
+## JetBrains Rider
+.idea/
+
+## Rider and VSCode History
+.history/

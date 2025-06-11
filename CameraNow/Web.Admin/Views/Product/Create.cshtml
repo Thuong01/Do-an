@@ -1,0 +1,254 @@
+﻿@using Datas.ViewModels
+@using Datas.ViewModels.Product
+@using Models.Enums
+@model CreateProductViewModel
+@{
+    ViewData["Title"] = "Create product";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var status_list = Enum.GetValues(typeof(StatusViewModel)) as IEnumerable<StatusViewModel>;
+    var categories = ViewBag.ProductCategoryParent as IEnumerable<ProductCategoryViewModel>;
+}
+@section Styles {
+<link href="/lib/select2/css/select2.min.css" rel="stylesheet" />
+<style>
+    /* Select-2 custom */
+    .select2-container .select2-selection--single {
+    height: 38px;
+    }
+
+    .ui-autocomplete {
+    max-height: 200px;
+    overflow-y: auto;
+    /* prevent horizontal scrollbar */
+    overflow-x: hidden;
+    }
+
+    .tag-item-wrap {
+    display: inline-block;
+    margin-bottom: 10px;
+    }
+
+    .tag-item {
+    padding: 5px 10px;
+    border-radius: 10px;
+    background-color: #fff;
+    border: 0.7px #ccc solid;
+    margin-right: 10px;
+    }
+
+    .btnDelTagItem {
+    cursor: pointer;
+    }
+
+    .btnDelTagItem:hover {
+    color: red;
+    }        
+
+    .preview-img-box {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    }
+
+</style>
+}
+
+<h1>Create product</h1>
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="@Url.Action("Index", "Home")"><i class="fa-regular fa-house"></i></a></li>
+        <li class="breadcrumb-item"><a href="@Url.Action("Index", "Product")">Product</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Create product</li>
+    </ol>
+</nav>
+<hr />
+<div class="row">
+    <div class="col-md-12">
+        <!--  asp-action="Create" -->
+        <form id="createForm" enctype="multipart/form-data">
+            @Html.AntiForgeryToken()
+            <atv-group title="Thông tin cơ bản">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="row">
+                    <div class="form-group col-lg-6 mt-3">
+                        <label asp-for="Name" class="control-label mb-2"></label>
+                        <input id="name" asp-for="Name" class="form-control" />
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>                    
+
+                    <div class="form-group col-lg-6 mt-3">
+                        <label asp-for="Category_ID" class="control-label mb-2"></label>
+                        <select id="categories" asp-for="Category_ID" class="form-select">
+                            <option value="">----- Vui lòng chọn ngành hàng -----</option>
+                            @if (categories == null && categories.Count() > 0)
+                            {
+                                <option value="">Không tìm thấy ngành hàng nào</option>
+                            }
+                            else
+                            {
+                                foreach (var item in categories)
+                                {
+                                    <option value="@item.ID">@item.Name</option>
+                                }
+                            }
+                        </select>
+                        <span asp-validation-for="Category_ID" class="text-danger"></span>
+                    </div> 
+                    <div class="form-group col-lg-6 mt-3">
+                        <label asp-for="Quantity" class="control-label mb-2"></label>
+                        <input type="number" asp-for="Quantity" class="form-control" />
+                        <span asp-validation-for="Quantity" class="text-danger"></span>
+                    </div>
+                    <div class="form-group col-lg-6 mt-3">
+                        <label asp-for="Price" class="control-label mb-2"></label>
+                        <input type="text" asp-for="Price" class="form-control" />
+                        @* <span asp-validation-for="Price" class="text-danger"></span> *@
+                    </div>
+                    <div class="form-group col-lg-6 mt-3">
+                        <label asp-for="Promotion_Price" class="control-label mb-2"></label>
+                        <input type="text" asp-for="Promotion_Price" class="form-control" />
+                        @* <span asp-validation-for="Promotion_Price" class="text-danger"></span> *@
+                    </div>
+                    <div class="form-group col-lg-6 mt-3">
+                        <label asp-for="Status" class="control-label mb-2"></label>
+                        <select asp-for="Status" class="form-select">
+                            @foreach (var item in status_list)
+                            {
+                                if (item == StatusViewModel.Active)
+                                {
+                                    <option selected value="@item">@item</option>
+                                }
+                                else
+                                {
+                                    <option value="@item">@item</option>
+                                }
+                            }
+                        </select>
+                        <span asp-validation-for="Status" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group col-lg-12 mt-3">
+                        <label asp-for="Description" class="control-label mb-2"></label>
+                        <textarea id="description" asp-for="Description" class="form-control"></textarea>
+                        <span asp-validation-for="Description" class="text-danger"></span>
+                    </div>
+                </div>
+            </atv-group>
+
+            <atv-group title="Hình ảnh sản phẩm">
+                <div class="row mt-4">
+                    <div class="col-lg-6">
+                        <label asp-for="Image" class="control-label mb-2"></label>
+                        <div style="display: flex;">
+                            <label for="image" class="choose-img-box text-primary">
+                                <input style="display: none" type="file" accept="image/*"
+                                       aspect="1" asp-for="Image" id="image" class="form-control" />
+                                <div class="choose-img-box-content">
+                                    <div style="font-size: 70px" class="">
+                                        <i class="fa-regular fa-square-dashed-circle-plus"></i>
+                                    </div>
+
+                                    <div> Thêm hình ảnh </div>
+                                </div>
+                            </label>
+                            <div id="preview-img" class="ms-3 d-flex justify-content-center preview-img-box"></div>
+                        </div>
+                        <span asp-validation-for="Image" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group col-lg-6 mt-3">
+                        <label asp-for="MoreImage" class="control-label mb-2"></label>
+                        <div style="display: flex;">
+                            <label id="choose-more-img" for="moreimage" class="choose-img-box text-primary">
+                                <input style="display: none" type="file" accept="image/*" multiple
+                                       aspect="1" asp-for="MoreImage" id="moreimage" class="form-control" />
+                                <div class="choose-img-box-content">
+                                    <div style="font-size: 70px" class="">
+                                        <i class="fa-regular fa-square-dashed-circle-plus"></i>
+                                    </div>
+                                    <div class="d-flex flex-column justify-content-center align-items-center mb-2">
+                                        Thêm hình ảnh <div><span id="img-count">0</span>/9 </div>
+                                    </div>
+                                </div>
+                            </label>
+                            <div id="preview-moreimg" class="ms-3 preview-img-box"></div>
+                        </div>
+                        <span asp-validation-for="MoreImage" class="text-danger"></span>
+                    </div>
+                </div>
+            </atv-group>
+            
+            <div class="card mt-4">
+                <div class="d-flex justify-content-end card-body py-3">
+                    <div class="me-3">
+                        <a class="btn btn-outline-secondary" asp-action="Index"><i class="fa-regular fa-hand-point-left"></i> Back to List</a>
+                    </div>
+
+                    <div class="">
+                        <input type="submit" id="Create_btn" value="Create" class="btn btn-primary" />
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="/lib/ckeditor5-build-classic/ckeditor.js"></script>
+    @* <script src="/lib/ckeditor5-41.4.2-e1tqnfswhc1l/build/ckeditor.js"></script> *@
+    <script src="/js/CommonExtension.js"></script>
+    <script src="/lib/select2/js/select2.full.min.js"></script>
+    <script src="/Views/Product/Index.cshtml.js"></script>
+    <script src="/Views/Product/Create.cshtml.js"></script>
+    <script>
+        $(document).ready(function () {
+
+            $('#categories').select2({
+                placeholder: '--- Chọn ngành hàng ---'
+            });
+
+            $('#brands').select2({
+                templateResult: formatOption,
+                templateSelection: formatOption
+            })
+
+            function formatOption(option) {
+                if (!option.id) {
+                    return option.text;
+                }
+                var $option = $(
+                    '<span><img class="border" src="' + $(option.element).data('logo') + '" width="50" /> ' + option.text + '</span>'
+                );
+                return $option;
+            }
+        })
+
+        document.addEventListener('DOMContentLoaded', function () {
+            ClassicEditor
+                .create(document.querySelector('#description'), {
+                    //plugins: [
+                    //    Essentials,
+                    //    Paragraph
+                    //],
+                    ui: {
+                        poweredBy: {
+                            position: 'inside',
+                            side: 'left',
+                            label: 'This is'
+                        }
+                    }
+                })
+                .then(editor => {
+                    window.editor = editor;
+                })
+                .catch(err => {
+                    console.error(err.stack);
+                });
+        });
+
+    </script>
+
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

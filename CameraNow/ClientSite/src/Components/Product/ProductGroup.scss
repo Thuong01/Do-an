@@ -1,0 +1,126 @@
+/*----------------------------*\
+	Section
+\*----------------------------*/
+
+.section-title {
+    position: relative;
+    margin-bottom: 30px;
+    margin-top: 15px;
+
+    .title {
+        display: inline-block;
+        text-transform: uppercase;
+        margin: 0px;
+    }
+
+    .see-more {
+        display: inline-block;
+        font-size: 14px;
+        color: #ababab;
+
+        &:hover {
+            color: #d10024;
+        }
+    }
+
+    .section-nav {
+        float: right;
+
+        .section-tab-nav {
+            display: inline-block;
+
+            li {
+                display: inline-block;
+                margin-right: 15px;
+
+                &:last-child {
+                    margin-right: 0px;
+                }
+
+                a {
+                    font-weight: 700;
+                    color: #8d99ae;
+
+                    &:after {
+                        content: '';
+                        display: block;
+                        width: 0%;
+                        height: 2px;
+                        background-color: #d10024;
+                        -webkit-transition: 0.2s all;
+                        transition: 0.2s all;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.section-tab-nav li.active a {
+    color: #d10024;
+}
+
+.section-tab-nav li a:hover:after,
+.section-tab-nav li a:focus:after,
+.section-tab-nav li.active a:after {
+    width: 100%;
+}
+
+.section-title .section-nav .products-slick-nav {
+    top: 0px;
+    right: 0px;
+}
+
+/*----------------------------*\
+	Products slick
+\*----------------------------*/
+
+.products-slick .slick-list {
+    padding-bottom: 60px;
+    margin-bottom: -60px;
+    z-index: 2;
+}
+
+// .products-slick .product.slick-slide {
+//     margin: 15px;
+// }
+
+.products-tabs > .tab-pane {
+    display: block;
+    // height: 0;
+    // opacity: 0;
+    // visibility: hidden;
+    // overflow-y: hidden;
+    padding-bottom: 60px;
+    margin-bottom: -60px;
+}
+
+.products-tabs > .tab-pane.active {
+    opacity: 1;
+    visibility: visible;
+    height: auto;
+}
+
+.products-slick-nav {
+    position: absolute;
+    right: 15px;
+    z-index: 10;
+}
+
+// .products-slick-nav .slick-prev,
+// .products-slick-nav .slick-next {
+//     position: static;
+//     -webkit-transform: none;
+//     -ms-transform: none;
+//     transform: none;
+//     width: 20px;
+//     color: black;
+//     height: 20px;
+//     display: inline-block !important;
+//     margin: 0px 2px;
+// }
+
+.products-slick-nav .slick-prev:before,
+.products-slick-nav .slick-next:before {
+    font-size: 14px;
+}

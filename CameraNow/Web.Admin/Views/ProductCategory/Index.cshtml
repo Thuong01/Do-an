@@ -1,0 +1,146 @@
+﻿@using Datas.ViewModels
+@using Models.Enums
+@using Web.Admin.Models
+@model IEnumerable<ProductCategoryViewModel>
+@using Web.Admin.Resources
+@inject LocalizationService locService
+@{
+    ViewData["Title"] = "Product category";
+    var status_list = ViewBag.Status as IEnumerable<Status>;
+    var parent_list = ViewBag.ProductCategoryParent as IEnumerable<ProductCategoryViewModel>;
+}
+
+@section Styles {
+    @* <link href="/lib/sweetalert2/sweetalert2.min.css" /> *@
+    
+}
+
+@section Scripts {
+    <script src="/js/CommonExtension.js"></script>
+    <script src="/Views/Productcategory/Index.cshtml.js"></script>
+}
+
+<div>
+    <!-- Page Heading -->
+    <h1 class="h3 mb-2 text-gray-800">@locService.GetLocalize("Product_Categories")</h1>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="@Url.Action("Index", "Home")"><i class="fa-solid fa-house"></i></a></li>
+            <li class="breadcrumb-item active" aria-current="page">@locService.GetLocalize("Product_Categories")</li>
+        </ol>
+    </nav>
+
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary d-flex justify-content-between align-items-center">
+                <span>@locService.GetLocalize("Product_Categories") (@ViewBag.TotalCount)</span>
+                <div class="">
+                    <a href="@Url.Action("Create", "ProductCategory")" type="button" id="create_btn" class="btn text-primary">
+                        <i class="fa-light fa-plus"></i>
+                    </a>
+                    <button id="del_multi_btn" class="btn text-danger">
+                        <i class="fa-regular fa-trash"></i>
+                    </button>
+                </div>
+            </h6>
+        </div>
+        <div class="card-body">
+            @using (Html.BeginForm("Index", "ProductCategory", FormMethod.Get, new { @class = "mb-3" }))
+            {
+                <div class="input-group">
+                    <input type="search" id="search_input" name="filter_text" value="@ViewData["current_fillter"]" placeholder="Search" class="form-control">
+                    <button type="submit" id="btn_search" class="btn btn-primary">
+                        <i class="fa-regular fa-magnifying-glass"></i>
+                    </button>
+                </div>
+            }
+
+            <div class="table-responsive">
+                <table class="table table-bordered table-striped table-hover" id="category_datatable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr class="text-center">
+                            @* <th class="text-center">#</th> *@
+                            <th>
+                                <div class="form-check text-center">
+                                    <input type="checkbox" id="check_all" class="form-check-input" />
+                                </div>
+                            </th>
+                            <th>@Html.DisplayNameFor(model => model.Name)</th>
+                            <th class="hiden-creation-date-col">@Html.DisplayNameFor(model => model.Creation_Date)</th>
+                            <th class="hiden-status-col">@Html.DisplayNameFor(model => model.Status)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model != null && Model.Count() > 0)
+                        {
+                            foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        <div class="form-check text-center">
+                                            <input type="checkbox" id="check_item" data-id="@item.ID" class="form-check-input" />
+                                        </div>
+                                    </td>
+                                    <td>@item.Name</td>
+                                <td class="hiden-creation-date-col">@(item.Creation_Date.HasValue ? item.Creation_Date.Value.ToString("dd/MM/yyyy") : "N/A")</td>
+                                    <td class="hiden-status-col text-center">
+                                        @if (item.Status == Status.Active)
+                                        {
+                                            <span class="badge bg-success">@locService.GetLocalize(item.Status.ToString())</span>
+                                        }
+                                        else if (item.Status == Status.Lock)
+                                        {
+                                            <span class="badge bg-danger">@locService.GetLocalize(item.Status.ToString())</span>
+                                        }
+                                        else if (item.Status == Status.Pending)
+                                        {
+                                            <span class="badge bg-warning">@locService.GetLocalize(item.Status.ToString())</span>
+                                        }
+                                    </td>
+                                    <td>
+                                        <a href="@Url.Action("Edit", "ProductCategory", new { id = item.ID})" class="btn me-2">
+                                            <i class="fa-solid fa-pen-nib"></i>
+                                        </a>
+
+                                        <button data-id="@item.ID" class="btn text-danger btn-del">
+                                            <i class="fa-solid fa-trash"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr colspan="7">
+                                <h3>Không có dữ liệu</h3>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    
+    @{
+        // xây dựng Func phát sinh Url từ page ./Index
+        Func<int?, string> generateUrl = (int? _pagenumber) =>
+        {
+            return Url.ActionLink("Index", null, new { page = _pagenumber });
+        };
+
+        var datapaging = new PagingModel()
+            {
+                CurrentPage = ViewBag.pageNumber,
+                CountPages = ViewBag.totalPages,
+                GenerateUrl = generateUrl
+            };
+    }
+
+     <div class="d-flex justify-content-between align-items-center">
+        <div>Hiển thị @ViewBag.pageNumber trên tổng số @ViewBag.totalPages trang</div>
+        <partial name="_Paging" model="@datapaging" />
+     </div>
+</div>
+
+

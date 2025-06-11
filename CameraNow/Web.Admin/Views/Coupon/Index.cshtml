@@ -1,0 +1,108 @@
+﻿@using Datas.ViewModels.Coupon
+@model IEnumerable<CouponViewModel>
+@inject Web.Admin.Resources.LocalizationService locService
+@{
+    ViewData["Title"] = "Coupon";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h1>@locService.GetLocalize("Coupons")</h1>
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="@Url.Action("Index", "Home")"><i class="fa-solid fa-house"></i></a></li>
+        <li class="breadcrumb-item active" aria-current="page">@locService.GetLocalize("Coupons")</li>
+    </ol>
+</nav>
+<div class="card shadow">
+    <div class="card-header">
+        <h6 class="m-0 font-weight-bold text-primary d-flex justify-content-between align-items-center">
+            <span>@locService.GetLocalize("Coupons") (@ViewBag.TotalCount)</span>
+            <div class="">
+                <a asp-action="Create" title="Create new" type="button" id="create_btn" class="btn text-primary">
+                    <i class="fa-light fa-plus"></i>
+                </a>
+
+                @* <button id="btn_del_multi" title="Delete" class="btn text-danger">
+                    <i class="fa-regular fa-trash"></i>
+                </button> *@
+            </div>
+        </h6>
+    </div>
+
+    <div class="card-body">
+        @using (Html.BeginForm("Index", "Coupon", FormMethod.Get, new { @class = "mb-3", @id = "frm_search" }))
+        {
+            <div class="input-group">
+                <input type="search" id="search_input" name="filter"
+                       value="@ViewData["Current_Filter"]" placeholder="Search"
+                       class="form-control">
+                <button type="submit" id="btn_search" class="btn btn-primary">
+                    <i class="fa-regular fa-magnifying-glass"></i>
+                </button>
+            </div>
+        }
+
+        <div class="table-responsive">
+            <table id="couponDatatable" class="table table-hover table-striped">
+                <thead>
+                    <tr>
+                        <th>
+                            <div class="form-check text-center">
+                                <input class="form-check-input" type="checkbox" id="check_all" />
+                            </div>
+                        </th>
+                        <th>@locService.GetLocalize(Html.DisplayNameFor(model => model.Code))</th>
+                        @* <th>@Html.DisplayNameFor(model => model.Percent)</th> *@
+                        @* <th>@Html.DisplayNameFor(model => model.Discount)</th> *@
+                        <th>@locService.GetLocalize(Html.DisplayNameFor(model => model.Type))</th>
+                        <th>@locService.GetLocalize(Html.DisplayNameFor(model => model.StartDate))</th>
+                        <th>@locService.GetLocalize(Html.DisplayNameFor(model => model.EndDate))</th>
+                        <th>@locService.GetLocalize(locService.GetLocalize("Actions"))</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                <div class="form-check text-center">
+                                    <input class="form-check-input" type="checkbox" data-id="@item.Id" />
+                                </div>
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Code)
+                            </td>
+                            @* <td> *@
+                            @*     <div class="description_col"> *@
+                            @*         @Html.DisplayFor(modelItem => item.Percent) *@
+                            @*     </div> *@
+                            @* </td> *@
+                            @* <td>
+                                @Html.DisplayFor(modelItem => item.Discount)
+                            </td> *@
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Type)
+                            </td>
+                            <td>
+                                @item.StartDate.Value.ToString("dd/MM/yyyy")
+                            </td>
+                            <td>
+                                @item.EndDate.Value.ToString("dd/MM/yyyy")
+                            </td>
+                            <td style="width: 12%">
+                                <a asp-action="Update" asp-route-id="@item.Id" class="text-primary btn"><i class="fa-regular fa-pen-nib"></i></a> |
+                                @* <a asp-action="Details" asp-route-id="@item.Id" class="text-primary btn"><i class="fa-regular fa-circle-info"></i></a> | *@
+                                <button data-id="@item.Id" class="btn text-danger btn_Del">
+                                    <i class="fa-regular fa-trash"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="/Views/Coupon/Index.cshtml.js"></script>
+}

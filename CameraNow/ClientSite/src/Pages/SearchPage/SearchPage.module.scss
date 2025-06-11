@@ -1,0 +1,60 @@
+@import '../../_variables.scss';
+
+.category-filter-block {
+    .category-filter-item {
+        margin: 10px 10px;
+        display: block;
+
+        .svg-icon {
+            display: inline-block;
+            height: 0.7em;
+            width: 0.7em;
+            fill: currentColor;
+            position: relative;
+            margin-right: 10px;
+        }
+
+        .shopee-category-list__main-category--active .shopee-category-list__main-category__caret,
+        .shopee-category-list__main-category--active .shopee-category-list__sub-category__caret,
+        .shopee-category-list__sub-category--active .shopee-category-list__main-category__caret,
+        .shopee-category-list__sub-category--active .shopee-category-list__sub-category__caret {
+            opacity: 1;
+            fill: $primary-color;
+        }
+
+        &:hover {
+            cursor: pointer;
+        }
+    }
+
+    .category-filter-item.active {
+        color: $primary-color;
+    }
+}
+
+svg:not(:root) {
+    overflow: hidden;
+}
+
+.order-block {
+    padding: 0px 12px;
+
+    .order-block-title {
+        display: block;
+    }
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* 4 cột bằng nhau */
+    gap: 5px; /* Khoảng cách giữa các cột */
+    padding: 20px 0px;
+
+    .grid-item {
+        background-color: lightblue;
+        padding: 20px;
+        text-align: center;
+        border-radius: 5px;
+        font-size: 18px;
+    }
+}

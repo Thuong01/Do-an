@@ -1,0 +1,187 @@
+﻿@model IEnumerable<Datas.ViewModels.Order.OrderViewModel>
+@inject Web.Admin.Resources.LocalizationService locService
+@using Models.Enums
+@{
+    ViewData["Title"] = "Danh sách đơn đặt hàng";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Styles {
+    <style>
+        .custom-color {
+            color: #ee4d2d;
+            line-height: 24px;
+            text-align: right;
+            text-transform: uppercase;
+            white-space: nowrap;
+        }
+
+        p {
+            margin-bottom: 5px;
+        }
+
+        a {
+            color: #333;
+        }
+    </style>
+}
+
+<h1>@locService.GetLocalize("Orders")</h1>
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="@Url.Action("Index", "Home")"><i class="fa-solid fa-house"></i></a></li>
+        <li class="breadcrumb-item active" aria-current="page">@locService.GetLocalize("Orders")</li>
+    </ol>
+</nav>
+
+
+<div class="card shadow">
+    <div class="card-header">
+        <h6 class="m-0 font-weight-bold text-primary d-flex justify-content-between align-items-center">
+            <span>@locService.GetLocalize("Orders") (@ViewBag.TotalCount)</span>
+            <div class="">
+                @* <a asp-action="Create" title="Create new" type="button" id="create_btn" class="btn text-primary">
+                <i class="fa-light fa-plus"></i>
+                </a> *@
+
+                @* <button id="btn_del_multi" title="Delete" class="btn text-danger">
+                <i class="fa-regular fa-trash"></i>
+                </button> *@
+            </div>
+        </h6>
+    </div>
+
+    <div class="card-body">
+        @using (Html.BeginForm("Index", "Orders", FormMethod.Get, new { @class = "mb-3", @id = "frm_search" }))
+        {
+            <div class="input-group">
+                <input type="search" id="search_input" name="filter"
+                       value="@ViewData["Current_Filter"]" placeholder="Search"
+                       class="form-control">
+                <button type="submit" id="btn_search" class="btn btn-primary">
+                    <i class="fa-regular fa-magnifying-glass"></i>
+                </button>
+            </div>
+        }
+
+        <div class="mt-3">
+            @if (Model == null || Model.Count() == 0)
+            {
+                <p class="text-center mt-5">Không có đơn đặt hàng nào!</p>
+                <hr />
+            }
+            else
+            {
+                @foreach (var order in Model)
+                {
+                    <div>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <p class="fw-bold">@(order.FullName ?? "Unknow")</p>
+                                <p>@order.Order_Date</p>
+                            </div>
+
+                            <div class="d-flex">
+                                <p>@order.OrderNo</p>
+                                <span class="mx-3"> | </span>
+                                <p class="custom-color">@locService.GetLocalize(order.Status.ToString())</p>
+                            </div>
+                        </div>
+
+                        <a asp-action="Details" asp-route-orderId="@order.ID" asp-route-userId="@order.UserId" class="ms-5">
+                            @foreach (var order_item in order.OrderDetails)
+                            {
+                                <div class="mt-3 d-flex justify-content-between align-items-center">
+                                    <div class="d-flex justify-content-start align-items-center ">
+                                        <div>
+                                            <img height="100" src="@order_item.Product_Image" alt="@order_item.Product_Name" />
+                                        </div>
+                                        <div class="ms-3 ">
+                                            <p class="fw-semibold">@order_item.Product_Name</p>
+                                            <p>Số lượng: x @order_item.Quantity</p>
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                        <p class="custom-color">@string.Format("{0:0,0 đ}", order_item.Product_Price)</p>
+                                    </div>
+                                </div>
+                            }
+                        </a>
+
+                        <div class="d-flex justify-content-end">
+                            <div class="d-flex flex-column justify-content-end">
+                                <p>Tổng tiền: <span class="custom-color">@string.Format("{0:0,0 đ}", order.Total_Amount)</span></p>
+
+                                <div>
+                                    @if (order.Status == OrderStatusEnum.DangXuLy)
+                                    {
+                                        <button data-orderId="@order.ID" data-userId="@order.UserId"
+                                                data-status="@OrderStatusEnum.XacNhanDonHang"
+                                                class="btn btn-success btnConfirmOrder">
+                                            Xác nhận đơn
+                                        </button>
+                                    }
+
+                                    @if (order.Status == OrderStatusEnum.DangGiaoHang)
+                                    {
+                                        <button data-orderId="@order.ID" data-userId="@order.UserId"
+                                                data-status="@OrderStatusEnum.DaGiaoHang"
+                                                class="btn btn-success btnConfirmOrder">
+                                            Đã giao hàng
+                                        </button>
+                                    }
+
+                                    @if (order.Status != OrderStatusEnum.DaGiaoHang && order.Status != OrderStatusEnum.DangGiaoHang && order.Status != OrderStatusEnum.DangXuLy)
+                                    {
+                                        <button data-orderId="@order.ID"
+                                                data-userId="@order.UserId"
+                                                data-status="@OrderStatusEnum.DangGiaoHang"
+                                                class="btn btn-primary btnShippingOrder">
+                                            Giao hàng
+                                        </button>
+                                    }
+
+                                    @if (order.Status != OrderStatusEnum.DaGiaoHang && order.Status != OrderStatusEnum.DangGiaoHang)
+                                    {
+                                        <button data-orderId="@order.ID"
+                                                data-userId="@order.UserId"
+                                                data-status="@OrderStatusEnum.DaHuy"
+                                                class="btn btn-danger btnCancelOrder">
+                                            Hủy đơn
+                                        </button>
+                                    }
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <hr />
+                }
+            }
+        </div>
+    </div>
+</div>
+
+<div>
+    @{
+        Func<int?, string> generateUrl = (int? _pageNumber) =>
+        {
+            return Url.ActionLink("Index", null, new { page = _pageNumber });
+        };
+
+        var dataPaging = new PagingModel(ViewBag.PageNumber, ViewBag.TotalPages, generateUrl);
+
+    }
+
+    <div class="d-flex justify-content-between align-items-center">
+        <div>Hiển thị @ViewBag.PageNumber trong tổng số @ViewBag.TotalPages trang</div>
+        <partial name="_Paging" model="@dataPaging" />
+    </div>
+</div>
+
+
+@section Scripts {
+    <script src="/Views/Order/Index.cshtml.js"></script>
+}

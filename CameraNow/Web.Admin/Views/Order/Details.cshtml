@@ -1,0 +1,270 @@
+﻿@model Datas.ViewModels.Order.OrderViewModel
+@using Models.Enums
+@inject Web.Admin.Resources.LocalizationService locService
+@{
+    ViewData["Title"] = "Chi tiết đơn hàng";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Styles {
+    <style>
+        .pack_border {
+            background-image: repeating-linear-gradient(45deg, #6fa6d6, #6fa6d6 33px, transparent 0, transparent 41px, #f18d9b 0, #f18d9b 74px, transparent 0, transparent 82px);
+            background-position-x: -1.875rem;
+            background-size: 7.25rem .1875rem;
+            height: .1875rem;
+            width: 100%;
+        }
+
+        .custom-color {
+            color: #ee4d2d;
+            line-height: 24px;
+            text-align: right;
+            text-transform: uppercase;
+            white-space: nowrap;
+        }
+
+        .order-product-wrap {
+            background-color: #fafafa;
+            padding: 12px 20px;
+        }
+
+        .display-info-wrap {
+            background-color: #fafafa;
+            border-top: 1px solid rgba(0, 0, 0, .09);
+        }
+
+        .display-info {
+            align-items: center;
+            border-bottom: 1px dotted rgba(0, 0, 0, .09);
+            display: flex;
+            justify-content: flex-end;
+            padding: 0 24px;
+            text-align: right;
+        }
+
+        .display-info-title {
+            color: rgba(0, 0, 0, .54);
+            padding: 13px 10px;
+        }
+
+        .display-info-value {
+            border-left: 1px dotted rgba(0, 0, 0, .09);
+            justify-content: flex-end;
+            padding: 13px 0 13px 10px;
+            width: 240px;
+            word-wrap: break-word;
+            color: rgba(0, 0, 0, .8);
+        }
+    </style>
+}
+
+<h2>@locService.GetLocalize("Order_Detail")</h2>
+
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="@Url.Action("Index", "Home")"><i class="fa-regular fa-house"></i></a></li>
+        <li class="breadcrumb-item"><a href="@Url.Action("Index", "Order")">@locService.GetLocalize("Order")</a></li>
+    </ol>
+</nav>
+
+<div class="my-4">
+    <div style="text-transform: uppercase;">@locService.GetLocalize("Order_No"): @Model.OrderNo | <span class="custom-color">@locService.GetLocalize(Model.Status.ToString())</span></div>
+</div>
+
+<div>
+    <div class="pack_border"></div>
+</div>
+
+<div class="my-3">
+    <div>
+        <p>@locService.GetLocalize("Order_Addr")</p>
+        <div class="text-secondary">
+            <p>Người đặt hàng: @Model.FullName</p>
+            <p>Email: @Model.Email</p>
+            <p>Số điện thoại: @Model.Phone</p>
+            <p>Địa chỉ giao hàng: @Model.Address</p>
+        </div>
+    </div>
+</div>
+
+<div class="mt-5 order-product-wrap">
+    @foreach (var order_item in Model.OrderDetails)
+    {
+        <div class="mt-3 d-flex justify-content-between align-items-center">
+            <div class="d-flex justify-content-start align-items-center ">
+                <div>
+                    <img height="100" src="@order_item.Product_Image" alt="@order_item.Product_Name" />
+                </div>
+                <div class="ms-3 ">
+                    <p class="fw-semibold">@order_item.Product_Name</p>
+                    <p>Số lượng: x @order_item.Quantity</p>
+                </div>
+            </div>
+
+            <div>
+                <p class="custom-color">@string.Format("{0:0,0 đ}", order_item.Product_Price)</p>
+            </div>
+        </div>
+    }
+</div>
+
+<div>
+    <div>
+        <div class="display-info-wrap">
+            <div class="display-info">
+                <div class="display-info-title">
+                    <span>@locService.GetLocalize("Paymen_Method"):</span>
+                </div>
+                <div class="display-info-value">
+                    <span>@locService.GetLocalize(Model.Payment_Method)</span>
+                </div>
+            </div>
+
+            <div class="display-info">
+                <div class="display-info-title">
+                    <span>@locService.GetLocalize("Total_Amount"):</span>
+                </div>
+                <div class="display-info-value">
+                    <span>@string.Format("{0:0,0 đ}", Model.Total_Amount)</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-3 d-flex justify-content-between">
+            <div>
+                @if (Model.Status == OrderStatusEnum.DangXuLy)
+                {
+                    <button data-orderId="@Model.ID" data-userId="@Model.UserId"
+                            data-status="@OrderStatusEnum.XacNhanDonHang"
+                            class="btn btn-success btnConfirmOrder">
+                        Xác nhận đơn
+                    </button>
+                }      
+                
+                @if (Model.Status == OrderStatusEnum.DangGiaoHang)
+                {
+                    <button data-orderId="@Model.ID" data-userId="@Model.UserId"
+                            data-status="@OrderStatusEnum.DaGiaoHang"
+                            class="btn btn-success btnConfirmOrder">
+                        Đã giao hàng
+                    </button>
+                }
+
+                @if (Model.Status != OrderStatusEnum.DaGiaoHang && Model.Status != OrderStatusEnum.DangGiaoHang && Model.Status != OrderStatusEnum.DangXuLy)
+                {
+                    <button data-orderId="@Model.ID"
+                            data-userId="@Model.UserId"
+                            data-status="@OrderStatusEnum.DangGiaoHang"
+                            class="btn btn-primary btnShippingOrder">
+                        Giao hàng
+                    </button>                                      
+                }
+
+                @if (Model.Status != OrderStatusEnum.DaGiaoHang && Model.Status != OrderStatusEnum.DangGiaoHang)
+                {
+                    <button data-orderId="@Model.ID"
+                            data-userId="@Model.UserId"
+                            data-status="@OrderStatusEnum.DaHuy"
+                            class="btn btn-danger btnCancelOrder">
+                        Hủy đơn
+                    </button>
+                }
+            </div>
+
+            <button id="print-invoice" data-orderId="@Model.ID" data-userId="@Model.UserId">
+                In hóa đơn
+            </button>
+
+        </div>
+    </div>
+</div>
+
+@* <canvas id="pdf-canvas" style="border:1px solid #ccc; margin-top:20px;"></canvas> *@
+
+<!-- Modal -->
+<div class="modal fade" id="invoiceModal" tabindex="-1" aria-labelledby="invoiceModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-fullscreen">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="invoiceModalLabel"></h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <iframe id="pdf-viewer" width="100%" style="height: 100%; border: none;"></iframe>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <script src="/Views/Order/Index.cshtml.js"></script>
+    <script>
+        $(function () {
+            $('#print-invoice').on('click', function () {
+                const orderId = $(this).data('orderid');
+                const userId = $(this).data('userid');
+
+                $('#invoiceModal').modal('show');
+                $('#invoiceModal').on('shown.bs.modal', function (event) {
+                    $.ajax({
+                        url: `/Order/PrintInvoice?orderId=${orderId}&userId=${userId}`,
+                        type: 'POST',
+                        xhrFields: {
+                            responseType: 'blob' // quan trọng để nhận về file PDF
+                        },
+                        success: function (blob) {
+                            $('.loading').show();
+                            const blobUrl = URL.createObjectURL(blob);
+
+                        //             Mở file PDF trong viewer.html với blob URL
+                        // const viewerUrl = `/lib/pdfjs/web/viewer.html?file=${encodeURIComponent(blobUrl)}`;
+                        // window.open(viewerUrl, '_blank'); hoặc gắn vào iframe nếu muốn hiển thị trong cùng trang
+
+                        // Hiên thị với iframe
+                        document.getElementById('pdf-viewer').src = `/lib/pdfjs/web/viewer.html?file=${encodeURIComponent(blobUrl)}`;
+
+                           // //Gắn file PDF vào canvas hiển thị qua pdf.js
+                           //  const loadingTask = pdfjsLib.getDocument(blobUrl);
+                           //  loadingTask.promise.then(function (pdf) {
+                           //      console.log('PDF loaded');
+
+                           //            Fetch the first page
+                           //      var pageNumber = 1;
+                           //      pdf.getPage(pageNumber).then(function (page) {
+                           //          console.log('Page loaded');
+
+                           //          const scale = 1.5;
+                           //          const viewport = page.getViewport({ scale: scale });
+
+                           //          const canvas = document.getElementById('pdf-canvas');
+                           //          const context = canvas.getContext('2d');
+                           //          canvas.height = viewport.height;
+                           //          canvas.width = viewport.width;
+
+                           //          const renderContext = {
+                           //              canvasContext: context,
+                           //              viewport: viewport
+                           //          };
+                           //          var renderTask = page.render(renderContext);
+                           //          renderTask.then(function () {
+                           //            console.log('Page rendered');
+                           //          });
+
+                           //      });
+                           //  });
+                            $('.loading').hide();
+                        },
+                        error: function (xhr) {
+                            alert("Lỗi khi tải file PDF");
+                            $('.loading').hide();
+                        }
+                    });
+                });
+
+            
+            })
+        })
+    </script>
+}

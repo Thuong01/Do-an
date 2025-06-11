@@ -1,0 +1,178 @@
+﻿@using Web.Admin.Resources
+@inject LocalizationService locService
+@{
+    string AppName = Commons.Commons.CommonConstant.AppName;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>@ViewData["Title"] | CameraNow</title>
+    <meta content="" name="description">
+    <meta content="" name="keywords">
+    <!-- Favicons -->
+    <link href="~/img/apple-touch-icon.png" rel="apple-touch-icon">
+    <!-- Google Fonts -->
+    <link href="https://fonts.gstatic.com" rel="preconnect">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+    <!-- Vendor CSS Files -->
+    <link href="~/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="~/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+    <link href="~/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+    <link href="~/lib/jquery-ui-1.13.3/jquery-ui.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert2/11.16.1/sweetalert2.min.css" integrity="sha512-WnmDqbbAeHb7Put2nIAp7KNlnMup0FXVviOctducz1omuXB/hHK3s2vd3QLffK/CvvFUKrpioxdo+/Jo3k/xIw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="~/lib/fontawesome-pro-6.5.1-web/css/all.min.css" rel="stylesheet" />
+    <link href="~/lib/toastify-js/toastify.css" rel="stylesheet" />
+    @* <link href="~/js/fancybox/jquery.fancybox.min.css" rel="stylesheet" /> *@
+    <!-- Template Main CSS File -->
+    <link href="~/css/style.css" rel="stylesheet">
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    @await RenderSectionAsync("Styles", false)
+    <style>
+        /* Loading Spinner */
+        .loading {
+            display: none;
+            position: fixed;
+            z-index: 999;
+            height: 100%;
+            width: 100%;
+            overflow: hidden;
+            margin: auto;
+            top: 0;
+            left: 0;
+            background: rgba(255, 255, 255, 0.8);
+        }
+        .loading-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        .nav-link.navbar-active {
+            color: #4154f1;
+            background: #f6f9ff;
+        }
+        .nav-content a.navbar-subitems-active {
+            color: #4154f1;
+        }
+        .nav-content .navbar-subitems-active i {
+            background: #4154f1;
+        }
+    </style>
+</head>
+<body>
+    <!-- ======= Loading ======= -->
+    <div class="loading">
+        <div class="loading-content">
+            <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+        </div>
+    </div>
+    <!-- ======= Header ======= -->
+    <header id="header" class="header fixed-top d-flex align-items-center">
+        <div class="d-flex align-items-center justify-content-between">
+            <a href="@Url.Action("Index", "Home")" class="logo d-flex align-items-center">
+                <img src="~/img/logo.png" alt="logo.png">
+                <span class="d-none d-lg-block">@AppName</span>
+            </a>
+            <i class="bi bi-list toggle-sidebar-btn"></i>
+        </div>
+
+        <!-- End Search Bar -->
+        <nav class="header-nav ms-auto">
+            <ul class="d-flex align-items-center">                
+                <li class="nav-item"> 
+                    @await Html.PartialAsync("_CulturePartial")
+                </li>
+                <partial name="_NotificationPartial" />
+                <li class="nav-item dropdown pe-3">
+                    <partial name="_LoginPartital" />
+                </li>
+
+            </ul>
+        </nav>
+
+    </header>
+
+    <aside id="sidebar" class="sidebar">
+        <ul class="sidebar-nav" id="sidebar-nav">
+            @foreach (var menuItem in (ViewBag.MenuItems as List<MenuItem>))
+            {
+                var isActiveParent = ViewContext.RouteData.Values["Controller"].ToString() == menuItem.Controller;
+                if (!menuItem.SubMenus.Any())
+                {
+                    <li class="nav-item">
+                        <a class="nav-link @(isActiveParent ? "navbar-active" : "")" href="@Url.Action(menuItem.Action, menuItem.Controller)">
+                            <i class="bi bi-menu-button-wide"></i>
+                            <span>@locService.GetLocalize(menuItem.Name)</span>
+                        </a>
+                    </li>
+                }
+                else
+                {
+                    var navId = $"{menuItem.Name}-nav";
+                    <li class="nav-item">
+                        <a class="nav-link @(isActiveParent ? "navbar-active" : "collapsed")" data-bs-target="#@navId" data-bs-toggle="collapse" href="#">
+                            <i class="bi bi-menu-button-wide"></i>
+                            <span>@locService.GetLocalize(menuItem.Name)</span>
+                            <i class="bi bi-chevron-down ms-auto"></i>
+                        </a>
+                        <ul id="@navId" class="nav-content collapse @(isActiveParent ? "show" : "")" data-bs-parent="#sidebar-nav">
+                            @foreach (var subMenu in (menuItem.SubMenus as List<MenuItem>))
+                            {
+                                var isActiveSub = ViewContext.RouteData.Values["Controller"].ToString() == subMenu.Controller
+                                                && ViewContext.RouteData.Values["Action"].ToString() == subMenu.Action;
+                                <li>
+                                    <a class="@(isActiveSub ? "navbar-subitems-active" : "")" href="@Url.Action(subMenu.Action, subMenu.Controller)">
+                                        <i class="bi bi-circle"></i><span>@locService.GetLocalize(subMenu.Name)</span>
+                                    </a>
+                                </li>
+                            }
+                        </ul>
+                    </li>
+                }
+            }
+        </ul>
+    </aside>
+    <!-- End Sidebar-->
+    <!-- ======= Main ======= -->
+    <main id="main" class="main">
+        @RenderBody()
+        <div>
+            <div class="modal fade" id="logoutModal" tabindex="-1" aria-labelledby="logoutModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <form asp-controller="Login" asp-action="Logout" method="post" class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                            <button class="close" type="button" data-bs-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                        <div class="modal-footer">
+                            <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Cancel</button>
+                            <button class="btn btn-primary" type="submit">Logout</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+    <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+    <!-- Vendor JS Files -->
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/jquery-ui-1.13.3/jquery-ui.min.js"></script>
+    <!-- Template Main JS File -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert2/11.16.1/sweetalert2.min.js" integrity="sha512-LGHBR+kJ5jZSIzhhdfytPoEHzgaYuTRifq9g5l6ja6/k9NAOsAi5dQh4zQF6JIRB8cAYxTRedERUF+97/KuivQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    @* <script src="~/js/fancybox/jquery.fancybox.min.js"></script> *@
+    <script src="~/js/main.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/lib/toastify-js/toastify.min.js"></script>
+    @await Component.InvokeAsync("Notyf")
+    <!-- Render scripts for all view-->
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

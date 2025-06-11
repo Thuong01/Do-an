@@ -1,0 +1,318 @@
+/*---------------------
+  Helper CSS
+-----------------------*/
+
+.section-title span {
+    color: #e53637;
+    font-size: 14px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 15px;
+    display: block;
+}
+
+.section-title h2 {
+    color: #111111;
+    font-weight: 700;
+    line-height: 46px;
+}
+
+.set-bg {
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: top center;
+    height: 100%;
+}
+
+.spad {
+    padding-top: 100px;
+    padding-bottom: 100px;
+}
+
+/*---------------------
+  About
+-----------------------*/
+
+.about {
+    padding-bottom: 70px;
+}
+
+.about__pic {
+    margin-bottom: 35px;
+}
+
+.about__pic img {
+    min-width: 100%;
+}
+
+.about__item {
+    margin-bottom: 30px;
+}
+
+.about__item h4 {
+    color: #111111;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.about__item p {
+    margin-bottom: 0;
+}
+
+/*---------------------
+  Testimonial
+-----------------------*/
+
+.testimonial {
+    background: #f3f2ee;
+}
+
+.testimonial__text {
+    text-align: center;
+    padding: 130px 150px 175px;
+}
+
+.testimonial__text svg {
+    color: #e53637;
+    font-size: 50px;
+}
+
+.testimonial__text p {
+    color: #111111;
+    font-size: 20px;
+    font-style: italic;
+    line-height: 30px;
+    padding-top: 12px;
+    margin-bottom: 25px;
+}
+
+.testimonial__author {
+    display: inline-block;
+}
+
+.testimonial__author__pic {
+    float: left;
+    margin-right: 20px;
+}
+
+.testimonial__author__pic img {
+    height: 60px;
+    width: 60px;
+    border-radius: 50%;
+}
+
+.testimonial__author__text {
+    overflow: hidden;
+    padding-top: 3px;
+}
+
+.testimonial__author__text h5 {
+    color: #111111;
+    font-weight: 700;
+    margin-bottom: 5px;
+}
+
+.testimonial__author__text p {
+    color: #b7b7b7;
+    margin-bottom: 0 !important;
+    padding-top: 0;
+}
+
+.testimonial__pic {
+    height: 600px;
+    width: 100%;
+    overflow: hidden;
+}
+
+/*---------------------*\
+        Counter
+\*---------------------*/
+.counter {
+    padding-bottom: 0;
+
+    .container {
+        border-bottom: 1px solid #e5e5e5;
+        padding-bottom: 70px;
+    }
+}
+
+.counter__item {
+    margin-bottom: 30px;
+    overflow: hidden;
+
+    .counter__item__number {
+        float: left;
+        margin-right: 15px;
+
+        .cn_num {
+            span {
+                color: #111111;
+                font-weight: 700;
+                font-size: 60px;
+                line-height: 50px;
+                display: inline-block;
+            }
+        }
+    }
+
+    span {
+        display: block;
+        color: #3d3d3d;
+        font-size: 18px;
+        font-weight: 700;
+        line-height: 25px;
+        overflow: hidden;
+    }
+}
+
+/*---------------------
+  Testimonial
+-----------------------*/
+
+.team {
+    padding-bottom: 70px;
+}
+
+.team__item {
+    margin-bottom: 30px;
+
+    img {
+        min-width: 100%;
+        margin-bottom: 25px;
+    }
+
+    h4 {
+        color: #111111;
+        font-weight: 700;
+        margin-bottom: 8px;
+    }
+
+    span {
+        font-size: 15px;
+        display: block;
+        color: #b7b7b7;
+    }
+}
+
+/*---------------------
+  Clients
+-----------------------*/
+
+.clients {
+    padding-top: 0;
+    padding-bottom: 25px;
+}
+
+.client__item {
+    display: block;
+    margin-bottom: 75px;
+    text-align: center;
+}
+
+/*---------------------
+  Contact
+-----------------------*/
+
+.contact__text .section-title {
+    text-align: left;
+    margin-bottom: 40px;
+}
+
+.contact__text .section-title h2 {
+    font-size: 48px;
+    margin-bottom: 18px;
+}
+
+.contact__text .section-title p {
+    color: #707070;
+    line-height: 26px;
+    margin-bottom: 0;
+}
+
+.contact__text ul li {
+    list-style: none;
+    margin-bottom: 26px;
+}
+
+.contact__text ul li:last-child {
+    margin-bottom: 0;
+}
+
+.contact__text ul li h4 {
+    color: #111111;
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+
+.contact__text ul li p {
+    line-height: 27px;
+    margin-bottom: 0;
+}
+
+.contact__form input {
+    height: 50px;
+    width: 100%;
+    border: 1px solid #e1e1e1;
+    padding-left: 20px;
+    font-size: 15px;
+    color: #b7b7b7;
+    margin-bottom: 30px;
+}
+
+.contact__form input::-webkit-input-placeholder {
+    color: #b7b7b7;
+}
+
+.contact__form input::-moz-placeholder {
+    color: #b7b7b7;
+}
+
+.contact__form input:-ms-input-placeholder {
+    color: #b7b7b7;
+}
+
+.contact__form input::-ms-input-placeholder {
+    color: #b7b7b7;
+}
+
+.contact__form input::placeholder {
+    color: #b7b7b7;
+}
+
+.contact__form textarea {
+    height: 150px;
+    width: 100%;
+    border: 1px solid #e1e1e1;
+    padding-left: 20px;
+    padding-top: 12px;
+    font-size: 15px;
+    color: #b7b7b7;
+    margin-bottom: 24px;
+    resize: none;
+}
+
+.contact__form textarea::-webkit-input-placeholder {
+    color: #b7b7b7;
+}
+
+.contact__form textarea::-moz-placeholder {
+    color: #b7b7b7;
+}
+
+.contact__form textarea:-ms-input-placeholder {
+    color: #b7b7b7;
+}
+
+.contact__form textarea::-ms-input-placeholder {
+    color: #b7b7b7;
+}
+
+.contact__form textarea::placeholder {
+    color: #b7b7b7;
+}
+
+.contact__form button {
+    letter-spacing: 4px;
+    padding: 14px 35px;
+}

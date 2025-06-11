@@ -1,0 +1,46 @@
+{
+  "version": "1.0",
+  "defaultProvider": "cdnjs",
+  "libraries": [
+    {
+      "library": "toastr.js@2.1.4",
+      "destination": "wwwroot/lib/toastr.js/"
+    },
+    {
+      "library": "toastify-js@1.12.0",
+      "destination": "wwwroot/lib/toastify-js/"
+    },
+    {
+      "library": "select2@4.0.13",
+      "destination": "wwwroot/lib/select2/"
+    },
+    {
+      "library": "summernote@0.8.20",
+      "destination": "wwwroot/lib/summernote/"
+    },
+    {
+      "library": "sweetalert2@11.12.0",
+      "destination": "wwwroot/lib/sweetalert2/"
+    },
+    {
+      "library": "bootstrap@5.3.3",
+      "destination": "wwwroot/lib/bootstrap/"
+    },
+    {
+      "library": "datatables.net@2.1.6",
+      "destination": "wwwroot/lib/datatables.net/"
+    },
+    {
+      "library": "datatables.net-dt@2.1.6",
+      "destination": "wwwroot/lib/datatables.net-dt/"
+    },
+    {
+      "library": "fancybox@3.5.7",
+      "destination": "wwwroot/js/fancybox/"
+    },
+    {
+      "library": "microsoft-signalr@8.0.7",
+      "destination": "wwwroot/lib/microsoft-signalr/"
+    }
+  ]
+}

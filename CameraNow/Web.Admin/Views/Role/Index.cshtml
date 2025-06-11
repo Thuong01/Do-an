@@ -1,0 +1,113 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using MyShop.Web.Admin.Resources
+@inject LocalizationService locService
+@model IEnumerable<IdentityRole>
+@{
+    ViewData["Title"] = @locService.GetLocalize("Roles");
+}
+
+<h1>@locService.GetLocalize("Roles")</h1>
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="@Url.Action("Index", "Home")"><i class="fa-solid fa-house"></i></a></li>
+        <li class="breadcrumb-item active" aria-current="page">@locService.GetLocalize("Roles")</li>
+    </ol>
+</nav>
+
+<div class="card shadow">
+    <div class="card-header">
+        <h6 class="m-0 font-weight-bold text-primary d-flex justify-content-between align-items-center">
+            <span>@locService.GetLocalize("Roles")</span>
+            <div class="">
+                <a asp-action="CreateOrUpdate" title="@locService.GetLocalize("Create_New")"
+                   type="button" id="create_btn" class="btn text-primary">
+                    <i class="fa-light fa-plus"></i> @locService.GetLocalize("Create_New")
+                </a>
+            </div>
+        </h6>
+    </div>
+
+    <div class="card-body">
+        @* @using (Html.BeginForm("Index", "Blog", FormMethod.Get, new { @class = "mb-3", @id = "frm_search" }))
+        {
+        <div class="input-group">
+        <input type="search" id="search_input" name="filter"
+        value="@ViewData["Current_Filter"]" placeholder="Search"
+        class="form-control">
+        <button type="submit" id="btn_search" class="btn btn-primary">
+        <i class="fa-regular fa-magnifying-glass"></i>
+        </button>
+        </div>
+        } *@
+
+        <div class="table-responsive">
+            <table id="blogCategoryDatatable" class="table table-hover table-striped">
+                <thead>
+                    <tr>
+                        <th>
+                            <div class="form-check text-center">
+                                <input class="form-check-input" type="checkbox" id="check_all" />
+                            </div>
+                        </th>
+                        <th>@Html.DisplayNameFor(model => model.Name)</th>
+                        <th>@locService.GetLocalize("Actions")</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                <div class="form-check text-center">
+                                    <input class="form-check-input" type="checkbox" data-id="@item.Id" />
+                                </div>
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Name)
+                            </td>
+                            <td style="width: 12%">
+                                <div class="dropdown">
+                                    <a class="btn btn-primary dropdown-toggle" href="#"
+                                       role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        @locService.GetLocalize("Actions")
+                                    </a>
+
+                                    <ul class="dropdown-menu">
+                                        <a asp-action="UpdateOrCreate" asp-route-id="@item.Id" class="dropdown-item text-primary">
+                                            <i class="fa-regular fa-pen-nib"></i> @locService.GetLocalize("Update")
+                                        </a>
+                                        <a class="dropdown-item" asp-action="Permissions" asp-controller="Role" asp-route-id="@item.Id">
+                                            <i class="fa-regular fa-shield-keyhole me-2"></i>
+                                            @locService.GetLocalize("Permission")
+                                        </a>
+                                        <button data-id="@item.Id" class="dropdown-item text-danger btn_Del">
+                                            <i class="fa-regular fa-trash"></i> @locService.GetLocalize("Delete")
+                                        </button>
+                                    </ul>
+                                </div>
+
+                                @* <a asp-action="Details" asp-route-id="@item.ID">Details</a> *@
+
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+        @* @{
+        Func<int?, string> generateUrl = (int? _pageNumber) =>
+        {
+        return Url.ActionLink("Index", null, new { page = _pageNumber });
+        };
+
+        var dataPaging = new PagingModel(ViewBag.PageNumber, ViewBag.TotalPages, generateUrl);
+
+        }
+
+        <div class="d-flex justify-content-between align-items-center">
+        <div></div>
+        <partial name="_Paging" model="@dataPaging" />
+        </div> *@
+    </div>
+</div>

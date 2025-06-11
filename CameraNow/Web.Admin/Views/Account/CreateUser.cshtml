@@ -1,0 +1,249 @@
+﻿@using Datas.ViewModels
+@model CreateUserViewModel
+@{
+    Layout = "/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Create account";
+}
+
+@section Styles {
+    <style>
+        #Password {
+            position: relative
+        }
+
+        .togglePassword {
+            position: absolute;
+            top: 50%;
+            right: 35px;
+            transform: translateY(-50%);
+        }
+
+         
+    </style>
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <form id="registerForm" autocomplete="off" asp-action="CreateUser" method="post" novalidate>
+            <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+
+            <div class="row ">
+                <!-- Account Information Section -->
+                <fieldset class="col-md-6 mb-4">
+                    <legend class="h6 text-muted">Thông tin tài khoản</legend>
+
+                    <div class="form-floating mb-3">
+                        <input asp-for="UserName" class="form-control" required
+                               autocomplete="username" minlength="3" maxlength="20"
+                               pattern="[a-zA-Z0-9]+" placeholder="Username" />
+                        <label asp-for="UserName">Tên đăng nhập</label>
+                        <span asp-validation-for="UserName" class="text-danger small"></span>                        
+                    </div>
+
+                    <div>
+                        <div class="form-floating mb-3">
+                            <input asp-for="Password" class="form-control" required
+                                   autocomplete="new-password" type="password"
+                                   minlength="8" placeholder="Password"
+                                   pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).{6,}$" />
+                            <label asp-for="Password">Mật khẩu</label>
+                            <span asp-validation-for="Password" class="text-danger small"></span>
+                            <div class="togglePassword">
+                                <i class="fa fa-eye" id="toggleShowPasswordIcon"></i>
+                                <i class="fa fa-eye-slash d-none" id="toggleHidePasswordIcon"></i>
+                            </div>
+                        </div>
+                        <!-- vùng hiển thị lỗi chi tiết -->
+                        <div id="passwordErrors" class="text-danger small mt-1"></div>
+                    </div>
+                </fieldset>
+
+                <div class="col-md-6">
+                    <!-- Personal Information Section -->
+                    <fieldset class="mb-4">
+                        <legend class="h6 text-muted">Thông tin cá nhân</legend>
+
+                        <div class="form-floating mb-3">
+                            <input asp-for="FullName" class="form-control" required
+                                   placeholder="Trần Văn A" minlength="2" maxlength="100" />
+                            <label asp-for="FullName">Họ và tên</label>
+                            <span asp-validation-for="FullName" class="text-danger small"></span>
+                        </div>
+
+                        <div class="form-floating mb-3">
+                            <input asp-for="Birthday" class="form-control" required
+                                   type="date" max="@DateTime.Now.ToString("yyyy-MM-dd")" />
+                            <label asp-for="Birthday">Ngày sinh</label>
+                            <span asp-validation-for="Birthday" class="text-danger small"></span>
+                        </div>
+
+                        <div class="form-floating mb-3">
+                            <input asp-for="Address" class="form-control" required
+                                   placeholder="Xã A - Huyện B - Tỉnh C" minlength="5" maxlength="200" />
+                            <label asp-for="Address">Địa chỉ</label>
+                            <span asp-validation-for="Address" class="text-danger small"></span>
+                        </div>
+
+                        <div class="form-floating mb-3">
+                            <input asp-for="Email" class="form-control" required
+                                   type="email" placeholder="name@example.com" />
+                            <label asp-for="Email">Email</label>
+                            <span asp-validation-for="Email" class="text-danger small"></span>
+                        </div>
+
+                        <div class="form-floating mb-3">
+                            <input asp-for="PhoneNumber" class="form-control" required
+                                   type="tel" placeholder="012345678" pattern="[0-9]{10,15}" />
+                            <label asp-for="PhoneNumber">Số điện thoại</label>
+                            <span asp-validation-for="PhoneNumber" class="text-danger small"></span>
+                        </div>
+                    </fieldset>
+                </div>
+            </div>
+
+            <button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-primary">
+                <span id="submitText">Tạo tài khoản</span>
+                <span id="spinner" class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
+            </button>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function() {
+            $("#toggleShowPasswordIcon").on('click', function () {
+                $("#toggleHidePasswordIcon").removeClass('d-none');
+                $(this).addClass('d-none');
+                $("#Password").attr("type", "text");
+            })
+
+            $("#toggleHidePasswordIcon").on('click', function () {
+                $("#toggleShowPasswordIcon").removeClass('d-none');
+                $(this).addClass('d-none');
+                $("#Password").attr("type", "password");
+            })
+
+            // Form submission handler
+            $('#registerForm').on('submit', function(e) {
+                let isValid = true;
+
+                if (!validatePassword()) {
+                    isValid = false;
+                }
+
+                if (!this.checkValidity()) {
+                    isValid = false;
+                    
+                }
+
+                if (!isValid) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                }  else {
+                    // Show loading state
+                    $('#submitText').text('Processing...');
+                    $('#spinner').removeClass('d-none');
+                    $('#registerSubmit').prop('disabled', true);
+                }
+
+                $(this).addClass('was-validated');
+            });
+
+            // Phone number validation
+            $('#PhoneNumber').on('input', function() {
+                validatePhoneNumber($(this));
+            });
+
+
+            function validatePhoneNumber(input) {
+                const phoneNumber = input.val();
+                const regex = /^(84|0[3|5|7|8|9])+([0-9]{8,9})$/;
+
+                if (phoneNumber && !regex.test(phoneNumber)) {
+                    input.addClass('is-invalid');
+                    input.nextAll('.text-danger').text('Số điện thoại không hợp lệ. Phải bắt đầu bằng 0 hoặc 84, theo sau là 8-9 chữ số.');
+                } else {
+                    input.removeClass('is-invalid');
+                    input.nextAll('.text-danger').text('');
+                }
+            }
+
+            // Real-time validation feedback
+            $('input').on('input', function() {
+                $(this).removeClass('is-invalid');
+                $(this).nextAll('.text-danger').text('');
+            });
+
+            // Password strength indicator
+            $('#Password').on('input', function() {
+                const password = $(this).val();
+                const strength = checkPasswordStrength(password);
+                updateStrengthIndicator(strength);
+            });
+        });
+
+        function checkPasswordStrength(password) {
+            // Implement your password strength logic
+            if (password.length === 0) return 0;
+            if (password.length < 8) return 1;
+
+            let strength = 1;
+            if (/[A-Z]/.test(password)) strength++;
+            if (/[0-9]/.test(password)) strength++;
+            if (/[^A-Za-z0-9]/.test(password)) strength++;
+
+            return strength;
+        }
+
+        function updateStrengthIndicator(strength) {
+            // Update UI based on password strength
+            const indicator = $('#passwordStrength');
+            if (!indicator.length) return;
+
+            indicator.removeClass('bg-danger bg-warning bg-success');
+
+            if (strength <= 1) {
+                indicator.addClass('bg-danger').text('Weak');
+            } else if (strength <= 3) {
+                indicator.addClass('bg-warning').text('Medium');
+            } else {
+                indicator.addClass('bg-success').text('Strong');
+            }
+
+            indicator.css('width', (strength * 25) + '%');
+        }
+
+        function validatePassword() {
+            const password = $('#Password').val();
+            const errors = [];
+
+            if (password.length < 6) {
+                errors.push("Ít nhất 6 ký tự.");
+            }
+            if (!/[a-z]/.test(password)) {
+                errors.push("Phải có ít nhất một chữ thường.");
+            }
+            if (!/[A-Z]/.test(password)) {
+                errors.push("Phải có ít nhất một chữ in hoa.");
+            }
+            if (!/[0-9]/.test(password)) {
+                errors.push("Phải có ít nhất một chữ số.");
+            }
+            if (!/[^A-Za-z0-9]/.test(password)) {
+                errors.push("Phải có ít nhất một ký tự đặc biệt.");
+            }
+
+            const errorDiv = $('#passwordErrors');
+            if (errors.length > 0) {
+                $('#Password').addClass('is-invalid');
+                errorDiv.html(errors.map(e => `<div>${e}</div>`).join(''));
+                return false;
+            } else {
+                $('#Password').removeClass('is-invalid');
+                errorDiv.html('');
+                return true;
+            }
+        }
+    </script>
+}

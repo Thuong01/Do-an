@@ -1,0 +1,131 @@
+﻿@model Datas.ViewModels.Statistic.StatsViewModel
+
+@{
+    var startDate = Context.Request.Query["startDate"].ToString();
+    var endDate = Context.Request.Query["endDate"].ToString();
+
+    var startValue = string.IsNullOrEmpty(startDate)
+        ? DateTime.UtcNow.AddDays(-7).ToString("yyyy-MM-dd")
+        : startDate;
+
+    var endValue = string.IsNullOrEmpty(endDate)
+        ? DateTime.UtcNow.ToString("yyyy-MM-dd")
+        : endDate;
+
+    Console.WriteLine(startValue);
+    Console.WriteLine(endValue);
+}
+
+
+<form method="get" class="row mb-4">
+    <div class="col-md-3">
+        <label>Từ ngày</label>
+        <input type="date" name="startDate" class="form-control" value="@startValue" />
+    </div>
+    <div class="col-md-3">
+        <label>Đến ngày</label>
+        <input type="date" name="endDate" class="form-control" value="@endValue" />
+    </div>
+    <div class="col-md-3 d-flex align-items-end">
+        <button type="submit" class="btn btn-primary">Lọc</button>
+    </div>
+</form>
+
+<div class="row">
+    <!-- Tổng quan -->
+    <div class="col-md-3">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Tổng đơn hàng</h5>
+                <h2>@Model.TotalOrders</h2>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Tổng doanh thu</h5>
+                <h2>@Model.TotalRevenue.ToString("N0") đ</h2>
+            </div>
+        </div>
+    </div>
+
+    <!-- Thêm các card thống kê khác -->
+</div>
+
+<!-- Biểu đồ doanh thu -->
+<div class="row mt-4">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Doanh thu từ @startValue đến @endValue</h5>
+                <canvas id="revenueChart" height="100"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Bảng sản phẩm bán chạy -->
+<div class="row mt-4">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Sản phẩm bán chạy</h5>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Hình ảnh</th>
+                            <th>Sản phẩm</th>
+                            <th>Số lượng</th>
+                            <th>Doanh thu</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model.TopSellingProducts != null)
+                        {
+                            foreach (var product in Model.TopSellingProducts)
+                            {
+                                <tr>
+                                    <th scope="row"><a href="@Url.Action("Details", "Product", new { id = product.ProductId})"><img width="50" src="@product.ProductImage" alt="@product.ProductName"></a></th>
+
+                                    <td>@product.ProductName</td>
+                                    <td>@product.QuantitySold</td>
+                                    <td>@product.TotalRevenue.ToString("N0") đ</td>
+                                </tr>
+                            }
+                        }                        
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // Vẽ biểu đồ doanh thu
+        var ctx = document.getElementById('revenueChart').getContext('2d');
+        var chart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: @Json.Serialize(Model.RevenueByDay?.Keys),
+                datasets: [{
+                    label: 'Doanh thu',
+                    data: @Json.Serialize(Model.RevenueByDay?.Values),
+                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    </script>
+}

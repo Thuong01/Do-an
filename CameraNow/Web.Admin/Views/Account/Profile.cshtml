@@ -1,0 +1,164 @@
+﻿@using Datas.ViewModels.Auth
+@model AppUserViewModel
+@inject Web.Admin.Resources.LocalizationService locService
+
+@{
+    ViewData["Title"] = "User profile";
+    Layout = "/Views/Account/_Layout.cshtml";
+}
+
+@section Scripts {
+    <script src="/Views/Account/Profile.cshtml.js"></script>
+}
+
+<h1>@locService.GetLocalize("User_Profile")</h1>
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="@Url.Action("Index", "Home")"><i class="fa-solid fa-house"></i></a></li>
+        <li class="breadcrumb-item active" aria-current="page">@locService.GetLocalize("User_Profile")</li>
+    </ol>
+</nav>
+
+<section class="section profile mb-5">
+    <div class="row">
+        <div class="col-xl-4">
+            <div class="card">
+                <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
+                    @if (string.IsNullOrEmpty(Model.Avartar))
+                    {
+                        <img width="200" src="/img/avatar_default.jpg" alt="Profile" class="rounded-circle">
+                    }
+                    else
+                    {
+                        @* <img width="100" src="@Model.Avartar" alt="Profile" class="rounded-circle"> *@
+                        <div class="rounded-circle" style="overflow: hidden;">
+                            @await Html.PartialAsync("_ImageGallery", (Model.Avartar, Model.FullName, "gallery"))
+                        </div>
+                    }
+                    <h2 class="mt-3">@Model.UserName</h2>
+                    <h2 class="mt-3">@Model.FullName</h2>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-8">
+            <div class="card">
+                <div class="card-body pt-3">
+                    <!-- Bordered Tabs -->
+                    <ul class="nav nav-tabs nav-tabs-bordered">
+                        <li class="nav-item">
+                            <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#profile-overview">@locService.GetLocalize("Overview")</button>
+                        </li>
+                        <li class="nav-item">
+                            <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-edit">@locService.GetLocalize("Edit_Profile")</button>
+                        </li>
+                    </ul>
+                    <div class="tab-content pt-2">
+                        <div class="tab-pane fade show active profile-overview" id="profile-overview">
+                            <div class="row mb-3"></div>
+
+                            <div class="row mt-3">
+                                <div class="col-lg-3 col-md-4 label">@locService.GetLocalize("UserName"):</div>
+                                <div class="col-lg-9 col-md-8">@Model.UserName</div>
+                            </div>
+
+                            <div class="row mt-3">
+                                <div class="col-lg-3 col-md-4 label">@locService.GetLocalize("FullName"):</div>
+                                <div class="col-lg-9 col-md-8">@Model.FullName</div>
+                            </div>
+
+                            <div class="row mt-3">
+                                <div class="col-lg-3 col-md-4 label">@locService.GetLocalize("Email"):</div>
+                                <div class="col-lg-9 col-md-8">@Model.Email</div>
+                            </div>
+
+                            <div class="row mt-3">
+                                <div class="col-lg-3 col-md-4 label">@locService.GetLocalize("PhoneNumber"):</div>
+                                <div class="col-lg-9 col-md-8">@Model.PhoneNumber</div>
+                            </div>
+
+                            <div class="row mt-3">
+                                <div class="col-lg-3 col-md-4 label">@locService.GetLocalize("Address"):</div>
+                                <div class="col-lg-9 col-md-8">@Model.Address</div>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane fade profile-edit pt-3" id="profile-edit">
+                            <form id="profile-form" enctype="multipart/form-data" method="post">
+                                <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
+                                <input type="hidden" asp-for="Id" />
+                                <div class="row mb-3">
+                                    <label for="profileImage" class="col-md-4 col-lg-3 col-form-label">Profile Image</label>
+                                    <div class="col-md-8 col-lg-9">
+                                        <img width="100" id="previewImage" src="@(!string.IsNullOrEmpty(Model.Avartar) ? Model.Avartar : "/img/avatar_default.jpg")" alt="Profile" class="rounded-circle">
+                                        <div class="pt-2" style="padding-left: 17px;">
+                                            <input type="hidden" value="false" id="Image_yn" name="Image_yn" />
+                                            <input type="hidden" value="false" id="Delete_yn" name="Delete_yn" />
+                                            <input type="file" name="ImageFile" id="ImageFile" class="d-none" accept="image/*" />
+                                        </div>
+                                        <div class="pt-2" style="padding-left: 17px;">
+                                            <a href="#" class="btn btn-primary btn-sm" id="upload-btn" title="Upload new profile image"><i class="fa fa-upload"></i></a>
+                                            <a href="#" class="btn btn-danger btn-sm" id="remove-btn" title="Remove my profile image"><i class="fa-regular fa-trash"></i></a>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-floating mb-3">
+                                            <input asp-for="UserName" class="form-control" placeholder="Please enter your username." disabled />
+                                            <label asp-for="UserName" class="form-label"></label>
+                                        </div>
+                                    </div>
+
+                                    <div id="outerPass" class="col-md-6 d-none">
+                                        <div class="form-floating mb-3">
+                                            <input name="Password" id="Password" class="form-control" placeholder="Please enter your password." />
+                                            <label class="form-label">Password</label>
+                                        </div>
+                                        <div id="outerMsgPass" class="d-flex flex-column fs-6 text"> </div>
+                                    </div>
+                                </div>
+                                <div class="form-floating mb-3">
+                                    <input asp-for="PhoneNumber" class="form-control" placeholder="Please enter your phone number." />
+                                    <label asp-for="PhoneNumber" class="form-label"></label>
+                                    <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                                </div>
+
+                                <div class="form-floating mb-3">
+                                    <input asp-for="FullName" class="form-control" placeholder="Please enter your fullname." />
+                                    <label asp-for="FullName" class="form-label"></label>
+                                    <span asp-validation-for="FullName" class="text-danger"></span>
+                                </div>
+                                <div class="form-floating mb-3">
+                                    <input asp-for="Address" class="form-control" placeholder="Please enter your address." />
+                                    <label asp-for="Address" class="form-label"></label>
+                                    <span asp-validation-for="Address" class="text-danger"></span>
+                                </div>
+                                <div class="form-floating mb-3">
+                                    <input type="date" asp-for="Birthday" class="form-control" placeholder="Please enter your birthday." />
+                                    <label asp-for="Birthday" class="form-label"></label>
+                                    <span asp-validation-for="Birthday" class="text-danger"></span>
+                                </div>
+
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <button data-id="@Model.Id" id="change-password-btn" type="button" class="btn btn-warning">
+                                            @locService.GetLocalize("Change_Password")
+                                        </button>
+                                        <button id="cancel-password-btn" type="button" class="btn btn-danger d-none">
+                                            <i class="fa-solid fa-xmark"></i>
+                                        </button>
+                                    </div>
+                                    <button data-id="@Model.Id" id="update-profile-button" type="submit" class="w-25 btn btn-primary">
+                                        @locService.GetLocalize("Save")
+                                    </button>
+                                </div>
+                            </form>
+                        </div> 
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

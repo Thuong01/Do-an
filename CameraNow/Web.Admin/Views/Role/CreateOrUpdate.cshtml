@@ -1,0 +1,44 @@
+﻿@model MyShop.Web.Admin.Models.CreateUpdateRoleViewModel
+@using MyShop.Web.Admin.Resources
+@inject LocalizationService locService
+@{
+    ViewData["Title"] = "Create role";
+}
+
+<h1>@locService.GetLocalize("Create_New")</h1>
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="@Url.Action("Index", "Home")"><i class="fa-solid fa-house"></i></a></li>
+        <li class="breadcrumb-item active" aria-current="page"><a href="@Url.Action("Index", "Role")">@locService.GetLocalize("Roles")</a></li>
+        <li class="breadcrumb-item active" aria-current="page">@locService.GetLocalize("Create_New")</li>
+    </ol>
+</nav>
+
+<div class="row">
+    <div class="col-md-6">
+        <form asp-action="CreateOrUpdate" method="post">
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <input type="hidden" asp-for="IdentityRole.Id">
+            <input type="hidden" asp-for="IsUpdate">
+
+            <div class="form-group">
+                <label asp-for="IdentityRole.Name"></label>
+                <input asp-for="IdentityRole.Name" class="form-control">
+                <span asp-validation-for="IdentityRole.Name" class="text-danger"></span>
+            </div>
+
+            <div class="mt-3">
+                <button id="add-or-edit-role" type="submit" class="btn btn-primary">
+                    @locService.GetLocalize("Create_New")
+                </button>
+
+                <a class="btn btn-primary" asp-action="Index">Danh sách</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

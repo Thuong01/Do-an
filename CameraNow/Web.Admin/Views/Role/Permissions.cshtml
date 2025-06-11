@@ -1,0 +1,102 @@
+﻿@model MyShop.Datas.ViewModels.Permissions.RoleClaimViewModel
+
+@using Microsoft.AspNetCore.Identity
+@using MyShop.Web.Admin.Resources
+@using MyShop.Models.Models
+@using MyShop.Datas.ViewModels.Permissions
+
+@inject LocalizationService locService
+
+@{
+    ViewData["Title"] = locService.GetLocalize("Set_Permissions");
+    var permissions = ViewBag.Permissions as IEnumerable<PermissionViewModel>;
+}
+
+@section Styles {
+    <style>
+        .child-permission-wrap {
+            margin-left: 40px;
+        }
+
+        .grantAllPermission {
+            margin: 30px 0px;
+        }
+    </style>
+}
+
+<h2>@locService.GetLocalize("Set_Permissions")</h2>
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="@Url.Action("Index", "Home")"><i class="fa-solid fa-house"></i></a></li>
+        <li class="breadcrumb-item">@Url.Action("Index", "Role")</li>
+        <li class="breadcrumb-item active" aria-current="page">@locService.GetLocalize("Set_Permissions")</li>
+    </ol>
+</nav>
+
+<h1></h1>
+
+<div>
+    <form id="frm_GrantPermission">
+        @Html.AntiForgeryToken()
+
+        <input type="hidden" value="@ViewBag.RoleId" name="roleId" />
+
+        <div class="grantAllPermission">
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" id="grant_all_permission">
+                <label class="form-check-label" for="grant_all_permission">
+                    @locService.GetLocalize("grant_all_permission");
+                </label>
+            </div>
+        </div>
+
+        <div>
+            @foreach (var item in permissions)
+            {
+                <div class="form-check my-3">
+                    <input class="form-check-input parent_permission_input" type="checkbox" value="@item.Name" id="@item.Name">
+                    <label class="form-check-label" for="@item.Name">
+                        @locService.GetLocalize(item.Name)
+                    </label>
+                </div>
+
+                <div class="child-permission-wrap">
+                    @if (item.PermissionsChild != null && item.PermissionsChild.Count() > 0)
+                    {
+                        foreach (var child in item.PermissionsChild)
+                        {
+                            <div class="form-check my-3">
+                                <input class="form-check-input parent_permission_input" id="@child.Name" type="checkbox" value="@child.Name">
+                                <label class="form-check-label" for="@child.Name">
+                                    @locService.GetLocalize(child.Name)
+                                </label>
+                            </div>
+                        }
+                    }
+                </div>
+
+                <br />
+            }
+        </div>
+
+        <div>
+            <button class="btn border border-secondary">Hủy</button>
+            <button type="button" class="btn btn-primary">Lưu</button>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            // Khi checkbox "Grant all permissions" thay đổi
+            $('#grant_all_permission').change(function () {
+                // Lấy trạng thái của checkbox
+                var isChecked = $(this).is(':checked');
+
+                // Cập nhật trạng thái của tất cả các checkbox khác
+                $('.form-check-input').prop('checked', isChecked);
+            });
+        });
+    </script>
+}
