@@ -131,11 +131,11 @@ const Header = () => {
                             <Logo to="/">
                                 <img src={logo} alt="Fashion Store" />
                             </Logo>
-                            {/* <CategoryButton onClick={() => setShowMenu(!showMenu)}>
+                            <CategoryButton onClick={() => setShowMenu(!showMenu)}>
                                 <FontAwesomeIcon icon={faBars} />
                                 <span>Danh mục</span>
                             </CategoryButton>
-                            {showMenu && <CategoryMenu />} */}
+                            {showMenu && <CategoryMenu />}
                         </LogoSection>
 
                         <NavLinks>

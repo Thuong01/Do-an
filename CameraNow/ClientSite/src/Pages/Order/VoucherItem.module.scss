@@ -1,0 +1,119 @@
+.promo-list-item {
+    display: flex;
+    flex-direction: row;
+    align-self: stretch;
+    align-items: flex-start;
+    justify-content: stretch;
+    border-radius: 8px;
+    margin: 7.5px 0;
+    position: relative;
+    height: 146px;
+
+    .coupon_bg {
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 100%;
+        right: 100%;
+        filter: drop-shadow(rgba(0, 0, 0, 0.15) 0px 1px 3px);
+        width: 100%;
+        height: 100%;
+    }
+
+    & > div:first-of-type {
+        background: url('../../assets/icons/Frame_icon_web.svg') no-repeat center center;
+        width: 132px;
+        min-height: 100px;
+        height: 100%;
+        -moz-border-radius-bottomleft: 8px;
+        -moz-border-top-left-radius: 8px;
+        -webkit-border-bottom-left-radius: 8px;
+        -webkit-border-top-left-radius: 8px;
+        display: flex;
+        flex-direction: row;
+        align-self: stretch;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+    }
+
+    .promo-item {
+        width: calc(100% - 138px);
+        padding: 12px 8px;
+        display: flex;
+        flex-direction: column;
+        align-self: stretch;
+        align-items: flex-start;
+        justify-content: space-between;
+        position: relative;
+
+        & > div:first-of-type {
+            display: flex;
+            flex-direction: row;
+            align-self: stretch;
+            align-items: flex-start;
+            justify-content: flex-start;
+            min-height: 70px;
+
+            .promo-list-item-content {
+                width: 100%;
+                padding-bottom: 7.5px;
+
+                & > div:first-of-type {
+                    display: flex;
+                    flex-direction: row;
+                    align-items: center;
+                    justify-content: space-between;
+                    padding-bottom: 4px;
+
+                    .promo-list-item-content-title {
+                        font-size: 16px;
+                        font-weight: 650;
+                        text-overflow: ellipsis;
+                        text-transform: uppercase;
+                        color: #323232;
+                    }
+                }
+
+                .promo-list-item-content-description {
+                    word-break: break-word;
+                    display: -webkit-box;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    -webkit-line-clamp: 2;
+                    -webkit-box-orient: vertical;
+                }
+            }
+        }
+
+        & > div:nth-of-type(2) {
+            display: flex;
+            flex-direction: row;
+            align-self: stretch;
+            align-items: center;
+            justify-content: space-between;
+            min-height: 40px;
+
+            .btn-view-promo-coupon {
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                justify-content: center;
+                width: 100px;
+                font-size: 1em;
+                font-weight: 600;
+                transition: all 0.3s;
+                border-radius: 8px;
+                padding: 6px 0;
+                background-color: #2f80ed;
+                color: white;
+                border: 1.5px solid #2f80ed;
+                margin: 0;
+
+                &:hover {
+                    background-color: #275ca2;
+                }
+            }
+        }
+    }
+}

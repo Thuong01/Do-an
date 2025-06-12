@@ -7,6 +7,7 @@ import { setLoading } from '../../Redux/Slices/LoadingSlice';
 import { saveUserInfor } from '../../Redux/Actions/userAction';
 import styled from 'styled-components';
 import './Home.scss';
+import backgroundImg from '../../assets/imgs/173711113572710643_Leica_SL3_S_Ambient_Hero_HiRes.jpg';
 
 const styles = {
     gridContainer: {
@@ -24,12 +25,18 @@ const styles = {
 
 const Container = styled.div`
     display: flex;
+    background: url(${backgroundImg});
     flex-direction: column;
     align-items: center;
     justify-content: center;
     height: 100vh;
-    background-color: #f5f5f5;
     font-family: 'Helvetica Neue', Arial, sans-serif;
+`;
+
+const TitleWrapper = styled.div`
+    background: rgba(255, 255, 255, 50%);
+    padding: 10px 15px;
+    border-radius: 10px;
 `;
 
 const Title = styled.h1`
@@ -141,14 +148,10 @@ const Home = () => {
     return (
         <div>
             <Container>
-                <Title>WHICH LEICA LENS</Title>
-                <Subtitle>LEICA IS RIGHT FOR YOU?</Subtitle>
-
-                <BrandContainer>
-                    <Brand>CARON</Brand>
-                    <Brand>SONY</Brand>
-                    <Brand>NIKON</Brand>
-                </BrandContainer>
+                <TitleWrapper>
+                    <Title>WHICH LEICA LENS</Title>
+                    <Subtitle>LEICA IS RIGHT FOR YOU?</Subtitle>
+                </TitleWrapper>
             </Container>
 
             <div className="section">

@@ -16,27 +16,13 @@ const Footer = () => {
                             <img width={180} src={logo} alt="Company Logo" />
                         </NavLink>
                         <p className="footer-about">
-                            Premium photography equipment and lenses for professionals and enthusiasts alike.
+                            Thiết bị và ống kính chụp ảnh cao cấp dành cho cả chuyên gia và người đam mê.
                         </p>
-                        <div className="social-links">
-                            <a href="#" aria-label="Facebook">
-                                <FontAwesomeIcon icon={faFacebookF} />
-                            </a>
-                            <a href="#" aria-label="Instagram">
-                                <FontAwesomeIcon icon={faInstagram} />
-                            </a>
-                            <a href="#" aria-label="Twitter">
-                                <FontAwesomeIcon icon={faTwitter} />
-                            </a>
-                            <a href="#" aria-label="YouTube">
-                                <FontAwesomeIcon icon={faYoutube} />
-                            </a>
-                        </div>
                     </div>
 
                     {/* Contact Information */}
                     <div className="footer-column contact-section">
-                        <h3 className="footer-heading">Contact Us</h3>
+                        <h3 className="footer-heading">Thông tin liên hệ</h3>
                         <ul className="contact-list">
                             <li>
                                 <FontAwesomeIcon icon={faMapMarkerAlt} className="contact-icon" />
@@ -59,34 +45,15 @@ const Footer = () => {
 
                     {/* Quick Links */}
                     <div className="footer-column links-section">
-                        <h3 className="footer-heading">Quick Links</h3>
+                        <h3 className="footer-heading">Chuyển trang nhanh</h3>
                         <ul className="footer-links">
                             <li>
-                                <NavLink to="/about">About Us</NavLink>
+                                <NavLink to="/about-us">Về chúng tôi</NavLink>
                             </li>
                             <li>
-                                <NavLink to="/products">Products</NavLink>
-                            </li>
-                            <li>
-                                <NavLink to="/blog">Blog</NavLink>
-                            </li>
-                            <li>
-                                <NavLink to="/contact">Contact</NavLink>
-                            </li>
-                            <li>
-                                <NavLink to="/faq">FAQ</NavLink>
+                                <NavLink to="/search">Sản phẩm</NavLink>
                             </li>
                         </ul>
-                    </div>
-
-                    {/* Newsletter */}
-                    <div className="footer-column newsletter-section">
-                        <h3 className="footer-heading">Newsletter</h3>
-                        <p>Subscribe for updates and promotions</p>
-                        <form className="newsletter-form">
-                            <input type="email" placeholder="Your email address" required />
-                            <button type="submit">Subscribe</button>
-                        </form>
                     </div>
                 </div>
             </div>

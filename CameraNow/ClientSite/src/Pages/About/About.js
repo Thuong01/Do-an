@@ -1,5 +1,5 @@
 import './About.scss';
-import aboutUs from '../../assets/imgs/about/about-us.jpg';
+import aboutUs from '../../assets/imgs/sony-alpha-7-iv-4286.jpeg';
 import testimonialAuthor from '../../assets/imgs/about/testimonial-author.jpg';
 import testimonialPic from '../../assets/imgs/about/testimonial-pic.jpg';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -24,7 +24,7 @@ const About = () => {
                     <div className="row">
                         <div className="col-lg-12">
                             <div className="about__pic">
-                                <img src={aboutUs} alt="" />
+                                <img style={{ width: '100%', border: '1px solid' }} src={aboutUs} alt="" />
                             </div>
                         </div>
                     </div>

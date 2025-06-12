@@ -50,6 +50,8 @@ const ChildCategories = styled.div`
     flex: 1;
     padding: 20px;
     overflow-y: auto;
+    max-width: 400px;
+    width: 400px;
 `;
 
 const CategoryTitle = styled.h3`
@@ -75,10 +77,11 @@ const ChildCategoryItem = styled.li`
 
 const CategoryLink = styled(NavLink)`
     display: block;
-    padding: 10px 12px;
+    padding: 14px 20px;
     color: #555;
     text-decoration: none;
     border-radius: 6px;
+    border-left: 3px solid transparent;
     transition: all 0.2s ease;
 
     &:hover {
@@ -169,20 +172,32 @@ export default function CategoryMenu() {
     return (
         <CategoryContainer>
             <ParentCategories>
-                {productCategories?.map((cat) => (
-                    <ParentCategoryItem
-                        key={cat.id}
-                        onClick={() => handleSelect(cat.id)}
-                        $active={selectedCategoryId === cat.id}
-                    >
-                        {cat.name}
-                        {selectedCategoryId === cat.id && <FontAwesomeIcon icon={faChevronRight} />}
-                    </ParentCategoryItem>
-                ))}
+                {productCategories?.map((cat) =>
+                    cat?.children?.length > 0 ? (
+                        <ParentCategoryItem
+                            key={cat.id}
+                            onClick={() => handleSelect(cat.id)}
+                            $active={selectedCategoryId === cat.id}
+                        >
+                            {cat.name}
+                            {selectedCategoryId === cat.id && <FontAwesomeIcon icon={faChevronRight} />}
+                        </ParentCategoryItem>
+                    ) : (
+                        <CategoryLink
+                            key={cat.id}
+                            onClick={() => handleSelect(cat.id)}
+                            $active={selectedCategoryId === cat.id}
+                            to={`/search?category=${cat?.alias}&page=1`}
+                        >
+                            {cat.name}
+                            {selectedCategoryId === cat.id}
+                        </CategoryLink>
+                    ),
+                )}
             </ParentCategories>
 
-            <ChildCategories>
-                {selectedCategory?.children?.length > 0 ? (
+            {selectedCategory?.children?.length > 0 ? (
+                <ChildCategories>
                     <>
                         <CategoryTitle>{selectedCategory.name}</CategoryTitle>
                         <ChildCategoryList>
@@ -198,10 +213,10 @@ export default function CategoryMenu() {
                             ))}
                         </ChildCategoryList>
                     </>
-                ) : (
-                    <NoCategories>Không có danh mục con</NoCategories>
-                )}
-            </ChildCategories>
+                </ChildCategories>
+            ) : (
+                <></>
+            )}
         </CategoryContainer>
     );
 }

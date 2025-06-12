@@ -10,8 +10,12 @@ import { setLoading } from '../../Redux/Slices/LoadingSlice';
 import Swal from 'sweetalert2';
 import { getVnpayLinkPaymentService } from '../../Services/PaymentService';
 import * as Yup from 'yup';
-import { Form } from 'react-bootstrap';
+import axios from '../../axios';
+import { Form, Modal } from 'react-bootstrap';
 import { getUserInforService } from '../../Services/UserService';
+import VoucherItem from './VoucherItem';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faChevronRight } from '@fortawesome/free-solid-svg-icons';
 
 export const orderSchema = Yup.object().shape({
     fullName: Yup.string().required('Họ tên là bắt buộc'),
@@ -59,6 +63,8 @@ const Order = () => {
     const [emailError, setEmailError] = useState('');
     const [coupon, setCoupon] = useState('');
     const [couponData, setCouponData] = useState(null);
+    const [vouchers, setVouchers] = useState([]);
+    const [showVoucher, setShowVoucher] = useState(false);
 
     const getUser = async () => {
         try {
@@ -117,6 +123,32 @@ const Order = () => {
         setEmailError('');
         setOrder({ ...order, email: value });
     };
+
+    // fetch vouchers list
+    useEffect(() => {
+        dispatch(setLoading(true));
+        const fetchVoucher = async () => {
+            try {
+                const response = await axios.get('CouponAPIs/coupons', {
+                    params: {
+                        Status: -1,
+                        Sorting: 'name',
+                        PageNumber: 1,
+                        PageSize: 60,
+                        Filter: '',
+                    },
+                });
+
+                console.log(response.data?.result?.data);
+                dispatch(setLoading(false));
+
+                setVouchers(response.data?.result?.data);
+            } catch (error) {
+                console.log(error);
+            }
+        };
+        fetchVoucher();
+    }, []);
 
     useEffect(() => {
         setOrder((prevOrder) => {
@@ -232,9 +264,9 @@ const Order = () => {
         }
     };
 
-    const handleGetCoupon = async () => {
+    const handleGetCoupon = async (couponCode) => {
         try {
-            var res = await GetCoupon({ code: coupon });
+            var res = await GetCoupon({ code: couponCode });
 
             console.log(res);
 
@@ -263,7 +295,7 @@ const Order = () => {
                 }
             } else {
                 CustomToast.info(
-                    `Max giảm giá yêu cầu đơn hàng tối thiểu ${FormatPrice(res?.data?.minOrderAmount, 'VNĐ')}. `,
+                    `Mã giảm giá yêu cầu đơn hàng tối thiểu ${FormatPrice(res?.data?.minOrderAmount, 'VNĐ')}. `,
                 );
             }
         } catch (err) {
@@ -271,6 +303,15 @@ const Order = () => {
                 CustomToast.warning('Không tìm thấy mã giảm giá');
             } else CustomToast.warning('Lấy coupon thất bại');
         }
+    };
+
+    const handleShowVoucher = () => setShowVoucher(true);
+    const handleCloseVoucher = () => setShowVoucher(false);
+
+    const addVoucherForOrder = (voucherId) => {
+        setCoupon(voucherId);
+        handleGetCoupon(voucherId);
+        handleCloseVoucher();
     };
 
     return (
@@ -433,7 +474,8 @@ const Order = () => {
 
                                 <div className={clsx(styles['checkout__totals'])}>
                                     <h3>Mã giảm giá (Nếu có)</h3>
-                                    <div className="form-group row">
+
+                                    <div className="form-group row mb-2">
                                         <div className="col-md-9 col-sm-9 col-xs-9">
                                             <input
                                                 type="text"
@@ -451,12 +493,20 @@ const Order = () => {
                                                 id="coupon_code_apply"
                                                 name="coupon_code_apply"
                                                 className="btn btn-default "
-                                                onClick={() => handleGetCoupon()}
+                                                onClick={() => handleGetCoupon(coupon)}
                                                 style={{ background: '#F1AF0A' }}
                                                 defaultValue="Áp dụng"
                                             />
                                         </div>
                                     </div>
+
+                                    <span
+                                        style={{ cursor: 'pointer' }}
+                                        className={clsx(styles['choose-ticket'])}
+                                        onClick={handleShowVoucher}
+                                    >
+                                        Xem thêm <FontAwesomeIcon icon={faChevronRight} />
+                                    </span>
                                 </div>
 
                                 <div className={clsx(styles['checkout__payment-methods'])}>
@@ -498,6 +548,40 @@ const Order = () => {
                     </div>
                 </Form>
             </section>
+
+            <div className={clsx(styles['voucher-wrapper'])}>
+                <Modal show={showVoucher} onHide={handleCloseVoucher}>
+                    <Modal.Header closeButton>
+                        <Modal.Title>Chọn mã khuyến mãi</Modal.Title>
+                    </Modal.Header>
+
+                    <Modal.Body>
+                        {vouchers?.length > 0 ? (
+                            vouchers?.map((voucher) => {
+                                return (
+                                    <VoucherItem
+                                        key={`voucher-${voucher?.id}`}
+                                        voucherId={voucher?.id}
+                                        name={
+                                            voucher?.type == 0
+                                                ? `Giảm giá ${voucher?.value} %`
+                                                : `Giảm giá ${FormatPrice(voucher?.value, 'VNĐ')}`
+                                        }
+                                        desc={voucher?.code}
+                                        code={voucher?.code}
+                                        status={voucher?.status}
+                                        endDate={voucher?.endDate}
+                                        startDate={voucher?.startDate}
+                                        handleSelectVoucher={addVoucherForOrder}
+                                    />
+                                );
+                            })
+                        ) : (
+                            <div className="text-center">Bạn không có voucher nào</div>
+                        )}
+                    </Modal.Body>
+                </Modal>
+            </div>
         </main>
     );
 };

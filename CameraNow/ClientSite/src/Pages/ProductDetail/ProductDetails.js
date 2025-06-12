@@ -28,6 +28,7 @@ import { CartContext } from '../../Context/cartContext';
 import { GetProductFeedback } from '../../Services/FeedbackService';
 import CustomToast from '../../Untils/CustomToast';
 import Product from '../../Components/Product/Product';
+import useTitle from '../../Context/useTitle';
 
 const ProductDetails = () => {
     const dispatch = useDispatch();
@@ -62,6 +63,7 @@ const ProductDetails = () => {
     const [recomments, setRecomments] = useState([]);
 
     const [sizeQuantity, setSizeQuantity] = useState(0);
+    useTitle('Chi tiết sản phẩm');
 
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -95,12 +97,10 @@ const ProductDetails = () => {
     const fetchRecommentsProducts = async () => {
         const res = await RecommentsProducts({ product_id: id });
         setRecomments(res?.data?.result?.recommendations);
-        console.log(res);
     };
 
     const fetchProductFeedback = async () => {
         const res = await GetProductFeedback(id, fbPage, fbPageSize);
-        console.log(res);
 
         if (res?.data?.success) {
             setFeedbacks(res?.data?.result);
@@ -209,6 +209,42 @@ const ProductDetails = () => {
         }
     };
 
+    const [currentIndex, setCurrentIndex] = useState(0);
+    const [thumbnailScrollPosition, setThumbnailScrollPosition] = useState(0);
+    const thumbnailContainerRef = useRef(null);
+
+    // Handle thumbnail click
+    const handleThumbnailClick = (index) => {
+        setCurrentIndex(index);
+        scrollThumbnailIntoView(index);
+    };
+
+    // Scroll thumbnail into view
+    const scrollThumbnailIntoView = (index) => {
+        if (thumbnailContainerRef.current) {
+            const thumbnails = thumbnailContainerRef.current.children;
+            if (thumbnails[index]) {
+                const thumbnail = thumbnails[index];
+                const container = thumbnailContainerRef.current;
+                const containerWidth = container.offsetWidth;
+                const thumbnailLeft = thumbnail.offsetLeft;
+                const thumbnailWidth = thumbnail.offsetWidth;
+
+                // Calculate scroll position
+                const scrollTo = thumbnailLeft - containerWidth / 2 + thumbnailWidth / 2;
+                container.scrollTo({
+                    left: scrollTo,
+                    behavior: 'smooth',
+                });
+            }
+        }
+    };
+
+    // Auto-scroll thumbnails when currentIndex changes
+    useEffect(() => {
+        scrollThumbnailIntoView(currentIndex);
+    }, [currentIndex]);
+
     return (
         <div>
             <>
@@ -220,8 +256,7 @@ const ProductDetails = () => {
                     <div className="container">
                         {/* row */}
                         <div className="row">
-                            {/* Product main img */}
-                            <div className="col-md-5 col-md-push-2">
+                            {/* <div className="col-md-5 col-md-push-2">
                                 <div id={clsx('product-main-img')}>
                                     <Slider ref={(slider) => (mainImgSliderRef = slider)} {...productMainImgSettings}>
                                         {product?.images?.map((img, index) => {
@@ -233,11 +268,9 @@ const ProductDetails = () => {
                                         })}
                                     </Slider>
                                 </div>
-                            </div>
-                            {/* /Product main img */}
+                            </div> */}
 
-                            {/* Product thumb imgs */}
-                            <div className="col-md-2 col-md-pull-5">
+                            {/* <div className="col-md-2 col-md-pull-5">
                                 <div style={{}} id={clsx('product-imgs')}>
                                     <Slider
                                         ref={(slider) => (secondImgSliderRef = slider)}
@@ -253,11 +286,75 @@ const ProductDetails = () => {
                                         })}
                                     </Slider>
                                 </div>
-                            </div>
-                            {/* /Product thumb imgs */}
+                            </div> */}
 
-                            {/* Product details */}
-                            <div className="col-md-5">
+                            <div className="row col-md-5">
+                                {/* Product main img */}
+                                <div className="col-md-10 col-md-push-2">
+                                    <div id={clsx('product-main-img')}>
+                                        <div className="product-preview">
+                                            {product?.images?.length > 0 && (
+                                                <img
+                                                    src={product.images[currentIndex].link}
+                                                    alt={product?.name}
+                                                    className="img-responsive"
+                                                />
+                                            )}
+                                        </div>
+                                    </div>
+                                </div>
+                                {/* /Product main img */}
+
+                                {/* Product thumb imgs */}
+                                <div className="col-md-2 col-md-pull-5">
+                                    <div
+                                        id={clsx('product-imgs')}
+                                        ref={thumbnailContainerRef}
+                                        style={{
+                                            height: '100%',
+                                            overflowY: 'auto',
+                                            display: 'flex',
+                                            flexDirection: 'column',
+                                            gap: '10px',
+                                            scrollBehavior: 'smooth',
+                                            padding: '5px 0',
+                                        }}
+                                    >
+                                        {product?.images?.map((img, index) => (
+                                            <div
+                                                key={index}
+                                                className={clsx('product-preview', {
+                                                    'product-preview-active': index === currentIndex,
+                                                })}
+                                                onClick={() => handleThumbnailClick(index)}
+                                                style={{
+                                                    cursor: 'pointer',
+                                                    border:
+                                                        index === currentIndex ? '2px solid #D10024' : '1px solid #ddd',
+                                                    padding: '2px',
+                                                    transition: 'border 0.3s ease',
+                                                    flexShrink: 0,
+                                                }}
+                                            >
+                                                <img
+                                                    src={img.link}
+                                                    alt=""
+                                                    width={186}
+                                                    height={186}
+                                                    style={{
+                                                        objectFit: 'cover',
+                                                        width: '100%',
+                                                        height: 'auto',
+                                                        aspectRatio: '1/1',
+                                                    }}
+                                                />
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="col-md-7">
                                 <div className="product-details">
                                     <h2 className="product-name">{product?.name}</h2>
                                     <div>
@@ -285,13 +382,13 @@ const ProductDetails = () => {
                                     </div>
                                     <div>
                                         <h3 className="product-price">
-                                            {product?.promotion_Price == 0 ? (
+                                            {!product?.promotion_Price || product?.promotion_Price == 0 ? (
                                                 <>{FormatPrice(product?.price, 'VNĐ')}</>
                                             ) : (
                                                 <>{FormatPrice(product?.promotion_Price, 'VNĐ')}</>
                                             )}
 
-                                            {product?.promotion_Price == 0 ? (
+                                            {!product?.promotion_Price || product?.promotion_Price == 0 ? (
                                                 <></>
                                             ) : (
                                                 <>
@@ -374,9 +471,7 @@ const ProductDetails = () => {
                                     </ul>
                                 </div>
                             </div>
-                            {/* /Product details */}
 
-                            {/* Product tab */}
                             <div className="col-md-12">
                                 <div id="product-tab">
                                     <Tabs defaultActiveKey="description">
@@ -471,9 +566,7 @@ const ProductDetails = () => {
                                                                 </ul>
                                                             </div>
                                                         </div>
-                                                        {/* /Rating */}
 
-                                                        {/* Reviews */}
                                                         <div className="col-md-6">
                                                             <div id="reviews">
                                                                 <ul className="reviews">
@@ -484,7 +577,6 @@ const ProductDetails = () => {
                                                                                     {item?.user_Name}
                                                                                 </h5>
                                                                                 <p className="date">
-                                                                                    {/* 27 DEC 2018, 8:0 PM */}
                                                                                     {FormatLongDateTime(item?.date)}
                                                                                 </p>
                                                                                 <div className="review-rating">
@@ -527,7 +619,6 @@ const ProductDetails = () => {
                                                                 </ul>
                                                             </div>
                                                         </div>
-                                                        {/* /Reviews */}
                                                     </div>
                                                 </>
                                             )}
@@ -535,13 +626,9 @@ const ProductDetails = () => {
                                     </Tabs>
                                 </div>
                             </div>
-                            {/* /product tab */}
                         </div>
-                        {/* /row */}
                     </div>
-                    {/* /container */}
                 </div>
-                {/* /SECTION */}
 
                 <div className="section">
                     {recomments.length > 0 ? (
