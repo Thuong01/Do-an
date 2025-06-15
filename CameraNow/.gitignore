@@ -22,10 +22,6 @@ artifacts/
 ## Log files
 *.log
 
-## Environment files
-.env
-*.env
-
 ## Published output
 publish/
 *.Publish.xml
