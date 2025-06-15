@@ -27,7 +27,6 @@ artifacts/
 *.env
 
 ## Published output
-wwwroot/
 publish/
 *.Publish.xml
 
