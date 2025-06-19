@@ -15,6 +15,7 @@ namespace Datas.ViewModels.Auth
         public string UserName { get; set; }
         [DisplayName("Birthday")]
         public DateTime? Birthday { get; set; }
+        public IEnumerable<string> Roles { get; set; }
         [DisplayName("Email")]
         public string? Email { get; set; }
         [DisplayName("PhoneNumber")]

@@ -19,6 +19,7 @@ namespace Web.Admin.Controllers
     {
         private readonly SignInManager<AppUser> _signinManager;
         private readonly UserManager<AppUser> _userManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
         private readonly IUserStore<AppUser> _userStore;
         private readonly ILogger<AccountController> _logger;
         private readonly IAppUserService _userService;
@@ -28,6 +29,7 @@ namespace Web.Admin.Controllers
 
         public AccountController(SignInManager<AppUser> signinManager,
                                 UserManager<AppUser> userManager,
+                                RoleManager<IdentityRole> roleManager,
                                 IUserStore<AppUser> userStore,
                                 ILogger<AccountController> logger,
                                 IAppUserService userService,
@@ -37,6 +39,7 @@ namespace Web.Admin.Controllers
         {
             _signinManager = signinManager;
             _userManager = userManager;
+            _roleManager = roleManager;
             _userStore = userStore;
             _logger = logger;
             _userService = userService;
@@ -49,12 +52,17 @@ namespace Web.Admin.Controllers
         {
             ViewData["current_FilterText"] = filter_text;
 
-            if (page <= 0)
-                page = 1;
+            if (page <= 0) page = 1;
 
             var spec = new AppUserSpecification(filter_text, Status.All, sorting);
             var pageParams = new PaginatedParams(page, 25);
             var users = await _userService.GetListAsync(spec, pageParams);
+
+            foreach (var item in users.Data)
+            {
+                var roles = await _userManager.GetRolesAsync(_mapper.Map<AppUser>(item));
+                item.Roles = roles;
+            }
 
             ViewBag.Page = page;
             ViewBag.TotalPages = users.TotalPage;

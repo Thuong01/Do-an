@@ -156,6 +156,9 @@
   <data name="Brand_ID" xml:space="preserve">
     <value>Mã thương hiệu</value>
   </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Hủy</value>
+  </data>
   <data name="Category_ID" xml:space="preserve">
     <value>Phân loại</value>
   </data>
@@ -431,6 +434,9 @@
   </data>
   <data name="Status" xml:space="preserve">
     <value>Trạng thái</value>
+  </data>
+  <data name="Submit" xml:space="preserve">
+    <value>Gửi</value>
   </data>
   <data name="Total_Amount" xml:space="preserve">
     <value>Tổng tiền</value>

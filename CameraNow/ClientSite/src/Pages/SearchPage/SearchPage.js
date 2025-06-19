@@ -403,13 +403,19 @@ const SearchPage = () => {
                             </ResultsInfo>
                         </ResultsHeader>
 
-                        <ProductGrid>
-                            {products.map((product) => (
-                                <Product key={product.id} product={product} hoverEffect showQuickView />
-                            ))}
-                        </ProductGrid>
+                        {products.length > 0 ? (
+                            <>
+                                <ProductGrid>
+                                    {products.map((product) => (
+                                        <Product key={product.id} product={product} hoverEffect showQuickView />
+                                    ))}
+                                </ProductGrid>
 
-                        {totalPages > 1 && renderPagination()}
+                                <div>{totalPages > 1 && renderPagination()}</div>
+                            </>
+                        ) : (
+                            <div className="text-center">Không có sản phẩm nào</div>
+                        )}
                     </Col>
                 </Row>
             </Container>

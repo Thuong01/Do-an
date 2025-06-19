@@ -1,21 +1,70 @@
-﻿using Services.Interfaces.Services;
-using System;
-using System.Collections.Generic;
+﻿using Microsoft.Extensions.Caching.Memory;
+using Services.Interfaces.Services;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 namespace Services.Services
 {
     public class AprioriService
     {
         private readonly IOrderService _orderService;
+        private readonly IMemoryCache _cache;
+        private static readonly SemaphoreSlim _cacheLock = new SemaphoreSlim(1, 1);
 
-        public AprioriService(IOrderService orderService)
+        public AprioriService(IOrderService orderService, IMemoryCache cache)
         {
             _orderService = orderService;
+            _cache = cache;
         }
+
+        public async Task<List<AssociationRule>> GetCachedAssociationRulesAsync(double minConfidence)
+        {
+            var cacheKey = $"AprioriRules_{minConfidence}";
+
+            if (_cache.TryGetValue(cacheKey, out List<AssociationRule> cachedRules))
+            {
+                return cachedRules;
+            }
+
+            await _cacheLock.WaitAsync();
+            try
+            {
+                // Double-check cache after acquiring lock
+                if (_cache.TryGetValue(cacheKey, out cachedRules))
+                {
+                    return cachedRules;
+                }
+
+                // Generate and cache new rules
+                var rules = await Task.Run(() => GenerateAssociationRules(minConfidence));
+                _cache.Set(cacheKey, rules, TimeSpan.FromHours(1)); // Cache for 1 hour
+                return rules;
+            }
+            finally
+            {
+                _cacheLock.Release();
+            }
+        }
+
+        private async Task<List<HashSet<Guid>>> GetNonEmptySubsetsAsync(List<Guid> items)
+        {
+            return await Task.Run(() =>
+            {
+                var result = new List<HashSet<Guid>>();
+                int subsetCount = 1 << items.Count;
+
+                for (int i = 1; i < subsetCount - 1; i++)
+                {
+                    var subset = new HashSet<Guid>();
+                    for (int j = 0; j < items.Count; j++)
+                    {
+                        if ((i & (1 << j)) != 0)
+                            subset.Add(items[j]);
+                    }
+                    result.Add(subset);
+                }
+                return result;
+            });
+        }
+
 
         // Hàm tìm frequent itemsets
         public Dictionary<HashSet<Guid>, int> FindFrequentItemsets(double minSupport)
@@ -74,23 +123,6 @@ namespace Services.Services
 
             return candidates;
         }
-
-        // Kiểm tra subsets có frequent không
-        private bool HasInfrequentSubset(List<Guid> candidate, List<List<Guid>> frequentItemsets)
-        {
-            var subsets = candidate.Select((x, i) => candidate.Where((y, j) => j != i).ToList()).ToList();
-
-            foreach (var subset in subsets)
-            {
-                if (!frequentItemsets.Any(fi => fi.SequenceEqual(subset)))
-                {
-                    return true;
-                }
-            }
-
-            return false;
-        }
-
 
         // Hàm tạo luật kết hợp
         public List<AssociationRule> GenerateAssociationRules(double minConfidence)
@@ -168,41 +200,6 @@ namespace Services.Services
             }
 
             return result;
-        }
-
-
-        private List<string[]> GenerateCandidateItemSets(List<string[]> frequentItemSets, int k)
-        {
-            var candidates = new List<string[]>();
-
-            for (int i = 0; i < frequentItemSets.Count; i++)
-            {
-                for (int j = i + 1; j < frequentItemSets.Count; j++)
-                {
-                    var merged = frequentItemSets[i].Take(k - 2)
-                        .SequenceEqual(frequentItemSets[j].Take(k - 2))
-                        ? frequentItemSets[i].Concat(new[] { frequentItemSets[j].Last() }).OrderBy(x => x).ToArray()
-                        : null;
-
-                    if (merged != null && HasAllSubsets(frequentItemSets, merged, k - 1))
-                        candidates.Add(merged);
-                }
-            }
-
-            return candidates;
-        }
-
-        private bool HasAllSubsets(List<string[]> frequentItemSets, string[] candidate, int subsetSize)
-        {
-            var subsets = GetSubsets(candidate, subsetSize);
-            return subsets.All(subset => frequentItemSets.Any(fs => fs.SequenceEqual(subset)));
-        }
-
-        private List<string[]> GetSubsets(string[] itemSet, int size)
-        {
-            var subsets = new List<string[]>();
-            GenerateSubsets(itemSet, size, 0, new string[size], subsets);
-            return subsets;
         }
 
         private void GenerateSubsets(string[] itemSet, int size, int start, string[] current, List<string[]> subsets)

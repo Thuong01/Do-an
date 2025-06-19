@@ -64,7 +64,6 @@ namespace Services.Services
 
             var uploadTask = new List<Task<string>>();
             uploadTask.Add(_imageService.UploadImage(create.Image, CommonExtensions.GenerateSEOTitle(create.Name), CommonExtensions.GenerateSEOTitle(create.Name)));
-
             var uploadResult = await Task.WhenAll(uploadTask);
 
             entity.Image = uploadResult[0];
@@ -72,10 +71,11 @@ namespace Services.Services
             entity.Creation_By = _httpContextAccessor.HttpContext.User.Identity.Name;
 
             var res = _repository.Add(entity);
+            var resultCommit = await _unitOfWork.CommitAsync();
 
             await _imageService.UploadMoreImage(create.MoreImage, res.ID, CommonExtensions.GenerateSEOTitle(res.Name));
             
-            return await _unitOfWork.CommitAsync();
+            return resultCommit;
         }
 
         public override async Task<ProductViewModel> GetByIdAsync(Guid id, string[] includes = null)

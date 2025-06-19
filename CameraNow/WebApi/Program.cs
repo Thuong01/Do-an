@@ -48,6 +48,8 @@ namespace WebApi
                 builder.Services.AddSerilog();
                 builder.Services.AddLogging();
 
+                builder.Services.AddMemoryCache();
+
                 builder.Services.AddCors(p => p.AddPolicy($@"{Commons.Commons.CommonConstant.AppName}.WebApi.CorsPolicy",
                     build =>
                     {

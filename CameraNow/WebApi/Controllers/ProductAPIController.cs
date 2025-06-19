@@ -48,6 +48,14 @@ namespace WebApi.Controllers
                 if (res == null)
                     return NotFound();
 
+                if (res.Images.Count() > 0)
+                {
+                    foreach (var item in res.Images)
+                    {
+                        item.Link = "https://localhost:7110/" + item.Link;
+                    }
+                }
+
                 return Ok(res);
             }
             catch (Exception ex)

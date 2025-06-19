@@ -62,6 +62,9 @@ namespace Services.ObjectMapping
             CreateMap<FeedbackImage, FeedbackImageViewModel>();
             CreateMap<FeedbackImageCreateViewModel, FeedbackImage>();
 
+            CreateMap<AppUser, AppUserViewModel>();
+            CreateMap<AppUserViewModel, AppUser>();
+
             //CreateMap<Brand, BrandViewModel>();
             //CreateMap<BrandViewModel, Brand>();
             //CreateMap<CreateBrandViewModel, Brand>();
@@ -84,7 +87,7 @@ namespace Services.ObjectMapping
 
             CreateMap<OrderDetail, OrderDetailViewModel>()
                 .ForMember(x => x.Product_Name, e => e.MapFrom(x => x.Product.Name))
-                .ForMember(x => x.Product_Image, e => e.MapFrom(x => x.Product.Image))
+                .ForMember(x => x.Product_Image, e => e.MapFrom(x => "https://localhost:7110/" + x.Product.Image))
                 .ForMember(x => x.Product_Price, e => e.MapFrom(x => x.Product.Price));
             CreateMap<OrderDetailViewModel, OrderDetail>();
             CreateMap<OrderDetailCreateViewModel, OrderDetail>();
@@ -109,7 +112,7 @@ namespace Services.ObjectMapping
             CreateMap<CartItemUpdateViewModel, CartItem>();
             CreateMap<CartItem, CartItemViewModel>()
                 .ForMember(x => x.Product_Name, e => e.MapFrom(x => x.Product.Name))
-                .ForMember(x => x.Product_Image, e => e.MapFrom(x => x.Product.Image))
+                .ForMember(x => x.Product_Image, e => e.MapFrom(x => "https://localhost:7110/" + x.Product.Image))
                 .ForMember(x => x.Product_Price, e => e.MapFrom(x => x.Product.Price))
                 .ForMember(x => x.TotalItemPrice, e => e.MapFrom(x => x.Product.Price * x.Quantity));
 

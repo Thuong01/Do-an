@@ -49,7 +49,7 @@
                         <th>@Html.DisplayNameFor(x => x.FullName)</th>
                         <th>@Html.DisplayNameFor(x => x.Email)</th>
                         <th>@Html.DisplayNameFor(x => x.PhoneNumber)</th>
-                        <th>@locService.GetLocalize("Actions")</th>
+                        <th>Quyền</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -80,33 +80,49 @@
                             <td>
                                 @Html.DisplayFor(modelItem => item.PhoneNumber)
                             </td>
-                            <td style="width: 12%">
-                                <div class="dropdown">
-                                    <a class="btn btn-primary dropdown-toggle" href="#"
-                                       role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                        @locService.GetLocalize("Actions")
-                                    </a>
+                            <td>
+                                @string.Join(", ", item.Roles)
+                            </td>
+                            @* <td style="width: 12%"> *@
+                            @*     <div class="dropdown"> *@
+                            @*         <a class="btn btn-primary dropdown-toggle" href="#" *@
+                            @*            role="button" data-bs-toggle="dropdown" aria-expanded="false"> *@
+                            @*             @locService.GetLocalize("Actions") *@
+                            @*         </a> *@
 
-                                    <ul class="dropdown-menu">
-                                        @if (!item.UserName.Equals("admin") || !item.UserName.Equals(userManager.GetUserName(User)))
-                                        {
-                                            @if (item.Id != userID)
-                                            {
-                                                <li>
-                                                    <button class="dropdown-item text-danger deleteAcc" data-id="@item.Id">
-                                                        <i class="fa-regular fa-trash me-2"></i>  @locService.GetLocalize("Delete")
-                                                    </button>
-                                                </li>
-                                            }
-                                        }
-                                        <li>
-                                            <a class="dropdown-item" asp-action="AddRoleUser" asp-controller="Role" asp-route-userId="@item.Id">
-                                                <i class="fa-regular fa-shield-keyhole me-2"></i>
-                                                @locService.GetLocalize("Permission")
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
+                            @*         <ul class="dropdown-menu"> *@
+                            @*             @if (!item.UserName.Equals("admin") || !item.UserName.Equals(userManager.GetUserName(User))) *@
+                            @*             { *@
+                            @*                 @if (item.Id != userID) *@
+                            @*                 { *@
+                            @*                     <li> *@
+                            @*                         <button class="dropdown-item text-danger deleteAcc" data-id="@item.Id"> *@
+                            @*                             <i class="fa-regular fa-trash me-2"></i>  @locService.GetLocalize("Delete") *@
+                            @*                         </button> *@
+                            @*                     </li> *@
+                            @*                 } *@
+                            @*             } *@
+                            @*             <li> *@
+                            @*                 <a class="dropdown-item" asp-action="AddRoleUser" asp-controller="Role" asp-route-userId="@item.Id"> *@
+                            @*                     <i class="fa-regular fa-shield-keyhole me-2"></i> *@
+                            @*                     @locService.GetLocalize("Permission") *@
+                            @*                 </a> *@
+                            @*             </li> *@
+                            @*         </ul> *@
+                            @*     </div> *@
+                            @* </td> *@
+
+                            <td>
+                                @if (!item.UserName.Equals("admin") || !item.UserName.Equals(userManager.GetUserName(User)))
+                                {
+                                    @if (item.Id != userID)
+                                    {
+                                        <button class="dropdown-item text-danger deleteAcc" data-id="@item.Id">
+                                            <i class="fa-regular fa-trash me-2"></i>
+                                        </button>
+                                    }
+                                }                                
+                                
                             </td>
                         </tr>
                     }

@@ -309,6 +309,8 @@ const Order = () => {
     const handleCloseVoucher = () => setShowVoucher(false);
 
     const addVoucherForOrder = (voucherId) => {
+        console.log(voucherId);
+
         setCoupon(voucherId);
         handleGetCoupon(voucherId);
         handleCloseVoucher();
@@ -472,41 +474,69 @@ const Order = () => {
                                     </table>
                                 </div>
 
-                                <div className={clsx(styles['checkout__totals'])}>
-                                    <h3>Mã giảm giá (Nếu có)</h3>
+                                <div>
+                                    {!couponData ? (
+                                        <>
+                                            <div className={clsx(styles['checkout__totals'])}>
+                                                <h3>Mã giảm giá (Nếu có)</h3>
 
-                                    <div className="form-group row mb-2">
-                                        <div className="col-md-9 col-sm-9 col-xs-9">
-                                            <input
-                                                type="text"
-                                                className="form-control field"
-                                                id="coupon_code"
-                                                name="coupon_code"
-                                                rows={5}
-                                                value={coupon}
-                                                onChange={(e) => setCoupon(e.target.value)}
-                                            />
-                                        </div>
-                                        <div className="col-md-3 col-sm-3 col-xs-3">
-                                            <input
-                                                type="button"
-                                                id="coupon_code_apply"
-                                                name="coupon_code_apply"
-                                                className="btn btn-default "
-                                                onClick={() => handleGetCoupon(coupon)}
-                                                style={{ background: '#F1AF0A' }}
-                                                defaultValue="Áp dụng"
-                                            />
-                                        </div>
-                                    </div>
+                                                <div className="form-group row mb-2">
+                                                    <div className="col-md-9 col-sm-9 col-xs-9">
+                                                        <input
+                                                            type="text"
+                                                            className="form-control field"
+                                                            id="coupon_code"
+                                                            name="coupon_code"
+                                                            rows={5}
+                                                            value={coupon}
+                                                            onChange={(e) => setCoupon(e.target.value)}
+                                                        />
+                                                    </div>
+                                                    <div className="col-md-3 col-sm-3 col-xs-3">
+                                                        <input
+                                                            type="button"
+                                                            id="coupon_code_apply"
+                                                            name="coupon_code_apply"
+                                                            className="btn btn-default "
+                                                            onClick={() => handleGetCoupon(coupon)}
+                                                            style={{ background: '#F1AF0A' }}
+                                                            defaultValue="Áp dụng"
+                                                        />
+                                                    </div>
+                                                </div>
 
-                                    <span
-                                        style={{ cursor: 'pointer' }}
-                                        className={clsx(styles['choose-ticket'])}
-                                        onClick={handleShowVoucher}
-                                    >
-                                        Xem thêm <FontAwesomeIcon icon={faChevronRight} />
-                                    </span>
+                                                <span
+                                                    style={{ cursor: 'pointer' }}
+                                                    className={clsx(styles['choose-ticket'])}
+                                                    onClick={handleShowVoucher}
+                                                >
+                                                    Xem thêm <FontAwesomeIcon icon={faChevronRight} />
+                                                </span>
+                                            </div>
+                                        </>
+                                    ) : (
+                                        <>
+                                            <div className={clsx(styles['voucher-container'])}>
+                                                <div className={clsx(styles['voucher-header'])}>
+                                                    <h3>Mã giảm giá đã áp dụng</h3>
+                                                    <button
+                                                        className={clsx(styles['remove-voucher'])}
+                                                        onClick={() => setCouponData(null)}
+                                                    >
+                                                        Xóa
+                                                    </button>
+                                                </div>
+                                                <div className={clsx(styles['voucher-body'])}>
+                                                    <div className={clsx(styles['voucher-code'])}>
+                                                        {couponData.code}
+                                                    </div>
+                                                    <div className={clsx(styles['voucher-discount'])}>
+                                                        Giảm {couponData.value}%
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </>
+                                    )}
                                 </div>
 
                                 <div className={clsx(styles['checkout__payment-methods'])}>

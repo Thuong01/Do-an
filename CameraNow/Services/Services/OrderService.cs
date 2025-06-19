@@ -71,7 +71,7 @@ namespace Services.Services
             foreach (var item in order.OrderDetails)
             {
                 var book = await _productService.GetByIdAsync(item.Product_ID);
-                totalAmount = book.Price * item.Quantity;
+                totalAmount += book.Price * item.Quantity;
             }
             if (create.Coupon_Id != null)
             {

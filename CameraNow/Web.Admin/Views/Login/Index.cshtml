@@ -15,63 +15,69 @@
     <meta name="author" content="">
     <title>CameraNow - Admin Login</title>
 
-    <!-- Favicon (camera icon would be appropriate) -->
+    <!-- Favicon -->
     <link rel="icon" href="/favicon.ico" type="image/x-icon">
 
     <!-- Fonts -->
     <link href="/lib/fontawesome-pro-6.5.1-web/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
 
     <!-- Styles -->
     <link href="/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         :root {
-            --primary-color: #3498db; /* Camera blue */
-            --secondary-color: #2c3e50; /* Dark blue */
-            --accent-color: #e74c3c; /* Red for alerts */
-            --light-gray: #f8f9fa;
-            --dark-gray: #343a40;
+            --primary-color: #e8a3a8; /* Soft pink */
+            --secondary-color: #c48f8f; /* Dusty rose */
+            --accent-color: #a8c3e8; /* Soft blue */
+            --light-color: #fff5f5; /* Very light pink */
+            --dark-color: #5d4a4a; /* Warm brown */
+            --text-color: #5d4a4a;
         }
 
         body {
-            font-family: 'Inter', sans-serif;
-            background-color: #f5f7fa;
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--light-color);
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            background-image: url('https://images.unsplash.com/photo-1516035069371-29a1b244cc32?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+            background-image: url('https://images.unsplash.com/photo-1528459801416-a9e53bbf4e17?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
+            color: var(--text-color);
         }
 
         .login-container {
             max-width: 420px;
             width: 100%;
-            background: white;
-            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 16px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
             overflow: hidden;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
         }
 
         .login-header {
-            background-color: var(--secondary-color);
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
             color: white;
-            padding: 1.5rem;
+            padding: 2rem;
             text-align: center;
             position: relative;
         }
 
             .login-header h1 {
-                font-size: 1.5rem;
+                font-family: 'Playfair Display', serif;
+                font-size: 1.8rem;
                 font-weight: 600;
                 margin: 0;
+                letter-spacing: 0.5px;
             }
 
             .login-header p {
                 font-size: 0.9rem;
-                opacity: 0.8;
+                opacity: 0.9;
                 margin: 0.5rem 0 0;
             }
 
@@ -81,33 +87,37 @@
 
         .form-control {
             height: 48px;
-            border-radius: 6px;
-            border: 1px solid #ddd;
+            border-radius: 8px;
+            border: 1px solid #e0c7c7;
             padding-left: 15px;
             transition: all 0.3s;
+            background-color: rgba(255, 255, 255, 0.8);
         }
 
             .form-control:focus {
                 border-color: var(--primary-color);
-                box-shadow: 0 0 0 0.2rem rgba(52, 152, 219, 0.25);
+                box-shadow: 0 0 0 0.2rem rgba(232, 163, 168, 0.25);
             }
 
         .form-floating label {
             padding-left: 15px;
-            color: #6c757d;
+            color: #8a7a7a;
         }
 
         .btn-login {
-            background-color: var(--primary-color);
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
             border: none;
             height: 48px;
             font-weight: 500;
-            border-radius: 6px;
+            border-radius: 8px;
             transition: all 0.3s;
+            letter-spacing: 0.5px;
         }
 
             .btn-login:hover {
-                background-color: #2980b9;
+                background: linear-gradient(135deg, #d99398, #b88080);
+                transform: translateY(-2px);
+                box-shadow: 0 4px 12px rgba(232, 163, 168, 0.3);
             }
 
         .remember-me {
@@ -117,40 +127,97 @@
 
             .remember-me input {
                 margin-right: 8px;
+                accent-color: var(--primary-color);
             }
 
         .forgot-password {
-            color: var(--primary-color);
+            color: var(--secondary-color);
             text-decoration: none;
             font-size: 0.9rem;
+            transition: all 0.3s;
         }
 
             .forgot-password:hover {
+                color: var(--primary-color);
                 text-decoration: underline;
             }
 
         .validation-summary {
-            border-radius: 6px;
+            border-radius: 8px;
             padding: 1rem;
             margin-bottom: 1.5rem;
+            background-color: rgba(232, 163, 168, 0.1);
+            border: 1px solid rgba(232, 163, 168, 0.3);
         }
 
         /* Camera icon in the header */
         .camera-icon {
-            font-size: 1.8rem;
+            font-size: 2.2rem;
             margin-bottom: 0.5rem;
-            color: var(--primary-color);
+            color: white;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
+
+        /* Floral decorations */
+        .floral-decoration {
+            position: absolute;
+            opacity: 0.1;
+            z-index: -1;
+        }
+
+            .floral-decoration.top-left {
+                top: 0;
+                left: 0;
+                transform: rotate(180deg);
+            }
+
+            .floral-decoration.bottom-right {
+                bottom: 0;
+                right: 0;
+            }
 
         /* Modal styles */
         .modal-header {
-            background-color: var(--secondary-color);
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
             color: white;
+            font-family: 'Playfair Display', serif;
         }
 
         .modal-footer .btn-primary {
-            background-color: var(--primary-color);
-            border-color: var(--primary-color);
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            border: none;
+        }
+
+        .floating {
+            animation: float 4s ease-in-out infinite;
+        }
+
+        /* Decorative elements */
+        .divider {
+            display: flex;
+            align-items: center;
+            margin: 1.5rem 0;
+        }
+
+            .divider::before, .divider::after {
+                content: "";
+                flex: 1;
+                border-bottom: 1px solid #e0c7c7;
+            }
+
+            .divider::before {
+                margin-right: 1rem;
+            }
+
+            .divider::after {
+                margin-left: 1rem;
+            }
+
+        .divider-text {
+            color: var(--secondary-color);
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
     </style>
 </head>
@@ -158,10 +225,11 @@
 <body>
     <div class="login-container">
         <div class="login-header">
-            <div class="camera-icon">
-                <i class="fas fa-camera"></i>
+            <div class="camera-icon floating">
+                <i class="fas fa-camera-retro"></i>
             </div>
             <h1>CameraNow Admin</h1>
+            <p>Capture beautiful moments</p>
         </div>
 
         <div class="login-body">

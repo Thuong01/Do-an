@@ -112,7 +112,7 @@ namespace Web.Admin
             services.AddDbContext<CameraNowContext>(option =>
             {
                 option.UseNpgsql(config.GetConnectionString("ShopthoiTrangNu"));
-            }, ServiceLifetime.Singleton);
+            });
 
             // Đăng ký các dịch vụ của Identity
             services.AddIdentity<AppUser, IdentityRole>(o =>

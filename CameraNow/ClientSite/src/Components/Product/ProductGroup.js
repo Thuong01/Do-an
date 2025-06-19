@@ -11,7 +11,7 @@ import { NavLink } from 'react-router-dom';
 const ProductGroup = ({ title, tabs = [], products = [], flag = '' }) => {
     const settings = {
         dots: false,
-        autoplay: true,
+        autoplay: false,
         autoplaySpeed: 2000,
         cssEase: 'linear',
         infinite: true,

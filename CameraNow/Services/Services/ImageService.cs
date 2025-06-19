@@ -29,6 +29,7 @@ namespace Services.Services
         public async Task UploadMoreImage(List<IFormFile> imgs, Guid product_Id, string product_Name)
         {
             var img_path = "";
+            var listImgs = new List<ProductImage>();
 
             if (imgs != null && imgs.Count() > 0) 
             {
@@ -59,8 +60,17 @@ namespace Services.Services
                         Product_Id = product_Id,
                     };
 
-                    var res = _repository.Add(_mapper.Map<ProductImage>(vm));
-                    _unitOfWork.CommitAsync();
+                    listImgs.Add(new ProductImage
+                    {
+                        Link = path,
+                        Product_Id = product_Id
+                    });
+                }
+
+                if (listImgs.Count() > 0)
+                {
+                    _repository.AddRange(listImgs);
+                    _unitOfWork.Commit();
                 }
             }
         }

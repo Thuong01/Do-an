@@ -82,12 +82,13 @@ namespace Web.Admin.Controllers
 
                 if (res != 0)
                 {
-                    TempData["Message_Info"] = "Thêm mới thành công";
-
+                    TempData["Message_Status"] = "OK";
+                    TempData["Message_Info"] = "Thêm mới thành công.";
                     return RedirectToAction(nameof(Index));
                 }
 
-                // TempData["Message_Info"] = "Thêm mới không thành công";
+                TempData["Message_Status"] = "NG";
+                TempData["Message_Info"] = "Thêm mới thất bại.";
                 return View(input);
             }
 
@@ -124,8 +125,8 @@ namespace Web.Admin.Controllers
                     return RedirectToAction(nameof(Index));
                 }
 
-                // TempData["Message_Info"] = "Chỉnh sửa thành công";
-
+                TempData["Message_Status"] = "NG";
+                TempData["Message_Info"] = "Chỉnh sửa thất bại";
                 return View(input);
             }
 

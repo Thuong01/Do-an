@@ -53,22 +53,14 @@ namespace Web.Admin.Controllers
 
             ViewBag.ProductCategories = await _categories.GetListParentAsync(new BaseSpecification(null, Status.All, "name"));
 
-            if (TempData["Message_Info"] != null && !string.IsNullOrEmpty(TempData["Message_Info"].ToString()))
+            if (TempData["Message_Status"] != null && !string.IsNullOrEmpty(TempData["Message_Status"].ToString()) && TempData["Message_Status"].ToString() == "OK")
                 _notif.Success(TempData["Message_Info"].ToString());
-
-            if (TempData["Message_Status"] != null && !string.IsNullOrEmpty(TempData["Message_Status"].ToString()))
+            else if (TempData["Message_Status"] != null && !string.IsNullOrEmpty(TempData["Message_Status"].ToString()) && TempData["Message_Status"].ToString() == "NG")
             {
-                if (TempData["Message_Status"].ToString() == "CREATE_FALSE")
-                {
-                    _notif.Error("Thêm mới sản phẩm thất bại");
-                }
-                else if (TempData["Message_Status"].ToString() == "UPDATE_FALSE")
-                {
-                    _notif.Error("Cập nhật sản phẩm thất bại");
-                }
+                _notif.Success(TempData["Message_Info"].ToString());
             }
-            TempData["Message_Status"] = "";
-            TempData["Message_Info"] = "";
+            TempData["Message_Info"] = null;
+            TempData["Message_Status"] = null;
 
             return View(res.Data);
         }
@@ -94,6 +86,7 @@ namespace Web.Admin.Controllers
 
                     if (res != 0)
                     {
+                        TempData["Message_Status"] = "OK";
                         TempData["Message_Info"] = "Thêm mới thành công";
                         return new JsonResult(new
                         {
@@ -101,7 +94,7 @@ namespace Web.Admin.Controllers
                         });
                     }
 
-                    TempData["Message_Status"] = "FALSE";
+                    TempData["Message_Status"] = "NG";
                     // TempData["Message_Info"] = "Thêm mới thất bại";
                     return new JsonResult(new
                     {
@@ -156,6 +149,7 @@ namespace Web.Admin.Controllers
 
                 if (res != null)
                 {
+                    TempData["Message_Status"] = "OK";
                     TempData["Message_Info"] = "Cập nhật thành công";
                     return new JsonResult(new
                     {
@@ -164,7 +158,8 @@ namespace Web.Admin.Controllers
                     });
                 }
 
-                TempData["Message_Success"] = "UPDATE_FALSE";
+                TempData["Message_Status"] = "NG";
+                TempData["Message_Success"] = "Cập nhật thất bại";
                 return new JsonResult(new
                 {
                     success = false,                    
@@ -190,6 +185,7 @@ namespace Web.Admin.Controllers
 
                 if (res != 0)
                 {
+                    TempData["Message_Status"] = "OK";
                     TempData["Message_Info"] = "Xóa thành công";
                     return Json(new
                     {
@@ -206,6 +202,7 @@ namespace Web.Admin.Controllers
             }
             catch (Exception ex)
             {
+                TempData["Message_Status"] = "NG";
                 TempData["Message_Info"] = "Xóa không thành công";
 
                 return Json(new
@@ -231,6 +228,7 @@ namespace Web.Admin.Controllers
 
                 if (res != 0)
                 {
+                    TempData["Message_Status"] = "OK";
                     TempData["Message_Info"] = $"Xóa {ids.Count} sản phẩm thành công";
                     return Json(new
                     {
@@ -248,6 +246,7 @@ namespace Web.Admin.Controllers
             }
             catch (Exception ex)
             {
+                TempData["Message_Status"] = "NG";
                 TempData["Message_Info"] = "Xóa không thành công";
 
                 return Json(new

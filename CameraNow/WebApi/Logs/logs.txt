@@ -4881,3 +4881,21 @@ System.InvalidOperationException: An exception has been raised that is likely du
    at WebApi.Controllers.ProductAPIController.GetList(ProductSpecification spec, PaginatedParams pageParams) in D:\Workspaces\DoAnCuaThuong\Do-an\CameraNow\WebApi\Controllers\ProductAPIController.cs:line 29
 2025-06-12 21:34:45.410 +07:00 [ERR] Error ProductController ==> An exception has been raised that is likely due to a transient failure.
 2025-06-12 21:34:45.410 +07:00 [ERR] Error ProductController ==> An exception has been raised that is likely due to a transient failure.
+2025-06-19 00:38:27.332 +07:00 [FTL] CameraNow.WebApi terminated unexpectedly!
+System.AggregateException: Some services are not able to be constructed (Error while validating the service descriptor 'ServiceType: Services.Services.AprioriService Lifetime: Scoped ImplementationType: Services.Services.AprioriService': Unable to resolve service for type 'Microsoft.Extensions.Caching.Memory.IMemoryCache' while attempting to activate 'Services.Services.AprioriService'.)
+ ---> System.InvalidOperationException: Error while validating the service descriptor 'ServiceType: Services.Services.AprioriService Lifetime: Scoped ImplementationType: Services.Services.AprioriService': Unable to resolve service for type 'Microsoft.Extensions.Caching.Memory.IMemoryCache' while attempting to activate 'Services.Services.AprioriService'.
+ ---> System.InvalidOperationException: Unable to resolve service for type 'Microsoft.Extensions.Caching.Memory.IMemoryCache' while attempting to activate 'Services.Services.AprioriService'.
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateArgumentCallSites(ServiceIdentifier serviceIdentifier, Type implementationType, CallSiteChain callSiteChain, ParameterInfo[] parameters, Boolean throwIfCallSiteNotFound)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateConstructorCallSite(ResultCache lifetime, ServiceIdentifier serviceIdentifier, Type implementationType, CallSiteChain callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.TryCreateExact(ServiceDescriptor descriptor, ServiceIdentifier serviceIdentifier, CallSiteChain callSiteChain, Int32 slot)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.GetCallSite(ServiceDescriptor serviceDescriptor, CallSiteChain callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider.ValidateService(ServiceDescriptor descriptor)
+   --- End of inner exception stack trace ---
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider.ValidateService(ServiceDescriptor descriptor)
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider..ctor(ICollection`1 serviceDescriptors, ServiceProviderOptions options)
+   --- End of inner exception stack trace ---
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider..ctor(ICollection`1 serviceDescriptors, ServiceProviderOptions options)
+   at Microsoft.Extensions.DependencyInjection.ServiceCollectionContainerBuilderExtensions.BuildServiceProvider(IServiceCollection services, ServiceProviderOptions options)
+   at Microsoft.Extensions.Hosting.HostApplicationBuilder.Build()
+   at Microsoft.AspNetCore.Builder.WebApplicationBuilder.Build()
+   at WebApi.Program.Main(String[] args) in D:\Workspaces\DoAnCuaThuong\Do-an\CameraNow\WebApi\Program.cs:line 194

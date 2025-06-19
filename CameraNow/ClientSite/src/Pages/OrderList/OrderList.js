@@ -381,23 +381,29 @@ const OrderList = () => {
     };
 
     const handleSubmitFeedback = async (feedbackData) => {
-        orders?.forEach((ord) => {
-            if (ord.id == orderNeedFb) {
-                ord?.orderDetails?.forEach((item) => {
-                    feedbackData.product_ID = item.product_ID;
+        try {
+            console.log(feedbackData);
 
-                    CreateProductFeedback(feedbackData);
+            orders?.forEach((ord) => {
+                if (ord.id == orderNeedFb) {
+                    ord?.orderDetails?.forEach((item) => {
+                        feedbackData.product_ID = item.product_ID;
+                        feedbackData.order_ID = orderNeedFb;
 
-                    console.log('Đánh giá gửi lên:', feedbackData);
-                    // await SendFeedback(feedbackData); // gọi API thực tế nếu có
-                    CustomToast.success('Gửi đánh giá thành công!');
-                    setShowFeedbackModal(false);
-                });
+                        CreateProductFeedback(feedbackData);
+                        GetOrders();
+                        // await SendFeedback(feedbackData); // gọi API thực tế nếu có
+                        CustomToast.success('Gửi đánh giá thành công!');
+                        setShowFeedbackModal(false);
+                    });
 
-                setOrderNeedDb('');
-                return;
-            }
-        });
+                    setOrderNeedDb('');
+                    return;
+                }
+            });
+        } catch {
+            CustomToast.error('Gửi đánh giá thất bại!');
+        }
     };
 
     return (

@@ -12,22 +12,9 @@ namespace WebApi.Controllers
     public class RecommendationController : ControllerBase
     {
         private readonly AprioriService _aprioriService;
-        private List<string[]> _transactions; // Dữ liệu giao dịch từ database
 
         public RecommendationController(AprioriService aprioriService, IProductService productService)
         {
-            // Giả lập dữ liệu giao dịch (thay bằng dữ liệu thực từ database)
-            _transactions = new List<string[]>
-            {
-                new[] { "Áo vest", "Cà vạt", "Quần tây", "Áo sơ mi trắng", "Thắt lưng" },
-                new[] { "Áo vest", "Cà vạt", "Quần tây" },
-                new[] { "Áo vest", "Áo sơ mi trắng", "Thắt lưng" },
-                new[] { "Áo thun", "Quần short", "Áo sơ mi ngắn tay" },
-                new[] { "Áo thun", "Quần short" },
-                new[] { "Giày", "Tất chân", "Đồ dùng đánh giày" },
-                new[] { "Giày", "Tất chân" },
-                // Thêm các giao dịch khác...
-            };
             _aprioriService = aprioriService;
             _productService = productService;
         }
@@ -46,25 +33,44 @@ namespace WebApi.Controllers
         [HttpGet("recommendations/product-recomments/{productId}")]
         public async Task<IActionResult> GetProductRecommendations(Guid productId, [FromQuery] int limit = 5)
         {
-            // Lấy tất cả các luật kết hợp
-            var rules = _aprioriService.GenerateAssociationRules(0.3); // minConfidence = 70%
+            try
+            {
+                var minConfidence = 0.3;
 
-            // Lọc các luật có productId trong antecedent
-            var relevantRules = rules
-                .Where(r => r.Antecedent.Contains(productId))
-                .OrderByDescending(r => r.Confidence)
-                .ThenByDescending(r => r.Support)
-                .Take(limit)
-                .ToList();
+                // Lấy các luật kết hợp (có thể cache kết quả này)
+                var rules = await _aprioriService.GetCachedAssociationRulesAsync(minConfidence); // minConfidence = 70%
 
+                // Lọc và sắp xếp các luật liên quan
+                var relevantRules = rules
+                    .Where(r => r.Antecedent.Contains(productId))
+                    .OrderByDescending(r => r.Confidence)
+                    .ThenByDescending(r => r.Support)
+                    .Take(limit)
+                    .ToList();
 
-            // Lấy thông tin sản phẩm gợi ý
-            var recommendedProductIds = relevantRules
-                .SelectMany(r => r.Consequent)
-                .Distinct()
-                .ToList();
+                //if (!relevantRules.Any())
+                //{
+                //    // Fallback: trả về sản phẩm bán chạy nếu không có gợi ý
+                //    var popularProducts = await _productService.GetPopularProductsAsync(limit);
+                //    return Ok(new ResponseMessage
+                //    {
+                //        Success = true,
+                //        Result = new
+                //        {
+                //            ProductId = productId,
+                //            Recommendations = popularProducts,
+                //            Rules = Array.Empty<object>()
+                //        }
+                //    });
+                //}
 
-            var recommendedProducts = _productService.GetAllAsync().Result
+                // Lấy thông tin sản phẩm gợi ý
+                var recommendedProductIds = relevantRules
+                    .SelectMany(r => r.Consequent)
+                    .Distinct()
+                    .ToList();
+
+                var recommendedProducts = _productService.GetAllAsync().Result
                     .Where(p => recommendedProductIds.Contains(p.ID))
                     .Select(p => new
                     {
@@ -74,24 +80,35 @@ namespace WebApi.Controllers
                         p.Price,
                         p.Promotion_Price,
                         p.Rating
-                    });
-
-            return Ok(new ResponseMessage
-            {
-                Success = true,
-                Result = new
-                {
-                    ProductId = productId,
-                    Recommendations = recommendedProducts,
-                    Rules = relevantRules.Select(r => new
-                    {
-                        Antecedent = r.Antecedent,
-                        Consequent = r.Consequent,
-                        Confidence = r.Confidence,
-                        Support = r.Support
                     })
-                }
-            });
+                    .OrderByDescending(p => p.Rating) // Sắp xếp thêm theo rating
+                    .ThenByDescending(p => p.Promotion_Price.HasValue); // Ưu tiên sản phẩm có khuyến mãi
+
+                return Ok(new ResponseMessage
+                {
+                    Success = true,
+                    Result = new
+                    {
+                        ProductId = productId,
+                        Recommendations = recommendedProducts,
+                        Rules = relevantRules.Select(r => new
+                        {
+                            Antecedent = r.Antecedent,
+                            Consequent = r.Consequent,
+                            Confidence = r.Confidence,
+                            Support = r.Support
+                        })
+                    }
+                });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new ResponseMessage
+                {
+                    Success = false,
+                    Result = "An error occurred while processing your request"
+                });
+            }
         }
 
         // Endpoint để cập nhật/cải thiện luật
