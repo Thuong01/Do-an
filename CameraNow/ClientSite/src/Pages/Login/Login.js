@@ -7,18 +7,22 @@ import { userLogin } from '../../Redux/Actions/authAction';
 import { NavLink, useNavigate } from 'react-router-dom';
 import CustomToast from '../../Untils/CustomToast';
 
+// Màu chủ đạo và bảng màu phối hợp
+const primaryColor = '#c9f0d6';
+const primaryDark = '#a8d8bb';
+const primaryLight = '#e8f8ee';
+const textColor = '#2a4a3a';
+const secondaryColor = '#f0f7f3';
+
 // Styled Components
 const LoginContainer = styled.div`
-    background: linear-gradient(rgba(0, 0, 0, 0.5)),
-        url('https://images.unsplash.com/photo-1516035069371-29a1b244cc32?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
-    background-size: cover;
-    background-position: center;
+    background: linear-gradient(to bottom, ${primaryLight}, white);
     min-height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
     padding: 20px;
-    font-family: 'Inter', sans-serif;
+    font-family: 'Montserrat', sans-serif;
 `;
 
 const LoginWrapper = styled.div`
@@ -29,7 +33,7 @@ const LoginWrapper = styled.div`
 const LoginMain = styled.div`
     background: white;
     border-radius: 16px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 10px 30px rgba(42, 74, 58, 0.1);
     overflow: hidden;
     display: flex;
     min-height: 600px;
@@ -44,36 +48,36 @@ const LoginColumn = styled.div`
     position: relative;
 
     &:first-child {
-        background-color: #f8f9fa;
-        background-image: url('https://images.unsplash.com/photo-1510127034890-ba27508e9f1c?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+        background: linear-gradient(rgba(42, 74, 58, 0.7), rgba(42, 74, 58, 0.7)),
+            url('https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
         background-size: cover;
         background-position: center;
         color: white;
-
-        &::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.6);
-        }
     }
 `;
 
 const LoginHeader = styled.h1`
     text-align: center;
-    color: #2c3e50;
+    color: ${textColor};
     font-size: 32px;
     margin-bottom: 30px;
-    font-weight: 700;
+    font-weight: 600;
     position: relative;
+
+    &:after {
+        content: '';
+        display: block;
+        width: 80px;
+        height: 3px;
+        background: ${primaryColor};
+        margin: 15px auto 0;
+        border-radius: 3px;
+    }
 `;
 
 const CameraIcon = styled.div`
     font-size: 40px;
-    color: #3498db;
+    color: ${primaryColor};
     margin-bottom: 20px;
     text-align: center;
 `;
@@ -88,11 +92,13 @@ const WelcomeText = styled.div`
         color: white;
         font-size: 28px;
         margin-bottom: 15px;
+        font-weight: 500;
     }
 
     p {
         font-size: 16px;
         line-height: 1.6;
+        opacity: 0.9;
     }
 `;
 
@@ -109,16 +115,16 @@ const FormGroup = styled.div`
 const FormInput = styled.input`
     width: 100%;
     padding: 15px 20px;
-    border: 1px solid #e0e0e0;
-    border-radius: 8px;
+    border: 1px solid #e0e8e3;
+    border-radius: 10px;
     font-size: 16px;
     transition: all 0.3s;
-    background-color: #f8f9fa;
+    background-color: ${secondaryColor};
 
     &:focus {
-        border-color: #3498db;
+        border-color: ${primaryColor};
         outline: none;
-        box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+        box-shadow: 0 0 0 3px rgba(201, 240, 214, 0.3);
         background-color: white;
     }
 `;
@@ -127,11 +133,13 @@ const FormLabel = styled.label`
     position: absolute;
     top: 15px;
     left: 20px;
-    color: #7f8c8d;
+    color: ${textColor};
+    opacity: 0.7;
     transition: all 0.3s;
     pointer-events: none;
-    background-color: #f8f9fa;
+    background-color: ${secondaryColor};
     padding: 0 5px;
+    font-size: 14px;
 
     ${FormInput}:focus + &,
     ${FormInput}:not(:placeholder-shown) + & {
@@ -139,7 +147,8 @@ const FormLabel = styled.label`
         left: 15px;
         font-size: 12px;
         background-color: white;
-        color: #3498db;
+        color: ${textColor};
+        opacity: 1;
     }
 `;
 
@@ -153,47 +162,50 @@ const ShowPassword = styled.span`
     top: 50%;
     transform: translateY(-50%);
     cursor: pointer;
-    color: #95a5a6;
+    color: #b0c8ba;
 
     &:hover {
-        color: #3498db;
+        color: ${textColor};
     }
 `;
 
 const ForgotPassword = styled.p`
     text-align: right;
-    color: #7f8c8d;
+    color: ${textColor};
+    opacity: 0.7;
     font-size: 14px;
     cursor: pointer;
     margin-top: -15px;
+    transition: all 0.3s;
 
     &:hover {
-        color: #3498db;
+        color: ${textColor};
+        opacity: 1;
         text-decoration: underline;
     }
 `;
 
 const SubmitButton = styled.button`
-    background-color: #3498db;
-    color: white;
+    background-color: ${primaryColor};
+    color: ${textColor};
     border: none;
     padding: 16px;
-    border-radius: 8px;
+    border-radius: 10px;
     font-size: 16px;
     font-weight: 600;
     cursor: pointer;
     transition: all 0.3s;
     margin-top: 10px;
-    box-shadow: 0 4px 6px rgba(52, 152, 219, 0.2);
+    border: 1px solid ${primaryDark};
 
     &:hover {
-        background-color: #2980b9;
+        background-color: ${primaryDark};
         transform: translateY(-2px);
-        box-shadow: 0 6px 8px rgba(52, 152, 219, 0.3);
+        box-shadow: 0 4px 10px rgba(42, 74, 58, 0.1);
     }
 
     &:disabled {
-        background-color: #bdc3c7;
+        background-color: #d0e0d6;
         cursor: not-allowed;
         transform: none;
         box-shadow: none;
@@ -201,8 +213,9 @@ const SubmitButton = styled.button`
 `;
 
 const RegisterPrompt = styled.h3`
-    color: #2c3e50;
-    font-size: 18px;
+    color: ${textColor};
+    opacity: 0.8;
+    font-size: 16px;
     margin-bottom: 25px;
     text-align: center;
     font-weight: 500;
@@ -211,19 +224,19 @@ const RegisterPrompt = styled.h3`
 const RegisterButton = styled(NavLink)`
     display: block;
     text-align: center;
-    background-color: #2c3e50;
-    color: white;
+    background-color: white;
+    color: ${textColor};
     padding: 16px;
-    border-radius: 8px;
+    border-radius: 10px;
     text-decoration: none;
     font-weight: 600;
     transition: all 0.3s;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border: 1px solid ${primaryColor};
 
     &:hover {
-        background-color: #1a252f;
+        background-color: ${primaryLight};
         transform: translateY(-2px);
-        box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+        box-shadow: 0 4px 10px rgba(42, 74, 58, 0.1);
     }
 `;
 
@@ -243,11 +256,11 @@ const DialogOverlay = styled.div`
 const Dialog = styled.div`
     background: white;
     padding: 30px;
-    border-radius: 12px;
+    border-radius: 16px;
     width: 450px;
     max-width: 90%;
     position: relative;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 10px 30px rgba(42, 74, 58, 0.2);
 `;
 
 const CloseButton = styled.button`
@@ -257,19 +270,23 @@ const CloseButton = styled.button`
     background: none;
     border: none;
     cursor: pointer;
-    color: #7f8c8d;
+    color: ${textColor};
+    opacity: 0.7;
     font-size: 20px;
+    transition: all 0.3s;
 
     &:hover {
-        color: #e74c3c;
+        opacity: 1;
+        color: ${primaryColor};
     }
 `;
 
 const DialogTitle = styled.h3`
-    color: #2c3e50;
+    color: ${textColor};
     font-size: 24px;
     margin-bottom: 20px;
     text-align: center;
+    font-weight: 600;
 `;
 
 const Login = () => {

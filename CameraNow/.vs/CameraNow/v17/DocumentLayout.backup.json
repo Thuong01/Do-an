@@ -120,7 +120,7 @@
               "RelativeDocumentMoniker": "Services\\Services\\OrderService.cs",
               "ToolTip": "D:\\Workspaces\\DoAnCuaThuong\\Do-an\\CameraNow\\Services\\Services\\OrderService.cs",
               "RelativeToolTip": "Services\\Services\\OrderService.cs",
-              "ViewState": "AgIAAD4AAAAAAAAAAAAkwEYAAAAMAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-06-19T15:10:37.482Z",
               "EditorCaption": ""
@@ -135,8 +135,7 @@
               "RelativeToolTip": "WebApi\\Controllers\\ProductRecommendationController.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAATAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-18T16:58:49.99Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-18T16:58:49.99Z"
             },
             {
               "$type": "Document",
@@ -148,8 +147,7 @@
               "RelativeToolTip": "WebApi\\Controllers\\ProductAPIController.cs",
               "ViewState": "AgIAACEAAAAAAAAAAAAkwDYAAAAlAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-18T16:57:22.333Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-18T16:57:22.333Z"
             },
             {
               "$type": "Document",
@@ -173,8 +171,7 @@
               "RelativeToolTip": "WebApi\\Program.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAARAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-18T15:59:23.551Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-18T15:59:23.551Z"
             },
             {
               "$type": "Document",
@@ -186,8 +183,7 @@
               "RelativeToolTip": "Web.Admin\\Controllers\\ProductController.cs",
               "ViewState": "AgIAAP8AAAAAAAAAAAAkwAoBAAApAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-17T16:14:33.306Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-17T16:14:33.306Z"
             },
             {
               "$type": "Document",
@@ -199,8 +195,7 @@
               "RelativeToolTip": "Services\\ObjectMapping\\AutoMapperProfile.cs",
               "ViewState": "AgIAAE4AAAAAAAAAAAAQwFkAAABhAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-17T17:31:30.08Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-17T17:31:30.08Z"
             },
             {
               "$type": "Document",

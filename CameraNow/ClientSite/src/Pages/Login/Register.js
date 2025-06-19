@@ -10,12 +10,9 @@ import { RegisterService } from '../../Services/UserService';
 import { setLoading } from '../../Redux/Slices/LoadingSlice';
 import CustomToast from '../../Untils/CustomToast';
 
-// Styled Components
+// Styled Components with c9f0d6 color scheme
 const RegisterContainer = styled.div`
-    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.7)),
-        url('https://images.unsplash.com/photo-1516035069371-29a1b244cc32?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
-    background-size: cover;
-    background-position: center;
+    background-color: #f5fbf8;
     min-height: 100vh;
     display: flex;
     justify-content: center;
@@ -32,10 +29,11 @@ const RegisterWrapper = styled.div`
 const RegisterCard = styled.div`
     background: white;
     border-radius: 16px;
-    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 15px 40px rgba(201, 240, 214, 0.3);
     padding: 50px;
     position: relative;
     overflow: hidden;
+    border: 1px solid #e0f0e8;
 
     @media (max-width: 768px) {
         padding: 30px;
@@ -44,14 +42,14 @@ const RegisterCard = styled.div`
 
 const CameraIcon = styled.div`
     font-size: 40px;
-    color: #3498db;
+    color: #c9f0d6;
     text-align: center;
     margin-bottom: 20px;
 `;
 
 const RegisterHeader = styled.h1`
     text-align: center;
-    color: #2c3e50;
+    color: #2d6a4f;
     font-size: 32px;
     margin-bottom: 30px;
     font-weight: 700;
@@ -62,7 +60,7 @@ const RegisterHeader = styled.h1`
         display: block;
         width: 80px;
         height: 4px;
-        background: #3498db;
+        background: #c9f0d6;
         margin: 15px auto 0;
         border-radius: 2px;
     }
@@ -88,7 +86,7 @@ const FormLabel = styled.label`
     display: block;
     margin-bottom: 10px;
     font-size: 14px;
-    color: #2c3e50;
+    color: #2d6a4f;
     font-weight: 500;
 
     span {
@@ -99,21 +97,26 @@ const FormLabel = styled.label`
 const StyledField = styled(Field)`
     width: 100%;
     padding: 14px 16px;
-    border: 1px solid #e0e0e0;
+    border: 1px solid #e0f0e8;
     border-radius: 8px;
     font-size: 15px;
     transition: all 0.3s;
-    background-color: #f8f9fa;
+    background-color: #f8fcfb;
+    color: #2d6a4f;
 
     &:focus {
-        border-color: #3498db;
+        border-color: #c9f0d6;
         outline: none;
-        box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+        box-shadow: 0 0 0 3px rgba(201, 240, 214, 0.3);
         background-color: white;
     }
 
     &[type='password'] {
         padding-right: 45px;
+    }
+
+    &::placeholder {
+        color: #95b8a6;
     }
 `;
 
@@ -123,14 +126,14 @@ const PasswordToggle = styled.button`
     top: 50%;
     background: none;
     border: none;
-    color: #95a5a6;
+    color: #95b8a6;
     cursor: pointer;
     font-size: 16px;
     transition: all 0.3s;
     transform: translateY(-50%);
 
     &:hover {
-        color: #3498db;
+        color: #2d6a4f;
     }
 `;
 
@@ -143,8 +146,8 @@ const ErrorText = styled(ErrorMessage)`
 
 const SubmitButton = styled.button`
     width: 100%;
-    background-color: #3498db;
-    color: white;
+    background-color: #c9f0d6;
+    color: #2d6a4f;
     border: none;
     padding: 16px;
     border-radius: 8px;
@@ -153,16 +156,17 @@ const SubmitButton = styled.button`
     cursor: pointer;
     transition: all 0.3s;
     margin-top: 20px;
-    box-shadow: 0 4px 6px rgba(52, 152, 219, 0.2);
+    box-shadow: 0 4px 6px rgba(201, 240, 214, 0.4);
 
     &:hover {
-        background-color: #2980b9;
+        background-color: #b0e0c6;
         transform: translateY(-2px);
-        box-shadow: 0 6px 8px rgba(52, 152, 219, 0.3);
+        box-shadow: 0 6px 8px rgba(201, 240, 214, 0.5);
     }
 
     &:disabled {
-        background-color: #bdc3c7;
+        background-color: #e0f0e8;
+        color: #95b8a6;
         cursor: not-allowed;
         transform: none;
         box-shadow: none;
@@ -173,7 +177,7 @@ const LoginPrompt = styled.div`
     text-align: center;
     margin-top: 35px;
     padding-top: 25px;
-    border-top: 1px solid #eee;
+    border-top: 1px solid #e0f0e8;
 `;
 
 const LoginText = styled.h3`
@@ -186,18 +190,18 @@ const LoginText = styled.h3`
 const LoginLink = styled(NavLink)`
     display: inline-block;
     padding: 14px 30px;
-    background-color: #2c3e50;
+    background-color: #2d6a4f;
     color: white;
     border-radius: 8px;
     text-decoration: none;
     font-weight: 600;
     transition: all 0.3s;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 6px rgba(45, 106, 79, 0.1);
 
     &:hover {
-        background-color: #1a252f;
+        background-color: #1f4e3a;
         transform: translateY(-2px);
-        box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+        box-shadow: 0 6px 8px rgba(45, 106, 79, 0.15);
     }
 `;
 
@@ -205,7 +209,7 @@ const OrDivider = styled.div`
     position: relative;
     margin: 25px 0;
     text-align: center;
-    color: #95a5a6;
+    color: #95b8a6;
 
     &:before {
         content: '';
@@ -214,7 +218,7 @@ const OrDivider = styled.div`
         left: 0;
         right: 0;
         height: 1px;
-        background: #eee;
+        background: #e0f0e8;
         z-index: -1;
     }
 
