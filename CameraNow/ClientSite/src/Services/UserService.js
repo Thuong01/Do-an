@@ -5,7 +5,7 @@ const getUserInforService = () => {
 };
 
 const RegisterService = ({ userName, email, fullName, password, address, phoneNumber, confirmPassword }) => {
-    return axios.post('https://localhost:7089/api/LoginAPI/register', {
+    return axios.post('https://localhost:7085/api/LoginAPI/register', {
         userName,
         email,
         fullName,
