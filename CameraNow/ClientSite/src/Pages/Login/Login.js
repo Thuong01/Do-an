@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { userLogin } from '../../Redux/Actions/authAction';
 import { NavLink, useNavigate } from 'react-router-dom';
 import CustomToast from '../../Untils/CustomToast';
+import loginbanner from '../../assets/imgs/login_banner.jpg';
 
 // Màu chủ đạo và bảng màu phối hợp
 const primaryColor = '#c9f0d6';
@@ -48,8 +49,7 @@ const LoginColumn = styled.div`
     position: relative;
 
     &:first-child {
-        background: linear-gradient(rgba(42, 74, 58, 0.7), rgba(42, 74, 58, 0.7)),
-            url('https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+        background: linear-gradient(rgba(42, 74, 58, 0.7), rgba(42, 74, 58, 0.7)), url('${loginbanner}');
         background-size: cover;
         background-position: center;
         color: white;

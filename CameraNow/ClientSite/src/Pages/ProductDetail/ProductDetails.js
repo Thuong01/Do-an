@@ -8,11 +8,11 @@ import './ProductDetails.scss';
 import { FormatLongDate, FormatLongDateTime, FormatPrice } from '../../Untils/CommonUntil';
 import { useContext, useEffect, useRef, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEnvelope, faShoppingCart, faStar, faStarHalfStroke } from '@fortawesome/free-solid-svg-icons';
+import { faEnvelope, faFire, faShoppingCart, faStar, faStarHalfStroke } from '@fortawesome/free-solid-svg-icons';
 import { faStar as faStarRegular } from '@fortawesome/free-regular-svg-icons';
 import { faStar as faStarO } from '@fortawesome/free-regular-svg-icons';
 import { faFacebookF, faGooglePlus, faTwitter } from '@fortawesome/free-brands-svg-icons';
-import { Tab, Tabs } from 'react-bootstrap';
+import { Col, Row, Tab, Tabs } from 'react-bootstrap';
 import ProductGroup from '../../Components/Product/ProductGroup';
 import BreadCrumb from '../../Components/BreadCrumb';
 import { useDispatch, useSelector } from 'react-redux';
@@ -29,6 +29,7 @@ import { GetProductFeedback } from '../../Services/FeedbackService';
 import CustomToast from '../../Untils/CustomToast';
 import Product from '../../Components/Product/Product';
 import useTitle from '../../Context/useTitle';
+import RecommendationModal from './RecommendationModal';
 
 const ProductDetails = () => {
     const dispatch = useDispatch();
@@ -61,6 +62,8 @@ const ProductDetails = () => {
     const [fbPageSize, setFbPageSize] = useState(10);
     const navigate = useNavigate();
     const [recomments, setRecomments] = useState([]);
+    const [recommentsCart, setRecommentsCart] = useState([]);
+    const [showRecommendationModal, setShowRecommendationModal] = useState(false);
 
     const [sizeQuantity, setSizeQuantity] = useState(0);
     useTitle('Chi tiết sản phẩm');
@@ -94,9 +97,13 @@ const ProductDetails = () => {
         }
     };
 
-    const fetchRecommentsProducts = async () => {
-        const res = await RecommentsProducts({ product_id: id });
-        setRecomments(res?.data?.result?.recommendations);
+    const fetchRecommentsProducts = async (cartData_yn = false) => {
+        const res = await RecommentsProducts({ product_id: id, useCartData: cartData_yn });
+        if (!cartData_yn) {
+            setRecomments(res?.data?.result?.recommendations);
+        } else {
+            setRecommentsCart(res?.data?.result?.recommendations);
+        }
     };
 
     const fetchProductFeedback = async () => {
@@ -137,39 +144,6 @@ const ProductDetails = () => {
         setMainImg(mainImgSliderRef);
         setSecondImg(secondImgSliderRef);
     }, []);
-
-    const productMainImgSettings = {
-        dots: false,
-        infinite: true,
-        speed: 300,
-        asNavFor: secondImg,
-        arrows: true,
-        fade: true,
-        slidesToShow: 1,
-        slidesToScroll: 1,
-    };
-
-    const productSecondImgSettings = {
-        slidesToShow: 3,
-        slidesToScroll: 1,
-        arrows: true,
-        centerMode: true,
-        focusOnSelect: true,
-        asNavFor: mainImg,
-        centerPadding: 0,
-        vertical: true,
-        swipeToSlide: true,
-        responsive: [
-            {
-                breakpoint: 991,
-                settings: {
-                    vertical: false,
-                    arrows: false,
-                    dots: true,
-                },
-            },
-        ],
-    };
 
     function ChangeQuantity(type) {
         setQuantity((prevVal) => {
@@ -244,6 +218,12 @@ const ProductDetails = () => {
     useEffect(() => {
         scrollThumbnailIntoView(currentIndex);
     }, [currentIndex]);
+
+    const handleAddToCartWithRecommendation = (productId, cartId, quantity, auth, callback) => {
+        setShowRecommendationModal(true);
+        fetchRecommentsProducts(true);
+        handleAddToCart(productId, cartId, quantity, auth);
+    };
 
     return (
         <div>
@@ -444,7 +424,12 @@ const ProductDetails = () => {
                                         <div className="add-to-cart me-3">
                                             <button
                                                 onClick={() =>
-                                                    handleAddToCart(product?.id, user?.cartId, quantity, auth)
+                                                    handleAddToCartWithRecommendation(
+                                                        product?.id,
+                                                        user?.cartId,
+                                                        quantity,
+                                                        auth,
+                                                    )
                                                 }
                                                 className={clsx('add-to-cart-btn1')}
                                             >
@@ -630,25 +615,41 @@ const ProductDetails = () => {
                     </div>
                 </div>
 
-                <div className="section">
-                    {recomments.length > 0 ? (
-                        <>
-                            <div className="container">
-                                <p>Gợi ý sản phẩm đi kèm</p>
-
-                                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: '1rem' }}>
-                                    {recomments.map((i, ind) => (
-                                        <div>
-                                            <Product key={ind} product={i} />
-                                        </div>
-                                    ))}
-                                </div>
+                <div className="section recommendation-section">
+                    {recomments.length > 0 && (
+                        <div className="container">
+                            <div className="section-header mb-4">
+                                <h3 className="section-title position-relative d-inline-block">
+                                    <FontAwesomeIcon icon={faFire} className="text-danger me-2" />
+                                    Sản phẩm thường được mua cùng
+                                    <span className="position-absolute bottom-0 start-0 w-100"></span>
+                                </h3>
+                                <p className="text-muted mt-2">
+                                    Những sản phẩm khách hàng thường mua kèm với sản phẩm này
+                                </p>
                             </div>
-                        </>
-                    ) : (
-                        <></>
+
+                            <Row className="g-3">
+                                {recomments.map((product) => (
+                                    <Col key={product.id} xs={12} sm={6} md={4} lg={3} xl={3}>
+                                        <Product product={product} compactMode={true} />
+                                    </Col>
+                                ))}
+                            </Row>
+                        </div>
                     )}
                 </div>
+
+                <RecommendationModal
+                    show={showRecommendationModal}
+                    onHide={() => setShowRecommendationModal(false)}
+                    recommendations={recommentsCart}
+                    handleAddToCart={(productId, callback) =>
+                        handleAddToCartWithRecommendation(productId, user?.cartId, 1, auth, callback)
+                    }
+                    currentProduct={product}
+                    navigate={navigate}
+                />
 
                 <div className="section">
                     <div className="container">

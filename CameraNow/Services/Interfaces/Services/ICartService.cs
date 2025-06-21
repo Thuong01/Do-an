@@ -11,5 +11,6 @@ namespace Services.Interfaces.Services
         Task<int> UpdateAsync(Guid cartId, Guid productId, int quantity);
         Task<int> DeleteAsync(string userId, Guid cartId, Guid productId);
         Task<Guid> GetCartId(string userId);
+        List<List<Guid>> GetCartsData();
     }
 }

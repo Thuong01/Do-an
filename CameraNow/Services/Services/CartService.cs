@@ -5,6 +5,7 @@ using Datas.ViewModels.Cart;
 using Models.Models;
 using Services.Interfaces.Repositories;
 using Services.Interfaces.Services;
+using Services.Repositories;
 
 namespace Services.Services
 {
@@ -21,6 +22,11 @@ namespace Services.Services
             _cartItemRepository = cartItemRepository;
             _unitOfWork = unitOfWork;
             _mapper = mapper;
+        }
+
+        public List<List<Guid>> GetCartsData()
+        {
+            return _cartRepository.GetCartsData().Result;
         }
 
         public async Task<int> CreateAsync(CartItemCreateViewModel create, string userId)

@@ -36,7 +36,6 @@ const HotDeal = () => {
                                     </li>
                                 </ul>
                                 <h2 className="text-uppercase">Ưu đãi hót trong hôm nay</h2>
-                                <p>Sản phẩm mới giảm 50%</p>
                                 <a className="primary-btn cta-btn" href="#">
                                     Mua sắm ngay
                                 </a>

@@ -24,7 +24,7 @@ const Product = ({ product, flag = '' }) => {
                 <div className={clsx('product-label')}>
                     {/* <span className={clsx('sale')}>-30%</span> */}
                     {flag === 'NEW' ? (
-                        <span className={clsx('new')}>NEW</span>
+                        <span className={clsx('new')}>MỚI</span>
                     ) : flag === 'HOT' ? (
                         <span className={clsx('new')}>HOT</span>
                     ) : (

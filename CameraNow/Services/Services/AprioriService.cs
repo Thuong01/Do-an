@@ -6,16 +6,18 @@ namespace Services.Services
     public class AprioriService
     {
         private readonly IOrderService _orderService;
+        private readonly ICartService _cartService;
         private readonly IMemoryCache _cache;
         private static readonly SemaphoreSlim _cacheLock = new SemaphoreSlim(1, 1);
 
-        public AprioriService(IOrderService orderService, IMemoryCache cache)
+        public AprioriService(IOrderService orderService, IMemoryCache cache, ICartService cartService)
         {
             _orderService = orderService;
+            _cartService = cartService;
             _cache = cache;
         }
 
-        public async Task<List<AssociationRule>> GetCachedAssociationRulesAsync(double minConfidence)
+        public async Task<List<AssociationRule>> GetCachedAssociationRulesAsync(double minConfidence, bool useCartData = false)
         {
             var cacheKey = $"AprioriRules_{minConfidence}";
 
@@ -34,7 +36,7 @@ namespace Services.Services
                 }
 
                 // Generate and cache new rules
-                var rules = await Task.Run(() => GenerateAssociationRules(minConfidence));
+                var rules = await Task.Run(() => GenerateAssociationRules(minConfidence, useCartData));
                 _cache.Set(cacheKey, rules, TimeSpan.FromHours(1)); // Cache for 1 hour
                 return rules;
             }
@@ -67,9 +69,23 @@ namespace Services.Services
 
 
         // Hàm tìm frequent itemsets
-        public Dictionary<HashSet<Guid>, int> FindFrequentItemsets(double minSupport)
+        public Dictionary<HashSet<Guid>, int> FindFrequentItemsets(double minSupport, bool useCartData = false)
         {
-            var transactions = _orderService.GetTransactionData();
+            List<List<Guid>> transactions;
+
+            if (useCartData)
+            {
+                transactions = _cartService.GetCartsData();
+            }
+            else
+            {
+                transactions = _orderService.GetTransactionData();
+            }
+
+            if (transactions.Count == 0)
+            {
+                return new Dictionary<HashSet<Guid>, int>();
+            }
 
             var itemCount = transactions.SelectMany(t => t)
                                         .GroupBy(i => i)
@@ -125,9 +141,9 @@ namespace Services.Services
         }
 
         // Hàm tạo luật kết hợp
-        public List<AssociationRule> GenerateAssociationRules(double minConfidence)
+        public List<AssociationRule> GenerateAssociationRules(double minConfidence, bool useCartData = false)
         {
-            var frequentItemsets = FindFrequentItemsets(0.1); // minSupport = 10%
+            var frequentItemsets = FindFrequentItemsets(0.1, useCartData); // minSupport = 10%
             var transactions = _orderService.GetTransactionData();
             var rules = new List<AssociationRule>();
 
@@ -183,6 +199,7 @@ namespace Services.Services
 
             return rules;
         }
+
         private List<HashSet<Guid>> GetNonEmptySubsets(List<Guid> items)
         {
             var result = new List<HashSet<Guid>>();

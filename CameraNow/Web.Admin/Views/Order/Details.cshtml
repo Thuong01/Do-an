@@ -2,7 +2,7 @@
 @using Models.Enums
 @inject Web.Admin.Resources.LocalizationService locService
 @{
-    ViewData["Title"] = "Chi tiết đơn hàng";
+    ViewData["Title"] = "Details";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -140,8 +140,8 @@
                             class="btn btn-success btnConfirmOrder">
                         Xác nhận đơn
                     </button>
-                }      
-                
+                }
+
                 @if (Model.Status == OrderStatusEnum.DangGiaoHang)
                 {
                     <button data-orderId="@Model.ID" data-userId="@Model.UserId"
@@ -158,7 +158,7 @@
                             data-status="@OrderStatusEnum.DangGiaoHang"
                             class="btn btn-primary btnShippingOrder">
                         Giao hàng
-                    </button>                                      
+                    </button>
                 }
 
                 @if (Model.Status != OrderStatusEnum.DaGiaoHang && Model.Status != OrderStatusEnum.DangGiaoHang)
@@ -263,7 +263,7 @@
                     });
                 });
 
-            
+
             })
         })
     </script>

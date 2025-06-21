@@ -31,14 +31,14 @@ namespace WebApi.Controllers
         /// <param name="limit"></param>
         /// <returns></returns>
         [HttpGet("recommendations/product-recomments/{productId}")]
-        public async Task<IActionResult> GetProductRecommendations(Guid productId, [FromQuery] int limit = 5)
+        public async Task<IActionResult> GetProductRecommendations(Guid productId, bool useCartData = false,[FromQuery] int limit = 5)
         {
             try
             {
                 var minConfidence = 0.3;
 
                 // Lấy các luật kết hợp (có thể cache kết quả này)
-                var rules = await _aprioriService.GetCachedAssociationRulesAsync(minConfidence); // minConfidence = 70%
+                var rules = _aprioriService.GenerateAssociationRules(minConfidence, useCartData); // minConfidence = 70%
 
                 // Lọc và sắp xếp các luật liên quan
                 var relevantRules = rules
@@ -119,42 +119,6 @@ namespace WebApi.Controllers
             // Có thể lưu rules vào cache hoặc database để sử dụng sau này
             return Ok(new { Count = rules.Count });
         }
-
-        //[HttpGet("recommend/{productName}")]
-        //public IActionResult GetRecommendations(string productName)
-        //{
-        //    double minSupport = 0.2; // Ngưỡng support
-        //    double minConfidence = 0.5; // Ngưỡng confidence
-
-        //    // Tạo frequent item sets
-        //    var frequentItemSets = _aprioriService.GenerateFrequentItemSets(_transactions, minSupport);
-
-        //    // Tạo luật kết hợp
-        //    var rules = _aprioriService.GenerateAssociationRules(frequentItemSets, minConfidence);
-
-        //    // Lọc các luật có productName ở vế trái
-        //    var relevantRules = rules
-        //        .Where(r => r.Key.TakeWhile(x => x != "=>").Contains(productName))
-        //        .OrderByDescending(r => r.Value)
-        //        .ToList();
-
-        //    // Lấy các sản phẩm được đề xuất
-        //    var recommendations = new List<string>();
-        //    foreach (var rule in relevantRules)
-        //    {
-        //        var consequent = rule.Key.SkipWhile(x => x != "=>").Skip(1).ToArray();
-        //        recommendations.AddRange(consequent);
-        //    }
-
-        //    // Loại bỏ trùng lặp và sản phẩm đã chọn
-        //    recommendations = recommendations
-        //        .Distinct()
-        //        .Where(r => r != productName)
-        //        .ToList();
-
-        //    return Ok(recommendations);
-        //}
-
 
     }
 }
