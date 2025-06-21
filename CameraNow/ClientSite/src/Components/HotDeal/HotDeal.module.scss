@@ -23,7 +23,7 @@
         display: inline-block;
         width: 100px;
         height: 100px;
-        background: #d10024e6;
+        background: #4db36f;
         text-align: center;
         border-radius: 50%;
         margin: 0px 5px;
@@ -58,5 +58,9 @@
 
     .cta-btn {
         margin-top: 15px;
+    }
+
+    .primary-btn-ctum {
+        background-color: #4db36f !important;
     }
 }

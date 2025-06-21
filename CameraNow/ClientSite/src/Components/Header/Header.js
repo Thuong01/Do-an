@@ -311,6 +311,7 @@ const MainHeader = styled.header`
     position: sticky;
     top: 0;
     z-index: 50;
+    border-bottom: 3px solid #4db36f;
 `;
 
 const NavContainer = styled.nav`

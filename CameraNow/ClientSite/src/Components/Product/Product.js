@@ -41,7 +41,6 @@ const Product = ({ product, flag = '' }) => {
                     {product?.promotion_Price && product?.promotion_Price != 0 ? (
                         <>
                             <span>{FormatPrice(product?.promotion_Price, 'VNĐ')}</span>
-                            {/* <del className={clsx('product-old-price')}>{FormatPrice(product?.price, 'VNĐ')}</del> */}
                         </>
                     ) : (
                         <div>
@@ -49,9 +48,6 @@ const Product = ({ product, flag = '' }) => {
                         </div>
                     )}
                 </h4>
-                {/* <p className={clsx('product-category')}>{product?.category_Name} </p> */}
-
-                <div className={clsx('product-rating')}></div>
             </div>
             <div className={clsx('add-to-cart')}>
                 <button

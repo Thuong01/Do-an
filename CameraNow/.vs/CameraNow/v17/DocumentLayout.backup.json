@@ -3,12 +3,12 @@
   "WorkspaceRootPath": "D:\\Workspaces\\DoAnCuaThuong\\Do-an\\CameraNow\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{5D6B5AD9-47B6-4640-B3BD-D0E8B5BF81D5}|Services\\Services.csproj|d:\\workspaces\\doancuathuong\\do-an\\cameranow\\services\\services\\aprioriservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{5D6B5AD9-47B6-4640-B3BD-D0E8B5BF81D5}|Services\\Services.csproj|solutionrelative:services\\services\\aprioriservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{B5CBA23C-8491-4E71-8DBE-06152788269E}|WebApi\\WebApi.csproj|d:\\workspaces\\doancuathuong\\do-an\\cameranow\\webapi\\controllers\\recommendationcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{B5CBA23C-8491-4E71-8DBE-06152788269E}|WebApi\\WebApi.csproj|solutionrelative:webapi\\controllers\\recommendationcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5D6B5AD9-47B6-4640-B3BD-D0E8B5BF81D5}|Services\\Services.csproj|d:\\workspaces\\doancuathuong\\do-an\\cameranow\\services\\services\\aprioriservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5D6B5AD9-47B6-4640-B3BD-D0E8B5BF81D5}|Services\\Services.csproj|solutionrelative:services\\services\\aprioriservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{5D6B5AD9-47B6-4640-B3BD-D0E8B5BF81D5}|Services\\Services.csproj|d:\\workspaces\\doancuathuong\\do-an\\cameranow\\services\\interfaces\\services\\icartservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -146,7 +146,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 3,
+          "SelectedChildIndex": 4,
           "Children": [
             {
               "$type": "Document",
@@ -158,8 +158,7 @@
               "RelativeToolTip": "Services\\Interfaces\\Services\\ICartService.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAoAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-21T01:32:48.762Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-21T01:32:48.762Z"
             },
             {
               "$type": "Document",
@@ -171,8 +170,7 @@
               "RelativeToolTip": "Services\\Services\\CartService.cs",
               "ViewState": "AgIAAAoAAAAAAAAAAAAAABoAAAAuAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-21T01:32:02.282Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-21T01:32:02.282Z"
             },
             {
               "$type": "Document",
@@ -184,31 +182,29 @@
               "RelativeToolTip": "Services\\Repositories\\CartRepository.cs",
               "ViewState": "AgIAAA8AAAAAAAAAAAAuwBgAAAApAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-21T01:24:19.459Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-21T01:24:19.459Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "AprioriService.cs",
               "DocumentMoniker": "D:\\Workspaces\\DoAnCuaThuong\\Do-an\\CameraNow\\Services\\Services\\AprioriService.cs",
               "RelativeDocumentMoniker": "Services\\Services\\AprioriService.cs",
               "ToolTip": "D:\\Workspaces\\DoAnCuaThuong\\Do-an\\CameraNow\\Services\\Services\\AprioriService.cs",
               "RelativeToolTip": "Services\\Services\\AprioriService.cs",
-              "ViewState": "AgIAAHEAAAAAAAAAAAAqwJMAAAA0AAAAAAAAAA==",
+              "ViewState": "AgIAAFQAAAAAAAAAAAAowGcAAAAQAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-18T17:03:24.995Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-18T17:03:24.995Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
               "Title": "RecommendationController.cs",
               "DocumentMoniker": "D:\\Workspaces\\DoAnCuaThuong\\Do-an\\CameraNow\\WebApi\\Controllers\\RecommendationController.cs",
               "RelativeDocumentMoniker": "WebApi\\Controllers\\RecommendationController.cs",
-              "ToolTip": "D:\\Workspaces\\DoAnCuaThuong\\Do-an\\CameraNow\\WebApi\\Controllers\\RecommendationController.cs*",
-              "RelativeToolTip": "WebApi\\Controllers\\RecommendationController.cs*",
-              "ViewState": "AgIAABcAAAAAAAAAAAAqwCgAAAA9AAAAAAAAAA==",
+              "ToolTip": "D:\\Workspaces\\DoAnCuaThuong\\Do-an\\CameraNow\\WebApi\\Controllers\\RecommendationController.cs",
+              "RelativeToolTip": "WebApi\\Controllers\\RecommendationController.cs",
+              "ViewState": "AgIAACEAAAAAAAAAAAAgwCUAAAAQAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-06-18T16:58:51.016Z",
               "EditorCaption": ""
@@ -223,8 +219,7 @@
               "RelativeToolTip": "Services\\Repositories\\OrderRepository.cs",
               "ViewState": "AgIAABAAAAAAAAAAAAAQwCwAAAAgAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-20T17:55:41.804Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-20T17:55:41.804Z"
             },
             {
               "$type": "Document",
@@ -236,8 +231,7 @@
               "RelativeToolTip": "Services\\Interfaces\\Repositories\\ICartRepository.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAuAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-21T01:24:27.362Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-21T01:24:27.362Z"
             },
             {
               "$type": "Document",
@@ -249,8 +243,7 @@
               "RelativeToolTip": "Services\\Interfaces\\Repositories\\IOrderRepository.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAA0AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-21T01:24:44.059Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-21T01:24:44.059Z"
             },
             {
               "$type": "Document",
@@ -262,8 +255,7 @@
               "RelativeToolTip": "Models\\Models\\CartItem.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-21T01:24:13.402Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-21T01:24:13.402Z"
             },
             {
               "$type": "Document",
@@ -275,8 +267,7 @@
               "RelativeToolTip": "Models\\Models\\Cart.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-21T01:24:09.586Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-21T01:24:09.586Z"
             },
             {
               "$type": "Document",
@@ -288,8 +279,7 @@
               "RelativeToolTip": "Services\\Services\\OrderService.cs",
               "ViewState": "AgIAACEAAAAAAAAAAAAkwDIAAAAIAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-19T15:10:37.482Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-19T15:10:37.482Z"
             },
             {
               "$type": "Document",
@@ -313,8 +303,7 @@
               "RelativeToolTip": "Web.Admin\\Views\\Order\\Details.cshtml",
               "ViewState": "AgIAADAAAAAAAAAAAAAAADwAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-06-19T18:14:34.95Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-19T18:14:34.95Z"
             },
             {
               "$type": "Document",
