@@ -1,5 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Datas.Data;
+﻿using Datas.Data;
+using Microsoft.EntityFrameworkCore;
+using Models.Enums;
 using Datas.ViewModels.Statistic;
 using Services.Interfaces.Services;
 
@@ -19,12 +20,26 @@ namespace Services.Services
             var query = _context.Orders.AsQueryable();
 
             if (startDate.HasValue)
-                query = query.Where(o => o.Order_Date >= startDate.Value);
+                query = query.Where(o => o.Order_Date >= startDate.Value.Date);
 
             if (endDate.HasValue)
-                query = query.Where(o => o.Order_Date <= endDate.Value);
+                query = query.Where(o => o.Order_Date < endDate.Value.Date.AddDays(1));
 
             var hasOrders = await query.AnyAsync();
+
+
+            var totalOrder = await query.CountAsync();
+            var deliveredOrders = await query.CountAsync(o => o.Status == OrderStatusEnum.DaGiaoHang);
+            var cancelledOrders = await query.CountAsync(o => o.Status == OrderStatusEnum.DaHuy);
+            var shippingOrders = await query.CountAsync(o => o.Status == OrderStatusEnum.DangGiaoHang);
+
+            var orderStatusSummary = new OrderStatusSummary
+            {
+                TotalOrders = totalOrder,
+                DeliveredOrders = deliveredOrders,
+                CancelledOrders = cancelledOrders,
+                ShippingOrders = shippingOrders
+            };
 
             var stats = new StatsViewModel
             {
@@ -40,8 +55,8 @@ namespace Services.Services
                 RevenueByDay = await GetRevenueByDayAsync(),
                 TopCustomers = [],
                 TopSellingProducts = await GetTopSellingProductsAsync(),
-                RecentOrders = await GetRecentOrdersAsync(10)
-
+                RecentOrders = await GetRecentOrdersAsync(10),
+                OrderStatusSummary = orderStatusSummary,
             };
 
             return stats;

@@ -9,6 +9,7 @@ import {
     faShoppingBag,
     faUser,
     faBars,
+    faSortDown,
 } from '@fortawesome/free-solid-svg-icons';
 import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
@@ -80,15 +81,15 @@ const Header = () => {
                     <ContactInfo>
                         <InfoItem>
                             <FontAwesomeIcon icon={faPhone} />
-                            <span>+021-95-51-84</span>
+                            <span>+84 0852152243</span>
                         </InfoItem>
                         <InfoItem>
                             <FontAwesomeIcon icon={faEnvelope} />
-                            <span>email@email.com</span>
+                            <span>cameranow@gmail.com</span>
                         </InfoItem>
                         <InfoItem>
                             <FontAwesomeIcon icon={faMapMarker} />
-                            <span>1734 Stonecoal Road</span>
+                            <span>Doãn Kế Thiện, Mai Dịch, Cầu Giấy, Hà Nội</span>
                         </InfoItem>
                     </ContactInfo>
 
@@ -97,7 +98,9 @@ const Header = () => {
                             <AccountDropdown>
                                 <AccountButton>
                                     <FontAwesomeIcon icon={faUser} />
-                                    <span>{user.userName}</span>
+                                    <span className="d-flex align-item-center">
+                                        {user.userName} <FontAwesomeIcon icon={faSortDown} className="ps-2" />
+                                    </span>
                                 </AccountButton>
                                 <DropdownMenu>
                                     <DropdownItem>

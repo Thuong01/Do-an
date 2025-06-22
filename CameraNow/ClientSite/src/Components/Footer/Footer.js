@@ -27,18 +27,18 @@ const Footer = () => {
                             <li>
                                 <FontAwesomeIcon icon={faMapMarkerAlt} className="contact-icon" />
                                 <span>
-                                    28 White Tower, Street Name
+                                    Doãn Kế Thiện
                                     <br />
-                                    New York City, USA
+                                    Mai Dịch, Cầu Giấy, Hà Nội
                                 </span>
                             </li>
                             <li>
                                 <FontAwesomeIcon icon={faPhone} className="contact-icon" />
-                                <span>+91 987 654 3210</span>
+                                <span>+84 0852152243</span>
                             </li>
                             <li>
                                 <FontAwesomeIcon icon={faEnvelope} className="contact-icon" />
-                                <span>yourmain@gmail.com</span>
+                                <span>cameranow@gmail.com</span>
                             </li>
                         </ul>
                     </div>

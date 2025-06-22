@@ -3,13 +3,10 @@ import './Product.scss';
 import default_product_image from '../../assets/imgs/default_product_image.jpg';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faExchange, faEye, faHeart, faShoppingCart, faStar } from '@fortawesome/free-solid-svg-icons';
-import { faHeart as faHeartO } from '@fortawesome/free-regular-svg-icons';
 import { useContext, useEffect } from 'react';
 import { FormatPrice } from '../../Untils/CommonUntil';
 import { NavLink } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { addToCartService } from '../../Services/CartService';
-import { toast } from 'react-toastify';
 import { CartContext } from '../../Context/cartContext';
 
 const Product = ({ product, flag = '' }) => {
@@ -54,7 +51,7 @@ const Product = ({ product, flag = '' }) => {
                     onClick={() => handleAddToCart(product?.id, user?.cartId, 1, auth)}
                     className={clsx('add-to-cart-btn')}
                 >
-                    <FontAwesomeIcon icon={faShoppingCart} /> add to cart
+                    <FontAwesomeIcon icon={faShoppingCart} /> Thêm giỏ hàng
                 </button>
             </div>
         </div>

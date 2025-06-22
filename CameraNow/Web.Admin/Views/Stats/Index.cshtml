@@ -11,9 +11,6 @@
     var endValue = string.IsNullOrEmpty(endDate)
         ? DateTime.UtcNow.ToString("yyyy-MM-dd")
         : endDate;
-
-    Console.WriteLine(startValue);
-    Console.WriteLine(endValue);
 }
 
 
@@ -66,6 +63,160 @@
     </div>
 </div>
 
+<style>
+    /* Card Styling */
+    .card {
+        border-radius: 12px;
+        overflow: hidden;
+    }
+
+    .card-header {
+        padding: 1.25rem 1.5rem;
+        font-weight: 600;
+    }
+
+    /* Stat Cards */
+    .stat-card {
+        display: flex;
+        align-items: center;
+        padding: 1rem;
+        border-radius: 10px;
+        background-color: var(--bs-light);
+        transition: all 0.3s ease;
+    }
+
+        .stat-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+
+    .stat-icon {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 1rem;
+        font-size: 1.25rem;
+    }
+
+    .stat-content {
+        flex: 1;
+    }
+
+    .stat-label {
+        display: block;
+        font-size: 0.85rem;
+        color: var(--bs-gray-600);
+        margin-bottom: 0.25rem;
+    }
+
+    .stat-value {
+        font-size: 1.25rem;
+        font-weight: 600;
+        color: var(--bs-dark);
+    }
+
+    .stat-percentage {
+        font-size: 0.75rem;
+        padding: 0.25rem 0.5rem;
+        background: rgba(255,255,255,0.7);
+        border-radius: 4px;
+        margin-left: 0.5rem;
+    }
+
+    /* Color Variants */
+    .bg-primary-light {
+        background-color: rgba(13, 110, 253, 0.1);
+    }
+
+    .bg-success-light {
+        background-color: rgba(25, 135, 84, 0.1);
+    }
+
+    .bg-danger-light {
+        background-color: rgba(220, 53, 69, 0.1);
+    }
+
+    /* Chart Container */
+    .chart-container {
+        width: 100%;
+        min-height: 300px;
+    }
+</style>
+
+
+<!-- Revenue Dashboard Section -->
+<div class="row mt-4">
+    <!-- Chart Card -->
+    <div class="col-md-6">
+        <div class="card shadow-sm border-0">
+            <div class="card-header bg-white border-0 d-flex justify-content-between align-items-center">
+                <h5 class="mb-0">Tình trạng đơn hàng <span>từ @startValue đến @endValue</span></h5>
+            </div>
+            <div class="card-body pt-0">
+                <div class="chart-container" style="position: relative; height: 300px;">
+                    <canvas id="orderStatusChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Stats Summary Card -->
+    <div class="col-md-6">
+        <div class="card shadow-sm border-0 h-100">
+            <div class="card-header bg-white border-0">
+                <h5 class="mb-0">Tổng quan tình trạng đơn</h5>
+            </div>
+            <div class="card-body">
+                <div class="d-flex flex-column gap-3">
+                    <!-- Total Orders -->
+                    <div class="stat-card bg-primary-light">
+                        <div class="stat-icon">
+                            <i class="bi bi-cart-check text-primary"></i>
+                        </div>
+                        <div class="stat-content">
+                            <span class="stat-label">Tổng số đơn hàng</span>
+                            <span class="stat-value">@Model.OrderStatusSummary.TotalOrders</span>
+                        </div>
+                    </div>
+
+                    <!-- Delivered Orders -->
+                    <div class="stat-card bg-success-light">
+                        <div class="stat-icon">
+                            <i class="bi bi-check-circle text-success"></i>
+                        </div>
+                        <div class="stat-content">
+                            <span class="stat-label">Đơn hàng đã giao</span>
+                            <span class="stat-value">@Model.OrderStatusSummary.DeliveredOrders</span>
+                            <span class="stat-percentage">
+                                @(Model.OrderStatusSummary.TotalOrders > 0 ?
+                                    Math.Round((double)Model.OrderStatusSummary.DeliveredOrders * 100 / (double)Model.OrderStatusSummary.TotalOrders, 2) : 0)%
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Cancelled Orders -->
+                    <div class="stat-card bg-danger-light">
+                        <div class="stat-icon">
+                            <i class="bi bi-x-circle text-danger"></i>
+                        </div>
+                        <div class="stat-content">
+                            <span class="stat-label">Đơn hàng đã hủy</span>
+                            <span class="stat-value">@Model.OrderStatusSummary.CancelledOrders</span>
+                            <span class="stat-percentage">
+                                @(Model.OrderStatusSummary.TotalOrders > 0 ?
+                                    Math.Round((double)Model.OrderStatusSummary.CancelledOrders * 100 / (double)Model.OrderStatusSummary.TotalOrders, 2) : 0)%
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- Bảng sản phẩm bán chạy -->
 <div class="row mt-4">
     <div class="col-md-12">
@@ -94,7 +245,7 @@
                                     <td>@product.TotalRevenue.ToString("N0") đ</td>
                                 </tr>
                             }
-                        }                        
+                        }
                     </tbody>
                 </table>
             </div>
@@ -123,6 +274,52 @@
                 scales: {
                     y: {
                         beginAtZero: true
+                    }
+                }
+            }
+        });
+
+        const ctx2 = document.getElementById('orderStatusChart').getContext('2d');
+        const orderStatusChart = new Chart(ctx2, {
+            type: 'doughnut', // hoặc 'pie'
+            data: {
+                labels: ['Đã giao', 'Đã hủy', 'Đang giao'],
+                datasets: [{
+                    label: 'Tình trạng đơn hàng',
+                    data: [
+        @Model.OrderStatusSummary.DeliveredOrders,
+        @Model.OrderStatusSummary.CancelledOrders,
+        @Model.OrderStatusSummary.ShippingOrders
+                    ],
+                    backgroundColor: [
+                        'rgba(54, 162, 235, 0.7)',   // blue - delivered
+                        'rgba(255, 99, 132, 0.7)',   // red - cancelled
+                        'rgba(255, 206, 86, 0.7)'    // yellow - shipping
+                    ],
+                    borderColor: [
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(255, 206, 86, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                let label = context.label || '';
+                                let value = context.parsed;
+                                let total = @Model.OrderStatusSummary.TotalOrders;
+                                let percent = total > 0 ? ((value / total) * 100).toFixed(2) : 0;
+                                return `${label}: ${value} (${percent}%)`;
+                            }
+                        }
                     }
                 }
             }

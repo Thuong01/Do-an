@@ -8,6 +8,9 @@
         public decimal AverageOrderValue { get; set; }
         public Dictionary<string, int> OrdersByStatus { get; set; }
 
+        // Thống kê tình trạng đơn
+        public OrderStatusSummary OrderStatusSummary { get; set; }
+
         // Theo thời gian
         public Dictionary<string, decimal> RevenueByDay { get; set; }
         public Dictionary<string, decimal> RevenueByMonth { get; set; }
@@ -38,6 +41,17 @@
         public string ProductImage { get; set; }
         public int QuantitySold { get; set; }
         public decimal TotalRevenue { get; set; }
+    }
+
+    public class OrderStatusSummary
+    {
+        public int TotalOrders { get; set; }          // Tổng đơn
+        public int CancelledOrders { get; set; }      // Đơn hủy
+        public int DeliveredOrders { get; set; }      // Đơn giao thành công
+        public int ShippingOrders { get; set; }       // Đơn đang giao
+
+        public double CancelledRate => TotalOrders > 0 ? Math.Round((double)CancelledOrders / TotalOrders * 100, 2) : 0;
+        public double DeliveredRate => TotalOrders > 0 ? Math.Round((double)DeliveredOrders / TotalOrders * 100, 2) : 0;
     }
 
     public class ProductCombo

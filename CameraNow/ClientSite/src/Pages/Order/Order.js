@@ -566,7 +566,7 @@ const Order = () => {
                                             name="checkout_payment_method"
                                         />
                                         <label className="form-check-label" htmlFor="checkout_payment_method_2">
-                                            Thanh toán qua VNPay
+                                            Thanh toán trực tuyến
                                         </label>
                                     </div>
                                 </div>
