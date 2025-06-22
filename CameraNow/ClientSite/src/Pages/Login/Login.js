@@ -323,8 +323,12 @@ const Login = () => {
         }
 
         try {
-            var res = axios.post(`https://localhost:7085/api/LoginAPI/forget-password?email=${email}`);
-            console.log(res);
+            try {
+                var res = axios.post(`https://localhost:7085/api/LoginAPI/forget-password?email=${email}`);
+                console.log(res);
+            } catch {
+                CustomToast.success('Email không hợp lệ hoặc có lỗi xảy ra.');
+            }
 
             CustomToast.success('Mật khẩu mới đã được gửi đến email của bạn.');
             setShowForgotPasswordForm(false);
