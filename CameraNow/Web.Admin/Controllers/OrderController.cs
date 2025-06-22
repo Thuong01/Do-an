@@ -124,10 +124,7 @@ namespace Web.Admin.Controllers
 
                     strSanPham += $@"<tr>
                                     <td>
-                                        <div style=""display: flex; justify-content: left"">
-                                            <div style=""margin-right: 20px"">
-                                                <img width=""80"" height=""80"" src=""{product.Images.ToString()}"" alt=""{product.Name}"" />
-                                            </div>
+                                        <div style=""display: flex; justify-content: left"">                                            
                                             <p>{product.Name}</p>
                                         </div>
                                     </td>

@@ -1,6 +1,7 @@
 ﻿@model Datas.ViewModels.Statistic.StatsViewModel
 
 @{
+    ViewData["Title"] = "Thống kê";
     var startDate = Context.Request.Query["startDate"].ToString();
     var endDate = Context.Request.Query["endDate"].ToString();
 

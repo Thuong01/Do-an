@@ -3,16 +3,36 @@
   "WorkspaceRootPath": "D:\\Workspaces\\DoAnCuaThuong\\Do-an\\CameraNow\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{5D6B5AD9-47B6-4640-B3BD-D0E8B5BF81D5}|Services\\Services.csproj|d:\\workspaces\\doancuathuong\\do-an\\cameranow\\services\\services\\paymentservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{5D6B5AD9-47B6-4640-B3BD-D0E8B5BF81D5}|Services\\Services.csproj|solutionrelative:services\\services\\paymentservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{160E0324-993B-4D14-AAAF-ADA7B7F2C163}|Web.Admin\\Web.Admin.csproj|d:\\workspaces\\doancuathuong\\do-an\\cameranow\\web.admin\\controllers\\ordercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{160E0324-993B-4D14-AAAF-ADA7B7F2C163}|Web.Admin\\Web.Admin.csproj|solutionrelative:web.admin\\controllers\\ordercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{160E0324-993B-4D14-AAAF-ADA7B7F2C163}|Web.Admin\\Web.Admin.csproj|d:\\workspaces\\doancuathuong\\do-an\\cameranow\\web.admin\\controllers\\statscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{160E0324-993B-4D14-AAAF-ADA7B7F2C163}|Web.Admin\\Web.Admin.csproj|solutionrelative:web.admin\\controllers\\statscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{160E0324-993B-4D14-AAAF-ADA7B7F2C163}|Web.Admin\\Web.Admin.csproj|d:\\workspaces\\doancuathuong\\do-an\\cameranow\\web.admin\\views\\order\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{160E0324-993B-4D14-AAAF-ADA7B7F2C163}|Web.Admin\\Web.Admin.csproj|solutionrelative:web.admin\\views\\order\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{160E0324-993B-4D14-AAAF-ADA7B7F2C163}|Web.Admin\\Web.Admin.csproj|d:\\workspaces\\doancuathuong\\do-an\\cameranow\\web.admin\\views\\product\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{160E0324-993B-4D14-AAAF-ADA7B7F2C163}|Web.Admin\\Web.Admin.csproj|solutionrelative:web.admin\\views\\product\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{160E0324-993B-4D14-AAAF-ADA7B7F2C163}|Web.Admin\\Web.Admin.csproj|d:\\workspaces\\doancuathuong\\do-an\\cameranow\\web.admin\\views\\productcategory\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{160E0324-993B-4D14-AAAF-ADA7B7F2C163}|Web.Admin\\Web.Admin.csproj|solutionrelative:web.admin\\views\\productcategory\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{160E0324-993B-4D14-AAAF-ADA7B7F2C163}|Web.Admin\\Web.Admin.csproj|d:\\workspaces\\doancuathuong\\do-an\\cameranow\\web.admin\\views\\productcategory\\edit.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{160E0324-993B-4D14-AAAF-ADA7B7F2C163}|Web.Admin\\Web.Admin.csproj|solutionrelative:web.admin\\views\\productcategory\\edit.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{160E0324-993B-4D14-AAAF-ADA7B7F2C163}|Web.Admin\\Web.Admin.csproj|d:\\workspaces\\doancuathuong\\do-an\\cameranow\\web.admin\\views\\stats\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{160E0324-993B-4D14-AAAF-ADA7B7F2C163}|Web.Admin\\Web.Admin.csproj|solutionrelative:web.admin\\views\\stats\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{5D6B5AD9-47B6-4640-B3BD-D0E8B5BF81D5}|Services\\Services.csproj|d:\\workspaces\\doancuathuong\\do-an\\cameranow\\services\\services\\statsservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{5D6B5AD9-47B6-4640-B3BD-D0E8B5BF81D5}|Services\\Services.csproj|solutionrelative:services\\services\\statsservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{160E0324-993B-4D14-AAAF-ADA7B7F2C163}|Web.Admin\\Web.Admin.csproj|d:\\workspaces\\doancuathuong\\do-an\\cameranow\\web.admin\\controllers\\statscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{160E0324-993B-4D14-AAAF-ADA7B7F2C163}|Web.Admin\\Web.Admin.csproj|solutionrelative:web.admin\\controllers\\statscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{160E0324-993B-4D14-AAAF-ADA7B7F2C163}|Web.Admin\\Web.Admin.csproj|d:\\workspaces\\doancuathuong\\do-an\\cameranow\\web.admin\\applicationservicesextensions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -21,14 +41,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{5D6B5AD9-47B6-4640-B3BD-D0E8B5BF81D5}|Services\\Services.csproj|d:\\workspaces\\doancuathuong\\do-an\\cameranow\\services\\interfaces\\services\\istatsservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{5D6B5AD9-47B6-4640-B3BD-D0E8B5BF81D5}|Services\\Services.csproj|solutionrelative:services\\interfaces\\services\\istatsservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{F1A4231E-A5A1-4886-8DAA-5F9E9F981EF6}|Datas\\Datas.csproj|d:\\workspaces\\doancuathuong\\do-an\\cameranow\\datas\\viewmodels\\statistic\\statsviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F1A4231E-A5A1-4886-8DAA-5F9E9F981EF6}|Datas\\Datas.csproj|solutionrelative:datas\\viewmodels\\statistic\\statsviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{160E0324-993B-4D14-AAAF-ADA7B7F2C163}|Web.Admin\\Web.Admin.csproj|d:\\workspaces\\doancuathuong\\do-an\\cameranow\\web.admin\\views\\stats\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{160E0324-993B-4D14-AAAF-ADA7B7F2C163}|Web.Admin\\Web.Admin.csproj|solutionrelative:web.admin\\views\\stats\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{B5CBA23C-8491-4E71-8DBE-06152788269E}|WebApi\\WebApi.csproj|d:\\workspaces\\doancuathuong\\do-an\\cameranow\\webapi\\controllers\\orderapicontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -119,20 +131,12 @@
       "RelativeMoniker": "D:0:0:{160E0324-993B-4D14-AAAF-ADA7B7F2C163}|Web.Admin\\Web.Admin.csproj|solutionrelative:web.admin\\views\\product\\create.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{160E0324-993B-4D14-AAAF-ADA7B7F2C163}|Web.Admin\\Web.Admin.csproj|d:\\workspaces\\doancuathuong\\do-an\\cameranow\\web.admin\\views\\order\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{160E0324-993B-4D14-AAAF-ADA7B7F2C163}|Web.Admin\\Web.Admin.csproj|solutionrelative:web.admin\\views\\order\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{160E0324-993B-4D14-AAAF-ADA7B7F2C163}|Web.Admin\\Web.Admin.csproj|d:\\workspaces\\doancuathuong\\do-an\\cameranow\\web.admin\\views\\account\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{160E0324-993B-4D14-AAAF-ADA7B7F2C163}|Web.Admin\\Web.Admin.csproj|solutionrelative:web.admin\\views\\account\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{160E0324-993B-4D14-AAAF-ADA7B7F2C163}|Web.Admin\\Web.Admin.csproj|d:\\workspaces\\doancuathuong\\do-an\\cameranow\\web.admin\\views\\account\\profile.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{160E0324-993B-4D14-AAAF-ADA7B7F2C163}|Web.Admin\\Web.Admin.csproj|solutionrelative:web.admin\\views\\account\\profile.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{160E0324-993B-4D14-AAAF-ADA7B7F2C163}|Web.Admin\\Web.Admin.csproj|d:\\workspaces\\doancuathuong\\do-an\\cameranow\\web.admin\\views\\productcategory\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{160E0324-993B-4D14-AAAF-ADA7B7F2C163}|Web.Admin\\Web.Admin.csproj|solutionrelative:web.admin\\views\\productcategory\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{160E0324-993B-4D14-AAAF-ADA7B7F2C163}|Web.Admin\\Web.Admin.csproj|d:\\workspaces\\doancuathuong\\do-an\\cameranow\\web.admin\\controllers\\accountcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -179,70 +183,133 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "PaymentService.cs",
-              "DocumentMoniker": "D:\\Workspaces\\DoAnCuaThuong\\Do-an\\CameraNow\\Services\\Services\\PaymentService.cs",
-              "RelativeDocumentMoniker": "Services\\Services\\PaymentService.cs",
-              "ToolTip": "D:\\Workspaces\\DoAnCuaThuong\\Do-an\\CameraNow\\Services\\Services\\PaymentService.cs",
-              "RelativeToolTip": "Services\\Services\\PaymentService.cs",
-              "ViewState": "AgIAAIcAAAAAAAAAAAAAAJEAAAA3AAAAAAAAAA==",
+              "Title": "OrderController.cs",
+              "DocumentMoniker": "D:\\Workspaces\\DoAnCuaThuong\\Do-an\\CameraNow\\Web.Admin\\Controllers\\OrderController.cs",
+              "RelativeDocumentMoniker": "Web.Admin\\Controllers\\OrderController.cs",
+              "ToolTip": "D:\\Workspaces\\DoAnCuaThuong\\Do-an\\CameraNow\\Web.Admin\\Controllers\\OrderController.cs",
+              "RelativeToolTip": "Web.Admin\\Controllers\\OrderController.cs",
+              "ViewState": "AgIAAGsAAAAAAAAAAAAowH4AAABcAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-22T02:13:14.16Z",
+              "WhenOpened": "2025-06-22T09:26:14.157Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "StatsViewModel.cs",
-              "DocumentMoniker": "D:\\Workspaces\\DoAnCuaThuong\\Do-an\\CameraNow\\Datas\\ViewModels\\Statistic\\StatsViewModel.cs",
-              "RelativeDocumentMoniker": "Datas\\ViewModels\\Statistic\\StatsViewModel.cs",
-              "ToolTip": "D:\\Workspaces\\DoAnCuaThuong\\Do-an\\CameraNow\\Datas\\ViewModels\\Statistic\\StatsViewModel.cs",
-              "RelativeToolTip": "Datas\\ViewModels\\Statistic\\StatsViewModel.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAAfAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-21T18:11:40.649Z",
+              "DocumentIndex": 4,
+              "Title": "Edit.cshtml",
+              "DocumentMoniker": "D:\\Workspaces\\DoAnCuaThuong\\Do-an\\CameraNow\\Web.Admin\\Views\\ProductCategory\\Edit.cshtml",
+              "RelativeDocumentMoniker": "Web.Admin\\Views\\ProductCategory\\Edit.cshtml",
+              "ToolTip": "D:\\Workspaces\\DoAnCuaThuong\\Do-an\\CameraNow\\Web.Admin\\Views\\ProductCategory\\Edit.cshtml",
+              "RelativeToolTip": "Web.Admin\\Views\\ProductCategory\\Edit.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-06-22T09:18:40.569Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 2,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "D:\\Workspaces\\DoAnCuaThuong\\Do-an\\CameraNow\\Web.Admin\\Views\\Product\\Index.cshtml",
+              "RelativeDocumentMoniker": "Web.Admin\\Views\\Product\\Index.cshtml",
+              "ToolTip": "D:\\Workspaces\\DoAnCuaThuong\\Do-an\\CameraNow\\Web.Admin\\Views\\Product\\Index.cshtml",
+              "RelativeToolTip": "Web.Admin\\Views\\Product\\Index.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAArAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-06-22T09:16:58.462Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
               "Title": "StatsService.cs",
               "DocumentMoniker": "D:\\Workspaces\\DoAnCuaThuong\\Do-an\\CameraNow\\Services\\Services\\StatsService.cs",
               "RelativeDocumentMoniker": "Services\\Services\\StatsService.cs",
               "ToolTip": "D:\\Workspaces\\DoAnCuaThuong\\Do-an\\CameraNow\\Services\\Services\\StatsService.cs",
               "RelativeToolTip": "Services\\Services\\StatsService.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAbAAAAAAAAAA==",
+              "ViewState": "AgIAAA0AAAAAAAAAAAAQwBUAAAAMAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-06-21T17:38:52.305Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 5,
               "Title": "Index.cshtml",
               "DocumentMoniker": "D:\\Workspaces\\DoAnCuaThuong\\Do-an\\CameraNow\\Web.Admin\\Views\\Stats\\Index.cshtml",
               "RelativeDocumentMoniker": "Web.Admin\\Views\\Stats\\Index.cshtml",
               "ToolTip": "D:\\Workspaces\\DoAnCuaThuong\\Do-an\\CameraNow\\Web.Admin\\Views\\Stats\\Index.cshtml",
               "RelativeToolTip": "Web.Admin\\Views\\Stats\\Index.cshtml",
-              "ViewState": "AgIAAKoAAAAAAAAAAAAAAL4AAAAxAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAMAAAAhAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
               "WhenOpened": "2025-06-21T17:42:51.304Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
-              "Title": "ICartService.cs",
-              "DocumentMoniker": "D:\\Workspaces\\DoAnCuaThuong\\Do-an\\CameraNow\\Services\\Interfaces\\Services\\ICartService.cs",
-              "RelativeDocumentMoniker": "Services\\Interfaces\\Services\\ICartService.cs",
-              "ToolTip": "D:\\Workspaces\\DoAnCuaThuong\\Do-an\\CameraNow\\Services\\Interfaces\\Services\\ICartService.cs",
-              "RelativeToolTip": "Services\\Interfaces\\Services\\ICartService.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAoAAAAAAAAAA==",
+              "DocumentIndex": 7,
+              "Title": "StatsController.cs",
+              "DocumentMoniker": "D:\\Workspaces\\DoAnCuaThuong\\Do-an\\CameraNow\\Web.Admin\\Controllers\\StatsController.cs",
+              "RelativeDocumentMoniker": "Web.Admin\\Controllers\\StatsController.cs",
+              "ToolTip": "D:\\Workspaces\\DoAnCuaThuong\\Do-an\\CameraNow\\Web.Admin\\Controllers\\StatsController.cs",
+              "RelativeToolTip": "Web.Admin\\Controllers\\StatsController.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAABEAAABEAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-21T01:32:48.762Z"
+              "WhenOpened": "2025-06-21T17:36:04.575Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 9,
+              "Title": "IStatsService.cs",
+              "DocumentMoniker": "D:\\Workspaces\\DoAnCuaThuong\\Do-an\\CameraNow\\Services\\Interfaces\\Services\\IStatsService.cs",
+              "RelativeDocumentMoniker": "Services\\Interfaces\\Services\\IStatsService.cs",
+              "ToolTip": "D:\\Workspaces\\DoAnCuaThuong\\Do-an\\CameraNow\\Services\\Interfaces\\Services\\IStatsService.cs",
+              "RelativeToolTip": "Services\\Interfaces\\Services\\IStatsService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAAKAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-21T18:13:17.85Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "D:\\Workspaces\\DoAnCuaThuong\\Do-an\\CameraNow\\Web.Admin\\Views\\ProductCategory\\Index.cshtml",
+              "RelativeDocumentMoniker": "Web.Admin\\Views\\ProductCategory\\Index.cshtml",
+              "ToolTip": "D:\\Workspaces\\DoAnCuaThuong\\Do-an\\CameraNow\\Web.Admin\\Views\\ProductCategory\\Index.cshtml",
+              "RelativeToolTip": "Web.Admin\\Views\\ProductCategory\\Index.cshtml",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAABEAAAASAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-06-17T17:37:17.647Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "D:\\Workspaces\\DoAnCuaThuong\\Do-an\\CameraNow\\Web.Admin\\Views\\Order\\Index.cshtml",
+              "RelativeDocumentMoniker": "Web.Admin\\Views\\Order\\Index.cshtml",
+              "ToolTip": "D:\\Workspaces\\DoAnCuaThuong\\Do-an\\CameraNow\\Web.Admin\\Views\\Order\\Index.cshtml",
+              "RelativeToolTip": "Web.Admin\\Views\\Order\\Index.cshtml",
+              "ViewState": "AgIAAPEAAAAAAAAAAAAAAAMBAAA5AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-06-18T15:15:13.681Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "ApplicationServicesExtensions.cs",
+              "DocumentMoniker": "D:\\Workspaces\\DoAnCuaThuong\\Do-an\\CameraNow\\Web.Admin\\ApplicationServicesExtensions.cs",
+              "RelativeDocumentMoniker": "Web.Admin\\ApplicationServicesExtensions.cs",
+              "ToolTip": "D:\\Workspaces\\DoAnCuaThuong\\Do-an\\CameraNow\\Web.Admin\\ApplicationServicesExtensions.cs",
+              "RelativeToolTip": "Web.Admin\\ApplicationServicesExtensions.cs",
+              "ViewState": "AgIAAOMAAAAAAAAAAAAhwPYAAAAzAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-18T15:58:56.723Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
               "Title": "CartService.cs",
               "DocumentMoniker": "D:\\Workspaces\\DoAnCuaThuong\\Do-an\\CameraNow\\Services\\Services\\CartService.cs",
               "RelativeDocumentMoniker": "Services\\Services\\CartService.cs",
@@ -254,46 +321,19 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "ApplicationServicesExtensions.cs",
-              "DocumentMoniker": "D:\\Workspaces\\DoAnCuaThuong\\Do-an\\CameraNow\\Web.Admin\\ApplicationServicesExtensions.cs",
-              "RelativeDocumentMoniker": "Web.Admin\\ApplicationServicesExtensions.cs",
-              "ToolTip": "D:\\Workspaces\\DoAnCuaThuong\\Do-an\\CameraNow\\Web.Admin\\ApplicationServicesExtensions.cs",
-              "RelativeToolTip": "Web.Admin\\ApplicationServicesExtensions.cs",
-              "ViewState": "AgIAAOMAAAAAAAAAAAAhwPYAAAAzAAAAAAAAAA==",
+              "DocumentIndex": 13,
+              "Title": "ICartService.cs",
+              "DocumentMoniker": "D:\\Workspaces\\DoAnCuaThuong\\Do-an\\CameraNow\\Services\\Interfaces\\Services\\ICartService.cs",
+              "RelativeDocumentMoniker": "Services\\Interfaces\\Services\\ICartService.cs",
+              "ToolTip": "D:\\Workspaces\\DoAnCuaThuong\\Do-an\\CameraNow\\Services\\Interfaces\\Services\\ICartService.cs",
+              "RelativeToolTip": "Services\\Interfaces\\Services\\ICartService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAoAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-18T15:58:56.723Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-21T01:32:48.762Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "StatsController.cs",
-              "DocumentMoniker": "D:\\Workspaces\\DoAnCuaThuong\\Do-an\\CameraNow\\Web.Admin\\Controllers\\StatsController.cs",
-              "RelativeDocumentMoniker": "Web.Admin\\Controllers\\StatsController.cs",
-              "ToolTip": "D:\\Workspaces\\DoAnCuaThuong\\Do-an\\CameraNow\\Web.Admin\\Controllers\\StatsController.cs",
-              "RelativeToolTip": "Web.Admin\\Controllers\\StatsController.cs",
-              "ViewState": "AgIAAAMAAAAAAAAAAAAAABEAAABEAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-21T17:36:04.575Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "IStatsService.cs",
-              "DocumentMoniker": "D:\\Workspaces\\DoAnCuaThuong\\Do-an\\CameraNow\\Services\\Interfaces\\Services\\IStatsService.cs",
-              "RelativeDocumentMoniker": "Services\\Interfaces\\Services\\IStatsService.cs",
-              "ToolTip": "D:\\Workspaces\\DoAnCuaThuong\\Do-an\\CameraNow\\Services\\Interfaces\\Services\\IStatsService.cs",
-              "RelativeToolTip": "Services\\Interfaces\\Services\\IStatsService.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAAKAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-21T18:13:17.85Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 10,
               "Title": "OrderAPIController.cs",
               "DocumentMoniker": "D:\\Workspaces\\DoAnCuaThuong\\Do-an\\CameraNow\\WebApi\\Controllers\\OrderAPIController.cs",
               "RelativeDocumentMoniker": "WebApi\\Controllers\\OrderAPIController.cs",
@@ -301,12 +341,11 @@
               "RelativeToolTip": "WebApi\\Controllers\\OrderAPIController.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-21T17:35:54.775Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-21T17:35:54.775Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 16,
               "Title": "CartRepository.cs",
               "DocumentMoniker": "D:\\Workspaces\\DoAnCuaThuong\\Do-an\\CameraNow\\Services\\Repositories\\CartRepository.cs",
               "RelativeDocumentMoniker": "Services\\Repositories\\CartRepository.cs",
@@ -318,7 +357,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 12,
               "Title": "AprioriService.cs",
               "DocumentMoniker": "D:\\Workspaces\\DoAnCuaThuong\\Do-an\\CameraNow\\Services\\Services\\AprioriService.cs",
               "RelativeDocumentMoniker": "Services\\Services\\AprioriService.cs",
@@ -330,7 +369,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 11,
               "Title": "RecommendationController.cs",
               "DocumentMoniker": "D:\\Workspaces\\DoAnCuaThuong\\Do-an\\CameraNow\\WebApi\\Controllers\\RecommendationController.cs",
               "RelativeDocumentMoniker": "WebApi\\Controllers\\RecommendationController.cs",
@@ -338,12 +377,11 @@
               "RelativeToolTip": "WebApi\\Controllers\\RecommendationController.cs",
               "ViewState": "AgIAACEAAAAAAAAAAAA3wC8AAAAgAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-18T16:58:51.016Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-18T16:58:51.016Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 17,
               "Title": "OrderRepository.cs",
               "DocumentMoniker": "D:\\Workspaces\\DoAnCuaThuong\\Do-an\\CameraNow\\Services\\Repositories\\OrderRepository.cs",
               "RelativeDocumentMoniker": "Services\\Repositories\\OrderRepository.cs",
@@ -355,7 +393,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
+              "DocumentIndex": 18,
               "Title": "ICartRepository.cs",
               "DocumentMoniker": "D:\\Workspaces\\DoAnCuaThuong\\Do-an\\CameraNow\\Services\\Interfaces\\Repositories\\ICartRepository.cs",
               "RelativeDocumentMoniker": "Services\\Interfaces\\Repositories\\ICartRepository.cs",
@@ -367,7 +405,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 16,
+              "DocumentIndex": 19,
               "Title": "IOrderRepository.cs",
               "DocumentMoniker": "D:\\Workspaces\\DoAnCuaThuong\\Do-an\\CameraNow\\Services\\Interfaces\\Repositories\\IOrderRepository.cs",
               "RelativeDocumentMoniker": "Services\\Interfaces\\Repositories\\IOrderRepository.cs",
@@ -379,7 +417,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 17,
+              "DocumentIndex": 20,
               "Title": "CartItem.cs",
               "DocumentMoniker": "D:\\Workspaces\\DoAnCuaThuong\\Do-an\\CameraNow\\Models\\Models\\CartItem.cs",
               "RelativeDocumentMoniker": "Models\\Models\\CartItem.cs",
@@ -391,7 +429,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 18,
+              "DocumentIndex": 21,
               "Title": "Cart.cs",
               "DocumentMoniker": "D:\\Workspaces\\DoAnCuaThuong\\Do-an\\CameraNow\\Models\\Models\\Cart.cs",
               "RelativeDocumentMoniker": "Models\\Models\\Cart.cs",
@@ -403,7 +441,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 15,
               "Title": "OrderService.cs",
               "DocumentMoniker": "D:\\Workspaces\\DoAnCuaThuong\\Do-an\\CameraNow\\Services\\Services\\OrderService.cs",
               "RelativeDocumentMoniker": "Services\\Services\\OrderService.cs",
@@ -415,7 +453,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 22,
+              "DocumentIndex": 25,
               "Title": "ProductAPIController.cs",
               "DocumentMoniker": "D:\\Workspaces\\DoAnCuaThuong\\Do-an\\CameraNow\\WebApi\\Controllers\\ProductAPIController.cs",
               "RelativeDocumentMoniker": "WebApi\\Controllers\\ProductAPIController.cs",
@@ -427,7 +465,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 19,
+              "DocumentIndex": 22,
               "Title": "Details.cshtml",
               "DocumentMoniker": "D:\\Workspaces\\DoAnCuaThuong\\Do-an\\CameraNow\\Web.Admin\\Views\\Order\\Details.cshtml",
               "RelativeDocumentMoniker": "Web.Admin\\Views\\Order\\Details.cshtml",
@@ -439,7 +477,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 25,
+              "DocumentIndex": 28,
               "Title": "ProductService.cs",
               "DocumentMoniker": "D:\\Workspaces\\DoAnCuaThuong\\Do-an\\CameraNow\\Services\\Services\\ProductService.cs",
               "RelativeDocumentMoniker": "Services\\Services\\ProductService.cs",
@@ -451,7 +489,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 24,
+              "DocumentIndex": 27,
               "Title": "Program.cs",
               "DocumentMoniker": "D:\\Workspaces\\DoAnCuaThuong\\Do-an\\CameraNow\\WebApi\\Program.cs",
               "RelativeDocumentMoniker": "WebApi\\Program.cs",
@@ -463,7 +501,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 20,
+              "DocumentIndex": 23,
               "Title": "_Layout.cshtml",
               "DocumentMoniker": "D:\\Workspaces\\DoAnCuaThuong\\Do-an\\CameraNow\\Web.Admin\\Views\\Shared\\_Layout.cshtml",
               "RelativeDocumentMoniker": "Web.Admin\\Views\\Shared\\_Layout.cshtml",
@@ -475,7 +513,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 23,
+              "DocumentIndex": 26,
               "Title": "ProductController.cs",
               "DocumentMoniker": "D:\\Workspaces\\DoAnCuaThuong\\Do-an\\CameraNow\\Web.Admin\\Controllers\\ProductController.cs",
               "RelativeDocumentMoniker": "Web.Admin\\Controllers\\ProductController.cs",
@@ -487,7 +525,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 21,
+              "DocumentIndex": 24,
               "Title": "AutoMapperProfile.cs",
               "DocumentMoniker": "D:\\Workspaces\\DoAnCuaThuong\\Do-an\\CameraNow\\Services\\ObjectMapping\\AutoMapperProfile.cs",
               "RelativeDocumentMoniker": "Services\\ObjectMapping\\AutoMapperProfile.cs",
@@ -499,19 +537,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 29,
-              "Title": "Index.cshtml",
-              "DocumentMoniker": "D:\\Workspaces\\DoAnCuaThuong\\Do-an\\CameraNow\\Web.Admin\\Views\\Order\\Index.cshtml",
-              "RelativeDocumentMoniker": "Web.Admin\\Views\\Order\\Index.cshtml",
-              "ToolTip": "D:\\Workspaces\\DoAnCuaThuong\\Do-an\\CameraNow\\Web.Admin\\Views\\Order\\Index.cshtml",
-              "RelativeToolTip": "Web.Admin\\Views\\Order\\Index.cshtml",
-              "ViewState": "AgIAADcAAAAAAAAAAAAowFAAAAAqAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-06-18T15:15:13.681Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 31,
+              "DocumentIndex": 33,
               "Title": "Profile.cshtml",
               "DocumentMoniker": "D:\\Workspaces\\DoAnCuaThuong\\Do-an\\CameraNow\\Web.Admin\\Views\\Account\\Profile.cshtml",
               "RelativeDocumentMoniker": "Web.Admin\\Views\\Account\\Profile.cshtml",
@@ -523,19 +549,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 32,
-              "Title": "Index.cshtml",
-              "DocumentMoniker": "D:\\Workspaces\\DoAnCuaThuong\\Do-an\\CameraNow\\Web.Admin\\Views\\ProductCategory\\Index.cshtml",
-              "RelativeDocumentMoniker": "Web.Admin\\Views\\ProductCategory\\Index.cshtml",
-              "ToolTip": "D:\\Workspaces\\DoAnCuaThuong\\Do-an\\CameraNow\\Web.Admin\\Views\\ProductCategory\\Index.cshtml",
-              "RelativeToolTip": "Web.Admin\\Views\\ProductCategory\\Index.cshtml",
-              "ViewState": "AgIAAFQAAAAAAAAAAAAAAGsAAAAxAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-06-17T17:37:17.647Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 26,
+              "DocumentIndex": 29,
               "Title": "ImageService.cs",
               "DocumentMoniker": "D:\\Workspaces\\DoAnCuaThuong\\Do-an\\CameraNow\\Services\\Services\\ImageService.cs",
               "RelativeDocumentMoniker": "Services\\Services\\ImageService.cs",
@@ -547,7 +561,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 28,
+              "DocumentIndex": 31,
               "Title": "Create.cshtml",
               "DocumentMoniker": "D:\\Workspaces\\DoAnCuaThuong\\Do-an\\CameraNow\\Web.Admin\\Views\\Product\\Create.cshtml",
               "RelativeDocumentMoniker": "Web.Admin\\Views\\Product\\Create.cshtml",
@@ -559,7 +573,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 27,
+              "DocumentIndex": 30,
               "Title": "Program.cs",
               "DocumentMoniker": "D:\\Workspaces\\DoAnCuaThuong\\Do-an\\CameraNow\\Web.Admin\\Program.cs",
               "RelativeDocumentMoniker": "Web.Admin\\Program.cs",
@@ -571,7 +585,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 36,
+              "DocumentIndex": 37,
               "Title": "AppUserRepository.cs",
               "DocumentMoniker": "D:\\Workspaces\\DoAnCuaThuong\\Do-an\\CameraNow\\Services\\Repositories\\AppUserRepository.cs",
               "RelativeDocumentMoniker": "Services\\Repositories\\AppUserRepository.cs",
@@ -583,7 +597,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 35,
+              "DocumentIndex": 36,
               "Title": "AppUserService.cs",
               "DocumentMoniker": "D:\\Workspaces\\DoAnCuaThuong\\Do-an\\CameraNow\\Services\\Services\\AppUserService.cs",
               "RelativeDocumentMoniker": "Services\\Services\\AppUserService.cs",
@@ -595,7 +609,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 33,
+              "DocumentIndex": 34,
               "Title": "AccountController.cs",
               "DocumentMoniker": "D:\\Workspaces\\DoAnCuaThuong\\Do-an\\CameraNow\\Web.Admin\\Controllers\\AccountController.cs",
               "RelativeDocumentMoniker": "Web.Admin\\Controllers\\AccountController.cs",
@@ -607,7 +621,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 30,
+              "DocumentIndex": 32,
               "Title": "Index.cshtml",
               "DocumentMoniker": "D:\\Workspaces\\DoAnCuaThuong\\Do-an\\CameraNow\\Web.Admin\\Views\\Account\\Index.cshtml",
               "RelativeDocumentMoniker": "Web.Admin\\Views\\Account\\Index.cshtml",
@@ -619,7 +633,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 34,
+              "DocumentIndex": 35,
               "Title": "PaginatedListConverter.cs",
               "DocumentMoniker": "D:\\Workspaces\\DoAnCuaThuong\\Do-an\\CameraNow\\Services\\ObjectMapping\\PaginatedListConverter.cs",
               "RelativeDocumentMoniker": "Services\\ObjectMapping\\PaginatedListConverter.cs",
@@ -631,7 +645,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 38,
+              "DocumentIndex": 39,
               "Title": "ProductCategoryController.cs",
               "DocumentMoniker": "D:\\Workspaces\\DoAnCuaThuong\\Do-an\\CameraNow\\Web.Admin\\Controllers\\ProductCategoryController.cs",
               "RelativeDocumentMoniker": "Web.Admin\\Controllers\\ProductCategoryController.cs",
@@ -643,7 +657,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 37,
+              "DocumentIndex": 38,
               "Title": "AppUserViewModel.cs",
               "DocumentMoniker": "D:\\Workspaces\\DoAnCuaThuong\\Do-an\\CameraNow\\Datas\\ViewModels\\Auth\\AppUserViewModel.cs",
               "RelativeDocumentMoniker": "Datas\\ViewModels\\Auth\\AppUserViewModel.cs",
@@ -655,7 +669,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 39,
+              "DocumentIndex": 40,
               "Title": "ApplicationResource.vi.resx",
               "DocumentMoniker": "D:\\Workspaces\\DoAnCuaThuong\\Do-an\\CameraNow\\Web.Admin\\Resources\\ApplicationResource.vi.resx",
               "RelativeDocumentMoniker": "Web.Admin\\Resources\\ApplicationResource.vi.resx",
@@ -666,7 +680,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 40,
+              "DocumentIndex": 41,
               "Title": "Index.cshtml",
               "DocumentMoniker": "D:\\Workspaces\\DoAnCuaThuong\\Do-an\\CameraNow\\Web.Admin\\Views\\Login\\Index.cshtml",
               "RelativeDocumentMoniker": "Web.Admin\\Views\\Login\\Index.cshtml",

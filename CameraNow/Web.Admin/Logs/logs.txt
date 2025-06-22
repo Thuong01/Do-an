@@ -962,3 +962,21 @@ D:\Workspaces\DoAnCuaThuong\Do-an\CameraNow\Web.Admin\Views\Order\Details.cshtml
    at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|7_0(Endpoint endpoint, Task requestTask, ILogger logger)
    at Configurations.Middlewares.ExceptionHandlingMiddleware.InvokeAsync(HttpContext context) in D:\Workspaces\DoAnCuaThuong\Do-an\CameraNow\Web.Admin\Middlewares\ExceptionHandlingMiddleware.cs:line 23
 2025-06-20 01:14:41.063 +07:00 [ERR] HTTP GET /Order/Details responded 500 in 231.9045 ms
+2025-06-22 16:25:05.821 +07:00 [ERR] One or more errors occurred. (Unable to load DLL 'libwkhtmltox' or one of its dependencies: The specified module could not be found. (0x8007007E))
+System.AggregateException: One or more errors occurred. (Unable to load DLL 'libwkhtmltox' or one of its dependencies: The specified module could not be found. (0x8007007E))
+ ---> System.DllNotFoundException: Unable to load DLL 'libwkhtmltox' or one of its dependencies: The specified module could not be found. (0x8007007E)
+   at DinkToPdf.WkHtmlToXBindings.wkhtmltopdf_init(Int32 useGraphics)
+   at DinkToPdf.PdfTools.Load()
+   at DinkToPdf.BasicConverter.Convert(IDocument document)
+   at DinkToPdf.SynchronizedConverter.<>n__0(IDocument document)
+   at DinkToPdf.SynchronizedConverter.<>c__DisplayClass5_0.<Convert>b__0()
+   at System.Threading.Tasks.Task`1.InnerInvoke()
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location ---
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)
+   --- End of inner exception stack trace ---
+   at DinkToPdf.SynchronizedConverter.Invoke[TResult](Func`1 delegate)
+   at DinkToPdf.SynchronizedConverter.Convert(IDocument document)
+   at Web.Admin.Controllers.OrderController.PrintInvoice(Guid orderId, String userId) in D:\Workspaces\DoAnCuaThuong\Do-an\CameraNow\Web.Admin\Controllers\OrderController.cs:line 171
+2025-06-22 16:25:05.822 +07:00 [ERR] HTTP POST /Order/PrintInvoice responded 500 in 89.1653 ms

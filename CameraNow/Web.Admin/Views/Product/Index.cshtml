@@ -7,7 +7,7 @@
 @model IEnumerable<ProductViewModel>
 @inject LocalizationService locService
 @{
-    ViewData["Title"] = "Product";
+    ViewData["Title"] = "Danh sách sản phẩm";
     var productCategories = ViewBag.ProductCategories as IEnumerable<ProductCategoryViewModel>;
     var statuses = Enum.GetValues(typeof(StatusViewModel)) as IEnumerable<StatusViewModel>;
 }

@@ -2,7 +2,7 @@
 @inject Web.Admin.Resources.LocalizationService locService
 @using Models.Enums
 @{
-    ViewData["Title"] = "Orders";
+    ViewData["Title"] = "Danh sách đơn đặt hàng";
     Layout = "~/Views/Shared/_Layout.cshtml";
 
     // Group orders by date
@@ -265,11 +265,6 @@
                                                         data-status="@OrderStatusEnum.DaGiaoHang"
                                                         class="btn btn-success btn-sm btnConfirmOrder me-2">
                                                     Đã giao hàng
-                                                </button>
-                                                <button data-orderId="@order.ID" data-userId="@order.UserId"
-                                                        data-status="@OrderStatusEnum.DaHuy"
-                                                        class="btn btn-outline-danger btn-sm btnCancelOrder">
-                                                    Hủy đơn
                                                 </button>
                                                 break;
 

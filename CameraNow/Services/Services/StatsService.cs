@@ -17,21 +17,21 @@ namespace Services.Services
 
         public async Task<StatsViewModel> GetGeneralStatsAsync(DateTime? startDate = null, DateTime? endDate = null)
         {
-            var query = _context.Orders.AsQueryable();
+            var query = _context.Orders.AsEnumerable();
 
             if (startDate.HasValue)
                 query = query.Where(o => o.Order_Date >= startDate.Value.Date);
 
             if (endDate.HasValue)
-                query = query.Where(o => o.Order_Date < endDate.Value.Date.AddDays(1));
+                query = query.Where(o => o.Order_Date < endDate.Value.Date.AddDays(2));
 
-            var hasOrders = await query.AnyAsync();
+            var hasOrders = query.Any();
 
 
-            var totalOrder = await query.CountAsync();
-            var deliveredOrders = await query.CountAsync(o => o.Status == OrderStatusEnum.DaGiaoHang);
-            var cancelledOrders = await query.CountAsync(o => o.Status == OrderStatusEnum.DaHuy);
-            var shippingOrders = await query.CountAsync(o => o.Status == OrderStatusEnum.DangGiaoHang);
+            var totalOrder =  query.Count();
+            var deliveredOrders = query.Count(o => o.Status == OrderStatusEnum.DaGiaoHang);
+            var cancelledOrders = query.Count(o => o.Status == OrderStatusEnum.DaHuy);
+            var shippingOrders = query.Count(o => o.Status == OrderStatusEnum.DangGiaoHang);
 
             var orderStatusSummary = new OrderStatusSummary
             {
@@ -43,14 +43,14 @@ namespace Services.Services
 
             var stats = new StatsViewModel
             {
-                TotalOrders = await query.CountAsync(),
-                TotalRevenue = hasOrders ? await query.SumAsync(o => o.Total_Amount) : 0,
-                AverageOrderValue = hasOrders ? await query.AverageAsync(o => o.Total_Amount) : 0,
+                TotalOrders = query.Count(),
+                TotalRevenue = hasOrders ? query.Sum(o => o.Total_Amount) : 0,
+                AverageOrderValue = hasOrders ? query.Average(o => o.Total_Amount) : 0,
                 OrdersByStatus = hasOrders
-                    ? await query
+                    ? query
                         .GroupBy(o => o.Status)
                         .Select(g => new { Status = g.Key, Count = g.Count() })
-                        .ToDictionaryAsync(x => x.Status.ToString(), x => x.Count)
+                        .ToDictionary(x => x.Status.ToString(), x => x.Count)
                     : new Dictionary<string, int>(),
                 RevenueByDay = await GetRevenueByDayAsync(),
                 TopCustomers = [],
