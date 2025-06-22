@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Models.Enums;
 using Datas.ViewModels.Statistic;
 using Services.Interfaces.Services;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace Services.Services
 {
@@ -23,7 +24,7 @@ namespace Services.Services
                 query = query.Where(o => o.Order_Date >= startDate.Value.Date);
 
             if (endDate.HasValue)
-                query = query.Where(o => o.Order_Date < endDate.Value.Date.AddDays(2));
+                query = query.Where(o => o.Order_Date <= endDate.Value.Date.AddDays(2));
 
             var hasOrders = query.Any();
 
@@ -52,7 +53,7 @@ namespace Services.Services
                         .Select(g => new { Status = g.Key, Count = g.Count() })
                         .ToDictionary(x => x.Status.ToString(), x => x.Count)
                     : new Dictionary<string, int>(),
-                RevenueByDay = await GetRevenueByDayAsync(),
+                RevenueByDay = await GetRevenueByDayAsync(startDate, endDate),
                 TopCustomers = [],
                 TopSellingProducts = await GetTopSellingProductsAsync(),
                 RecentOrders = await GetRecentOrdersAsync(10),
@@ -62,17 +63,20 @@ namespace Services.Services
             return stats;
         }
 
-        public async Task<Dictionary<string, decimal>> GetRevenueByDayAsync(int days = 30)
+        public async Task<Dictionary<string, decimal>> GetRevenueByDayAsync(DateTime? startDate = null, DateTime? endDate = null)
         {
-            var endDate = DateTime.UtcNow;
-            var startDate = endDate.AddDays(-days);
+            var query = _context.Orders.AsEnumerable();
 
-            return await _context.Orders
-                .Where(o => o.Order_Date >= startDate && o.Order_Date <= endDate)
+            if (startDate.HasValue)
+                query = query.Where(o => o.Order_Date >= startDate.Value.Date);
+            if (endDate.HasValue)
+                query = query.Where(o => o.Order_Date <= endDate.Value.Date.AddDays(2));
+
+            return query
                 .GroupBy(o => o.Order_Date.Date)
                 .OrderBy(g => g.Key)
                 .Select(g => new { Date = g.Key, Revenue = g.Sum(o => o.Total_Amount) })
-                .ToDictionaryAsync(x => x.Date.ToString("dd/MM"), x => x.Revenue);
+                .ToDictionary(x => x.Date.ToString("dd/MM"), x => x.Revenue);
         }
 
         public async Task<List<TopProduct>> GetTopSellingProductsAsync(int top = 5)

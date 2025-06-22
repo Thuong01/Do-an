@@ -117,7 +117,7 @@ const SectionTitle = styled.h2`
 const ProductGrid = styled.div`
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 30px;
+    gap: 10px;
     margin-top: 30px;
 
     @media (max-width: 768px) {

@@ -311,14 +311,14 @@
                     data: { email: email },
                     success: function(response) {
                         if (response.success) {
-                            alert('@locService.GetLocalize("Password_reset_email_sent")');
+                            alert("Mật khẩu mới đã được gửi qua email");
                             $('#forgotPasswordModal').modal('hide');
                         } else {
-                            alert(response.message || '@locService.GetLocalize("Error_occurred")');
+                            alert("Có lỗi xảy ra");
                         }
                     },
                     error: function() {
-                        alert('@locService.GetLocalize("Error_occurred")');
+                        alert("Có lỗi xảy ra");
                     }
                 });
             });

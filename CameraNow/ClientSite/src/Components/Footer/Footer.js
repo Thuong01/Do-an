@@ -1,5 +1,5 @@
 import './Footer.scss';
-import logo from '../../assets/imgs/logo11.jpg';
+import logo from '../../assets/imgs/logo_trong_suot2.png';
 import { NavLink } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFacebookF, faInstagram, faTwitter, faYoutube } from '@fortawesome/free-brands-svg-icons';
@@ -13,7 +13,7 @@ const Footer = () => {
                     {/* Logo and About Section */}
                     <div className="footer-column logo-section">
                         <NavLink to="/" className="footer-logo">
-                            <img width={180} src={logo} alt="Company Logo" />
+                            <img style={{ filter: 'invert(1)' }} width={180} src={logo} alt="CameraNow Logo" />
                         </NavLink>
                         <p className="footer-about">
                             Thiết bị và ống kính chụp ảnh cao cấp dành cho cả chuyên gia và người đam mê.

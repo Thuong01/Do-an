@@ -7,6 +7,7 @@ import { userLogin } from '../../Redux/Actions/authAction';
 import { NavLink, useNavigate } from 'react-router-dom';
 import CustomToast from '../../Untils/CustomToast';
 import loginbanner from '../../assets/imgs/login_banner.jpg';
+import axios from 'axios';
 
 // Màu chủ đạo và bảng màu phối hợp
 const primaryColor = '#c9f0d6';
@@ -15,7 +16,7 @@ const primaryLight = '#e8f8ee';
 const textColor = '#2a4a3a';
 const secondaryColor = '#f0f7f3';
 
-// Styled Components
+//#region  // Styled Components
 const LoginContainer = styled.div`
     background: linear-gradient(to bottom, ${primaryLight}, white);
     min-height: 100vh;
@@ -289,6 +290,8 @@ const DialogTitle = styled.h3`
     font-weight: 600;
 `;
 
+//#endregion
+
 const Login = () => {
     const dispatch = useDispatch();
     const { error } = useSelector((state) => state.auth);
@@ -320,6 +323,9 @@ const Login = () => {
         }
 
         try {
+            var res = axios.post(`https://localhost:7085/api/LoginAPI/forget-password?email=${email}`);
+            console.log(res);
+
             CustomToast.success('Mật khẩu mới đã được gửi đến email của bạn.');
             setShowForgotPasswordForm(false);
         } catch (error) {

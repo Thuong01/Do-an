@@ -168,6 +168,8 @@ namespace Web.Admin.Controllers
 
                 if (result.Succeeded)
                 {
+                    await _userManager.AddToRoleAsync(user, "Admin");
+
                     // Start:  Chuyển màu login
                     string GreenColor = "\x1b[32m"; // Màu xanh lá cây
                     string ResetColor = "\x1b[0m"; // Trở về màu mặc định

@@ -204,22 +204,53 @@ namespace Services.Services
 
         private string GenerateRandomPassword(int length = 10)
         {
-            const string valid = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!@#$%^&*()-_=+";
-            var res = new StringBuilder();
+            if (length < 4)
+                throw new ArgumentException("Password length must be at least 4 to include all character types.");
+
+            const string lower = "abcdefghijklmnopqrstuvwxyz";
+            const string upper = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            const string digits = "1234567890";
+            const string special = "#&_";
+
+            var all = lower + upper + digits + special;
+            var passwordChars = new List<char>();
+
             using (var rng = new RNGCryptoServiceProvider())
             {
-                var uintBuffer = new byte[sizeof(uint)];
+                // Đảm bảo mỗi loại có ít nhất 1 ký tự
+                passwordChars.Add(GetRandomChar(lower, rng));
+                passwordChars.Add(GetRandomChar(upper, rng));
+                passwordChars.Add(GetRandomChar(digits, rng));
+                passwordChars.Add(GetRandomChar(special, rng));
 
-                while (res.Length < length)
+                // Thêm ngẫu nhiên các ký tự còn lại
+                for (int i = 4; i < length; i++)
                 {
-                    rng.GetBytes(uintBuffer);
-                    var num = BitConverter.ToUInt32(uintBuffer, 0);
-                    res.Append(valid[(int)(num % (uint)valid.Length)]);
+                    passwordChars.Add(GetRandomChar(all, rng));
                 }
-            }
 
-            return res.ToString();
+                // Xáo trộn password để không cố định vị trí
+                passwordChars = passwordChars.OrderBy(_ => GetRandomInt(rng)).ToList();
+
+                return new string(passwordChars.ToArray());
+            }
         }
+
+        private char GetRandomChar(string chars, RNGCryptoServiceProvider rng)
+        {
+            var buffer = new byte[4];
+            rng.GetBytes(buffer);
+            uint num = BitConverter.ToUInt32(buffer, 0);
+            return chars[(int)(num % chars.Length)];
+        }
+
+        private int GetRandomInt(RNGCryptoServiceProvider rng)
+        {
+            var buffer = new byte[4];
+            rng.GetBytes(buffer);
+            return BitConverter.ToInt32(buffer, 0) & int.MaxValue; // positive only
+        }
+
     }
 }
 

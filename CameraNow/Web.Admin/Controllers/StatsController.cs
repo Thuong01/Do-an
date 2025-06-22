@@ -12,12 +12,9 @@ namespace Web.Admin.Controllers
             _statsService = statsService;
         }
 
-        public async Task<IActionResult> Index(DateTime? startDate, DateTime? endDate)
+        public async Task<IActionResult> Index(DateTime startDate, DateTime endDate)
         {
-            var start = (startDate ?? DateTime.Today.AddDays(-6)).ToUniversalTime();
-            var end = (endDate ?? DateTime.Today).ToUniversalTime();
-
-            var model = await _statsService.GetGeneralStatsAsync(start, end);
+            var model = await _statsService.GetGeneralStatsAsync(startDate, endDate);
 
             return View(model);
         }
