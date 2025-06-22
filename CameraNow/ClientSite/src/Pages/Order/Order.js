@@ -335,7 +335,7 @@ const Order = () => {
                                             placeholder="Last Name"
                                             type="text"
                                             onChange={(e) => setOrder({ ...order, fullName: e.target.value })}
-                                            value={user?.fullName}
+                                            value={order?.fullName}
                                         />
                                         <label htmlFor="checkout_last_name">
                                             Họ tên <span className="text-danger">*</span>
@@ -350,7 +350,7 @@ const Order = () => {
                                             placeholder="Street Address *"
                                             type="text"
                                             onChange={(e) => setOrder({ ...order, address: e.target.value })}
-                                            value={user?.address}
+                                            value={order?.address}
                                         />
                                         <label htmlFor="checkout_company_name">
                                             Địa chỉ nhận hàng <span className="text-danger">*</span>
@@ -365,7 +365,7 @@ const Order = () => {
                                             placeholder="Phone *"
                                             type="text"
                                             onChange={handlePhoneChange}
-                                            value={user?.phoneNumber}
+                                            value={order?.phoneNumber}
                                         />
                                         <label htmlFor="checkout_phone">
                                             Điện thoại <span className="text-danger">*</span>
@@ -381,7 +381,7 @@ const Order = () => {
                                             placeholder="Your Mail *"
                                             type="email"
                                             onChange={handleEmailChange}
-                                            value={user?.email}
+                                            value={order?.email}
                                         />
                                         <label htmlFor="checkout_email">
                                             Email <span className="text-danger">*</span>
